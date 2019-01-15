@@ -2,9 +2,8 @@ package com.di.penopllast.xmltranslater.di
 
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 
-class ComponentHolder (private val context: XmlTranslaterApp) {
-    var appComponent: AppComponent? = null
-        private set
+public class ComponentsHolder (private val context: XmlTranslaterApp) {
+    private lateinit var appComponent: AppComponent
 
     fun init() {
         appComponent = DaggerAppComponent

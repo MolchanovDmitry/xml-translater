@@ -1,12 +1,19 @@
 package com.di.penopllast.xmltranslater.di
 
+import com.di.penopllast.xmltranslater.MainActivity
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
-import dagger.BindsInstance
-import dagger.Component
+
 import javax.inject.Singleton
 
+import dagger.BindsInstance
+import dagger.Component
+
 @Singleton
-class AppComponent {
+@Component
+interface AppComponent {
+
+    fun inject(activity: MainActivity)
+
     @Component.Builder
     interface Builder {
         @BindsInstance
@@ -14,5 +21,4 @@ class AppComponent {
 
         fun build(): AppComponent
     }
-
 }
