@@ -27,13 +27,13 @@ class RetrofitModule {
     @Provides
     @Named("serverUrl")
     internal fun provideServerUrl(): String {
-        return "https://api.vk.com/"
+        return "https://translate.yandex.net/api/v1.5/tr.json/"
     }
 
     @Provides
     @Singleton
     internal fun provideRetrofit(@Named("serverUrl") serverUrl: String, builder: Retrofit.Builder,
-                                 okHttpClient: OkHttpClient?): Retrofit {
+                                 okHttpClient: OkHttpClient): Retrofit {
         return builder
                 .baseUrl(serverUrl)
                 .client(okHttpClient)

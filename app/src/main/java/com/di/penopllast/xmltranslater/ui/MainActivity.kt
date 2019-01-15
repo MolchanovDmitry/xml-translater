@@ -1,18 +1,24 @@
-package com.di.penopllast.xmltranslater
+package com.di.penopllast.xmltranslater.ui
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.content.Intent
+import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.utils.Utils
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainView {
+
+    private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        presenter = MainPresenterImpl()
+        presenter.getLangs()
 
         showFileChooser()
     }
