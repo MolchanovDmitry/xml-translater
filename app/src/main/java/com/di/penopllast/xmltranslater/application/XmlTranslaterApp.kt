@@ -15,6 +15,6 @@ class XmlTranslaterApp : Application() {
     }
 
     companion object {
-        private lateinit var app: XmlTranslaterApp
+        internal lateinit var app: XmlTranslaterApp
     }
 }

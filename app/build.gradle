@@ -40,4 +40,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.19'
     kapt 'com.google.dagger:dagger-compiler:2.19'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //preferences
+    implementation "com.github.yandextaxitech:binaryprefs:1.0.0"
 }

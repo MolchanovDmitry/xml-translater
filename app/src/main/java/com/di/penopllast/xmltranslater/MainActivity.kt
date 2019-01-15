@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val FILE_SELECT_CODE = 0
+        private const val FILE_SELECT_CODE = 0
     }
 
 }
