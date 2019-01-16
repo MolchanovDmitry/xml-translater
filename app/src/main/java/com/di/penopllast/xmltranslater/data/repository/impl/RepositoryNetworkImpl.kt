@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class RepositoryNetworkImpl : RepositoryNetwork {
 
-    private lateinit var yandexApi: YandexApi @Inject set
+    lateinit var yandexApi: YandexApi @Inject set
 
     init {
         XmlTranslaterApp.app.componentsHolder.appComponent.inject(this)

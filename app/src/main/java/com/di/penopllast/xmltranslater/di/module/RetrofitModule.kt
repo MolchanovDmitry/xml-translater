@@ -33,7 +33,7 @@ class RetrofitModule {
     @Provides
     @Singleton
     internal fun provideRetrofit(@Named("serverUrl") serverUrl: String, builder: Retrofit.Builder,
-                                 okHttpClient: OkHttpClient): Retrofit {
+                                 okHttpClient: OkHttpClient?): Retrofit {
         return builder
                 .baseUrl(serverUrl)
                 .client(okHttpClient)
