@@ -9,8 +9,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
+import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseFileConnector
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.ChooseFileFragment
+import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseLanguageFragmentImpl
+import com.google.gson.internal.LinkedTreeMap
 
 
 class MainActivity : AppCompatActivity(), MainView,
@@ -26,16 +28,31 @@ class MainActivity : AppCompatActivity(), MainView,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //presenter = MainPresenterImpl()
-        //presenter.getLangs()
+        presenter = MainPresenterImpl(this)
+        presenter.getLangs()
 
         if (savedInstanceState == null) {
-            supportFragmentManager
+            /*supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment_placeholder_layout, ChooseFileFragment(),
                             "ChooseFileFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()*/
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
+                            "ChooseLanguageFragmentImpl")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
+        }
+    }
+
+    override fun onLanguageListFetched(langs: LinkedTreeMap<String, String>) {
+        val langFragment = supportFragmentManager.findFragmentByTag("ChooseLanguageFragmentImpl")
+        langFragment?.let {
+            if (it is ChooseLanguageFragmentImpl && it.isVisible) {
+                it.fillRecycler(langs);
+            }
         }
     }
 
