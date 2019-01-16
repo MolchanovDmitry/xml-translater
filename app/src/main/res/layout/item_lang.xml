@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_gravity="center_vertical"
+    android:layout_margin="5dp"
+    android:background="@drawable/item_background"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/code_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingStart="70dp"
+        android:paddingEnd="0dp"
+        android:textColor="#000000"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/describe_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingStart="120dp"
+        android:paddingEnd="0dp"
+        android:textSize="17sp" />
 
-</LinearLayout>
+</FrameLayout>

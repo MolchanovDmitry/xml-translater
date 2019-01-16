@@ -11,12 +11,13 @@ import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
 import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseFileConnector
+import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseLanguageFragmentImpl
 import com.google.gson.internal.LinkedTreeMap
 
 
 class MainActivity : AppCompatActivity(), MainView,
-        ChooseFileConnector {
+        ChooseFileConnector, ChooseLanguageConnector {
 
     companion object {
         internal const val FILE_SELECT_CODE = 0
@@ -54,6 +55,10 @@ class MainActivity : AppCompatActivity(), MainView,
                 it.fillRecycler(langs);
             }
         }
+    }
+
+    override fun onLanguageSelected(locale: String) {
+        showToast(locale)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
