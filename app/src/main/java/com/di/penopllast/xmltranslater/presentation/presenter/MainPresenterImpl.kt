@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.ui
+package com.di.penopllast.xmltranslater.presentation.presenter
 
 import com.di.penopllast.xmltranslater.application.utils.Const
 

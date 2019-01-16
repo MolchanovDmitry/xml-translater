@@ -1,12 +1,12 @@
 package com.di.penopllast.xmltranslater.di
 
-import com.di.penopllast.xmltranslater.ui.MainActivity
+import com.di.penopllast.xmltranslater.presentation.ui.acitvity.MainActivity
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 import com.di.penopllast.xmltranslater.data.repository.impl.RepositoryNetworkImpl
 import com.di.penopllast.xmltranslater.di.module.ApiModule
 import com.di.penopllast.xmltranslater.di.module.ContextModule
 import com.di.penopllast.xmltranslater.di.module.RepositoryModule
-import com.di.penopllast.xmltranslater.ui.BasePresenter
+import com.di.penopllast.xmltranslater.presentation.presenter.BasePresenter
 
 import javax.inject.Singleton
 
