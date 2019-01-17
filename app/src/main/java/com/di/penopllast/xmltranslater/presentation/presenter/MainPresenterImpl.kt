@@ -25,11 +25,7 @@ class MainPresenterImpl(val view: MainView)
         val result = readFileLineByLineUsingForEachLine("/sdcard/strings.xml")
         val xmlToJson = XmlToJson.Builder(result).build()
         val jsonObject = xmlToJson.toJson()
-        //File("/sdcard/strings.json").writeText(xmlToJson.toString())
-        println("result = " + jsonObject)
-        val gson = Gson()
-        val root: StringRoot = gson.fromJson(jsonObject?.toString(), StringRoot::class.java)
-        println("result = " + jsonObject)
+        val root: StringRoot = Gson().fromJson(jsonObject?.toString(), StringRoot::class.java)
     }
 
     fun readFileLineByLineUsingForEachLine(fileName: String): String =
