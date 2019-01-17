@@ -8,7 +8,6 @@ import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguagesConnector
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.item_layout_with_checkboxs.view.*
-import java.util.zip.Inflater
 
 class LanguagesAdapter(val langs: LinkedTreeMap<String, String>,
                        val connector: ChooseLanguagesConnector)
