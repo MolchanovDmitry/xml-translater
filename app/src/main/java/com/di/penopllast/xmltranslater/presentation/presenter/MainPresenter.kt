@@ -8,4 +8,6 @@ interface MainPresenter {
     interface DownloadLanguageCallback{
         fun onLanguageListFetched(langs: LinkedTreeMap<String, String>)
     }
+
+    fun parseXmlFile()
 }

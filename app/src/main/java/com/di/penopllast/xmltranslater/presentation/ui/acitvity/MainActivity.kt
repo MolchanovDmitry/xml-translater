@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity(), MainView,
         setContentView(R.layout.activity_main)
 
         presenter = MainPresenterImpl(this)
-        presenter.getLangs()
+        //presenter.getLangs()
+        presenter.parseXmlFile()
 
         if (savedInstanceState == null) {
             /*supportFragmentManager
