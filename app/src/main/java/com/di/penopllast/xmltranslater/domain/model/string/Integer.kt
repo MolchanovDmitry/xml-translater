@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class Integer(
         @SerializedName("content")
         @Expose
-        var content: String? = null,
+        var content: StringRow? = null,
         @SerializedName("name")
         @Expose
-        var name: String? = null
+        var name: StringRow? = null
 )

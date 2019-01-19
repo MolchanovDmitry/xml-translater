@@ -292,7 +292,7 @@ public class XmlToJson {
         try {
             // checks if the user wants to force a class (Int, Double... for a given path)
             Class forcedClass = mForceClassForPath.get(path);
-            if (forcedClass == null) {  // default behaviour, put it as a String
+            if (forcedClass == null) {  // default behaviour, put it as a StringRow
                 if (content == null) {
                     content = DEFAULT_EMPTY_STRING;
                 }

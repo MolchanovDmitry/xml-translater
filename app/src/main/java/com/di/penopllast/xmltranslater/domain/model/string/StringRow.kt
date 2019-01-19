@@ -3,7 +3,7 @@ package com.di.penopllast.xmltranslater.domain.model.string
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class String(
+data class StringRow(
 
         @SerializedName("content")
         @Expose

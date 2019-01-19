@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.domain.model
+package com.di.penopllast.xmltranslater.domain.model.lang
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

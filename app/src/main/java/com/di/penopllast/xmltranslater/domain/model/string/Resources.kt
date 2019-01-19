@@ -7,7 +7,7 @@ data class Resources(
 
         @SerializedName("string")
         @Expose
-        var string: List<String>? = null,
+        var string: List<StringRow>? = null,
         @SerializedName("plurals")
         @Expose
         var plurals: List<Plural>? = null,

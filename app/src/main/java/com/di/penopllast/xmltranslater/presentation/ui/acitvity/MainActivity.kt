@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), MainView,
 
         presenter = MainPresenterImpl(this)
         //presenter.getLangs()
-        presenter.parseXmlFile()
+        presenter.translate()
 
         if (savedInstanceState == null) {
             /*supportFragmentManager
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainView,
         val langFragment = supportFragmentManager.findFragmentByTag("ChooseLanguageFragmentImpl")
         langFragment?.let {
             if (it is ChooseLanguageFragmentImpl && it.isVisible) {
-                it.fillRecycler(langs);
+                it.fillRecycler(langs)
             }
         }
     }
@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity(), MainView,
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onTranslateComplete() {
+        showToast("Translate completed")
     }
 
     override fun showToast(s: String) {

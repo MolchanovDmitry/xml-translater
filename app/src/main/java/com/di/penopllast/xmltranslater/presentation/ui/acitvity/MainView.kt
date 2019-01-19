@@ -4,4 +4,5 @@ import com.google.gson.internal.LinkedTreeMap
 
 interface MainView {
     fun onLanguageListFetched(langs: LinkedTreeMap<String, String>)
+    fun onTranslateComplete()
 }

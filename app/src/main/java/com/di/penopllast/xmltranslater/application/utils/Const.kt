@@ -1,6 +1,6 @@
 package com.di.penopllast.xmltranslater.application.utils
 
-class Const {
+class Const private constructor() {
 
     init {
         throw AssertionError()
