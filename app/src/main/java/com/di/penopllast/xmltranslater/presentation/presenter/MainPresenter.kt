@@ -11,7 +11,7 @@ interface MainPresenter {
     }
 
     interface TranslateCallback {
-        fun onTranslated(key: String, translatedText: String)
-        fun onTranslateError(key: String, text: String)
+        fun onTranslated(name: String, translatedText: String)
+        fun onTranslateError(name: String, text: String)
     }
 }

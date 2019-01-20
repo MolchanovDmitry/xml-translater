@@ -1,5 +1,7 @@
 package com.di.penopllast.xmltranslater.presentation.ui.fragment
 
+import android.util.ArrayMap
+
 interface TranslateFragment {
-    abstract fun setLog(key: String, text: String, success: Boolean)
+    fun updateFragmentTranslateStatus(propMap: ArrayMap<String, Any>)
 }

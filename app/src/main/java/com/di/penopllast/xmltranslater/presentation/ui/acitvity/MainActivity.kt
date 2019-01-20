@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.content.Intent
+import android.util.ArrayMap
 import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.utils.Utils
@@ -19,7 +20,8 @@ import com.google.gson.internal.LinkedTreeMap
 
 
 class MainActivity : AppCompatActivity(), MainView,
-        ChooseFileConnector, ChooseLanguageConnector {
+        ChooseFileConnector,
+        ChooseLanguageConnector {
 
     companion object {
         internal const val FILE_SELECT_CODE = 0
@@ -42,10 +44,16 @@ class MainActivity : AppCompatActivity(), MainView,
                             "ChooseFileFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()*/
-            supportFragmentManager
+            /*supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
                             "ChooseLanguageFragmentImpl")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()*/
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_placeholder_layout, TranslateFragmentImpl(),
+                            "TranslateFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
         }
@@ -64,11 +72,11 @@ class MainActivity : AppCompatActivity(), MainView,
         showToast(locale)
     }
 
-    override fun setTranslateLog(key: String, text: String, isSuccess: Boolean) {
+    override fun updateTranslateStatus(propMap: ArrayMap<String, Any>) {
         val langFragment = supportFragmentManager.findFragmentByTag("TranslateFragment")
         langFragment?.let {
             if (it is TranslateFragment && it.isVisible) {
-                it.setLog(key, text, isSuccess)
+                it.updateFragmentTranslateStatus(propMap)
             }
         }
     }
@@ -83,10 +91,6 @@ class MainActivity : AppCompatActivity(), MainView,
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun onTranslateComplete() {
-        showToast("Translate completed")
     }
 
     override fun showToast(s: String) {

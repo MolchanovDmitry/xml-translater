@@ -1,11 +1,13 @@
 package com.di.penopllast.xmltranslater.presentation.presenter
 
+import android.util.ArrayMap
 import com.di.penopllast.xmltranslater.application.utils.Const
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.MainView
 import com.google.gson.internal.LinkedTreeMap
 import java.io.File
 import com.di.penopllast.xmltranslater.application.utils.from_xml_to_json_parser.XmlToJson
 import com.di.penopllast.xmltranslater.domain.model.string.StringRoot
+import com.di.penopllast.xmltranslater.presentation.ui.StatusKey
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -55,7 +57,6 @@ class MainPresenterImpl(val view: MainView)
                 stringRow.translatable?.let { translatable ->
                     if (translatable.equals("false")) {
                         isTranslatable = false
-                        view.setTranslateLog(stringRow.name, stringRow.content, false)
                         iterationCount++
                     }
                 }
@@ -74,22 +75,39 @@ class MainPresenterImpl(val view: MainView)
         File("/sdcard/translated_strings.xml").writeText(originalXml.toString())
     }
 
-    override fun onTranslated(key: String, translatedText: String) {
+    override fun onTranslated(name: String, translatedText: String) {
         iterationCount++
 
-        val tagName = "name=\"$key\""
+        val tagName = "name=\"$name\""
         val tagIndex = originalXml.indexOf(tagName)
         val startReplaceIndex = originalXml.indexOf(">", tagIndex) + 1
         val endReplaceIndex = originalXml.indexOf("</string>", startReplaceIndex)
         originalXml.replace(startReplaceIndex, endReplaceIndex, translatedText)
 
-        view.setTranslateLog(key, translatedText, true)
+        val propMap: ArrayMap<String, Any> = ArrayMap()
+        propMap[StatusKey.LOCALE] = "ru-en"
+        propMap[StatusKey.INDEX] = iterationCount
+        propMap[StatusKey.COUNT] = stringRowCount
+        propMap[StatusKey.NAME] = name
+        propMap[StatusKey.TEXT] = translatedText
+        propMap[StatusKey.IS_SUCCESS] = true
+        view.updateTranslateStatus(propMap)
+
         checkFinish()
     }
 
-    override fun onTranslateError(key: String, text: String) {
+    override fun onTranslateError(name: String, text: String) {
         iterationCount++
-        view.setTranslateLog(key, text, true)
+
+        val propMap: ArrayMap<String, Any> = ArrayMap()
+        propMap[StatusKey.LOCALE] = "ru-en"
+        propMap[StatusKey.INDEX] = iterationCount
+        propMap[StatusKey.COUNT] = stringRowCount
+        propMap[StatusKey.NAME] = name
+        propMap[StatusKey.TEXT] = text
+        propMap[StatusKey.IS_SUCCESS] = false
+        view.updateTranslateStatus(propMap)
+
         checkFinish()
     }
 

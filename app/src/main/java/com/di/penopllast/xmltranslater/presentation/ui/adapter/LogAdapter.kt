@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
 import kotlinx.android.synthetic.main.item_log.view.*
 
-class LogAdapter : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
+class LogAdapter() : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
+    private var stringList = ArrayList<String>()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val logText = view.log_text
@@ -19,9 +20,16 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return stringList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.logText.text = stringList[position]
     }
+
+    public fun addItem(s: String) {
+        stringList.add(s)
+        notifyDataSetChanged()
+    }
+
 }
