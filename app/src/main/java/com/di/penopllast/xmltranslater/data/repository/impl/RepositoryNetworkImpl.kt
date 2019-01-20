@@ -34,7 +34,7 @@ class RepositoryNetworkImpl : RepositoryNetwork {
         })
     }
 
-    override fun translate(apiKey: String, key: String?, text: String?, fromTo: String,
+    override fun translate(apiKey: String, key: String?, text: String?, fromTo: String, rowId: Int,
                            callback: MainPresenter.TranslateCallback) {
         yandexApi.translate(apiKey, text, fromTo).enqueue(object : Callback<Translate> {
             override fun onResponse(call: Call<Translate>, response: Response<Translate>) {
