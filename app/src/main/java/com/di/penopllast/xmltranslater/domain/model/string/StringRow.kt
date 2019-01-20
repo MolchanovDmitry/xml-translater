@@ -7,10 +7,10 @@ data class StringRow(
 
         @SerializedName("content")
         @Expose
-        var content: kotlin.String? = null,
+        val content: kotlin.String,
         @SerializedName("name")
         @Expose
-        var name: kotlin.String? = null,
+        val name: kotlin.String,
         @SerializedName("translatable")
         @Expose
         var translatable: kotlin.String? = null
