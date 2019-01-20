@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
+import com.di.penopllast.xmltranslater.presentation.ui.adapter.LogAdapter
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
+import kotlinx.android.synthetic.main.fragment_translate.*
 
 class TranslateFragmentImpl : Fragment(), TranslateFragment {
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -22,7 +21,11 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
 
     override fun onStart() {
         super.onStart()
+        log_recycler_view.layoutManager = LinearLayoutManager(context)
+        log_recycler_view.adapter = LogAdapter()
+    }
 
+    override fun setLog(key: String, text: String, success: Boolean) {
     }
 
 }

@@ -12,7 +12,9 @@ import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
 import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseLanguageFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.TranslateFragmentImpl
 import com.google.gson.internal.LinkedTreeMap
 
 
@@ -60,6 +62,15 @@ class MainActivity : AppCompatActivity(), MainView,
 
     override fun onLanguageSelected(locale: String) {
         showToast(locale)
+    }
+
+    override fun setTranslateLog(key: String, text: String, isSuccess: Boolean) {
+        val langFragment = supportFragmentManager.findFragmentByTag("TranslateFragment")
+        langFragment?.let {
+            if (it is TranslateFragment && it.isVisible) {
+                it.setLog(key, text, isSuccess)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

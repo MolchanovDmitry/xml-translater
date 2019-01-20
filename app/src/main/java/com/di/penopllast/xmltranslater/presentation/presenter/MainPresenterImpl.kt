@@ -55,6 +55,7 @@ class MainPresenterImpl(val view: MainView)
                 stringRow.translatable?.let { translatable ->
                     if (translatable.equals("false")) {
                         isTranslatable = false
+                        view.setTranslateLog(stringRow.name, stringRow.content, false)
                         iterationCount++
                     }
                 }
@@ -82,11 +83,13 @@ class MainPresenterImpl(val view: MainView)
         val endReplaceIndex = originalXml.indexOf("</string>", startReplaceIndex)
         originalXml.replace(startReplaceIndex, endReplaceIndex, translatedText)
 
+        view.setTranslateLog(key, translatedText, true)
         checkFinish()
     }
 
     override fun onTranslateError(key: String, text: String) {
         iterationCount++
+        view.setTranslateLog(key, text, true)
         checkFinish()
     }
 
