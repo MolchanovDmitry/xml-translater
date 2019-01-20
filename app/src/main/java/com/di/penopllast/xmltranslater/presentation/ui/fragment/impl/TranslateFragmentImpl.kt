@@ -23,7 +23,9 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
 
     override fun onStart() {
         super.onStart()
-        log_recycler_view.layoutManager = LinearLayoutManager(context)
+        val layout = LinearLayoutManager(context)
+        layout.reverseLayout = true
+        log_recycler_view.layoutManager = layout
         log_recycler_view.adapter = adapter
     }
 
