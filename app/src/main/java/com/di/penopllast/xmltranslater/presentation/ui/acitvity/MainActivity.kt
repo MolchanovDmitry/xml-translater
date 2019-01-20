@@ -13,6 +13,7 @@ import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
 import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.ui.fragment.ChooseFileFragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseLanguageFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.TranslateFragmentImpl
@@ -38,18 +39,6 @@ class MainActivity : AppCompatActivity(), MainView,
         presenter.translate()
 
         if (savedInstanceState == null) {
-            /*supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_placeholder_layout, ChooseFileFragment(),
-                            "ChooseFileFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()*/
-            /*supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
-                            "ChooseLanguageFragmentImpl")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()*/
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment_placeholder_layout, TranslateFragmentImpl(),
@@ -57,6 +46,33 @@ class MainActivity : AppCompatActivity(), MainView,
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
         }
+    }
+
+    private fun showChooseFileFragment() {
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_placeholder_layout, ChooseFileFragment(),
+                        "ChooseFileFragment")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
+    }
+
+    private fun showChooseLanguageFragment(){
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
+                        "ChooseLanguageFragmentImpl")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
+    }
+
+    private fun showTranslateFragment(){
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_placeholder_layout, TranslateFragmentImpl(),
+                        "TranslateFragment")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
     }
 
     override fun onLanguageListFetched(langs: LinkedTreeMap<String, String>) {

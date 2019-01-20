@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_translate.*
 
 class TranslateFragmentImpl : Fragment(), TranslateFragment {
 
-    private val adapter: LogAdapter = LogAdapter()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_translate, container, false)
@@ -26,7 +25,7 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
         val layout = LinearLayoutManager(context)
         layout.reverseLayout = true
         log_recycler_view.layoutManager = layout
-        log_recycler_view.adapter = adapter
+        log_recycler_view.adapter = LogAdapter()
     }
 
     override fun updateFragmentTranslateStatus(propMap: ArrayMap<String, Any>) {
@@ -42,6 +41,7 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
 
         var message = if (isSuccess as Boolean) "Success translate: " else "Fail translate"
         message += " name = $name text = $text"
-        adapter.addItem(message)
+
+        (log_recycler_view.adapter as LogAdapter).addItem(message)
     }
 }

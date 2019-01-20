@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
 
-class MainPresenterImpl(val view: MainView)
+class MainPresenterImpl(private val view: MainView)
     : MainPresenter,
         BasePresenter(),
         MainPresenter.DownloadLanguageCallback,
