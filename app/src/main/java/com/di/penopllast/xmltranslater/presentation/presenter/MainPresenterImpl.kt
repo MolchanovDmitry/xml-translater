@@ -6,6 +6,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.acitvity.MainView
 import com.google.gson.internal.LinkedTreeMap
 import java.io.File
 import com.di.penopllast.xmltranslater.application.utils.from_xml_to_json_parser.XmlToJson
+import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
 import com.di.penopllast.xmltranslater.domain.model.string.StringRoot
 import com.di.penopllast.xmltranslater.presentation.ui.StatusKey
 import com.google.gson.Gson
@@ -14,24 +15,42 @@ import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
 
-class MainPresenterImpl(private val view: MainView)
+class MainPresenterImpl(private val view: MainView? = null)
     : MainPresenter,
         BasePresenter(),
         MainPresenter.DownloadLanguageCallback,
         MainPresenter.TranslateCallback {
 
     private lateinit var originalXml: StringBuilder
-    private var stringRowCount = 0
-
-    override fun getLangs() {
-        repositoryNetwork.getLangList("ru", Const.API_KEY, this)
-    }
-
-    override fun onLanguageListFetched(langs: LinkedTreeMap<String, String>) {
-        view.onLanguageListFetched(langs)
-    }
-
     private var stringRoot: StringRoot? = null
+    private var stringRowCount = 0
+    private var iterationCount: Int = 0
+    private val currentLocale = "ru"
+
+    override fun getLangList() {
+        repositoryNetwork.getLangList(currentLocale, Const.API_KEY, this)
+    }
+
+    override fun onLanguageListFetched(rootLangs: RootLangs) {
+        view?.showChooseTranslateLanguagesFragment()
+        val langList = getDestinationLanguageList(rootLangs)
+    }
+
+    private fun getDestinationLanguageList(rootLangs: RootLangs): ArrayMap<String, String> {
+        val destinationLanguageList: ArrayMap<String, String> = ArrayMap()
+        for (dir in rootLangs.dirs) {
+            val colonIndex = dir.indexOf(':')
+            val firstLocale = dir.substring(0, colonIndex)
+            val secondLocale = dir.substring(colonIndex + 1)
+
+            if (currentLocale == firstLocale) {
+                print("Сохраняем $secondLocale ${rootLangs.langs[secondLocale]}")
+                destinationLanguageList[secondLocale] = rootLangs.langs[secondLocale]
+            }
+        }
+        return destinationLanguageList
+    }
+
     override fun translate() {
         GlobalScope.launch {
             stringRoot = parseXmlFile()
@@ -47,7 +66,6 @@ class MainPresenterImpl(private val view: MainView)
         return Gson().fromJson(jsonObject?.toString(), StringRoot::class.java)
     }
 
-    private var iterationCount: Int = 0
     private fun translateWords() {
         stringRoot?.resources?.string?.let {
             loop@ for (stringRow in it) {
@@ -91,7 +109,7 @@ class MainPresenterImpl(private val view: MainView)
         propMap[StatusKey.NAME] = name
         propMap[StatusKey.TEXT] = translatedText
         propMap[StatusKey.IS_SUCCESS] = true
-        view.updateTranslateStatus(propMap)
+        view?.updateTranslateStatus(propMap)
 
         checkFinish()
     }
@@ -106,7 +124,7 @@ class MainPresenterImpl(private val view: MainView)
         propMap[StatusKey.NAME] = name
         propMap[StatusKey.TEXT] = text
         propMap[StatusKey.IS_SUCCESS] = false
-        view.updateTranslateStatus(propMap)
+        view?.updateTranslateStatus(propMap)
 
         checkFinish()
     }

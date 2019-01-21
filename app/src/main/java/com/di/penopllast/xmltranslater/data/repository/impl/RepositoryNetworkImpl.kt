@@ -27,7 +27,7 @@ class RepositoryNetworkImpl : RepositoryNetwork {
             }
 
             override fun onResponse(call: Call<RootLangs>, response: Response<RootLangs>) {
-                response.body()?.langs?.let {
+                response.body()?.let {
                     callback.onLanguageListFetched(it)
                 }
             }

@@ -16,7 +16,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.Choose
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.ChooseFileFragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseLanguageFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.TranslateFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseTranslateLanguagesFragmentImpl
 import com.google.gson.internal.LinkedTreeMap
 
 
@@ -35,16 +35,11 @@ class MainActivity : AppCompatActivity(), MainView,
         setContentView(R.layout.activity_main)
 
         presenter = MainPresenterImpl(this)
-        //presenter.getLangs()
-        presenter.translate()
+        presenter.getLangList()
+        //presenter.translate()
 
         if (savedInstanceState == null) {
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_placeholder_layout, TranslateFragmentImpl(),
-                            "TranslateFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
+            showChooseLanguageFragment()
         }
     }
 
@@ -57,7 +52,7 @@ class MainActivity : AppCompatActivity(), MainView,
                 .commit()
     }
 
-    private fun showChooseLanguageFragment(){
+    private fun showChooseLanguageFragment() {
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
@@ -66,11 +61,11 @@ class MainActivity : AppCompatActivity(), MainView,
                 .commit()
     }
 
-    private fun showTranslateFragment(){
+    override fun showChooseTranslateLanguagesFragment() {
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout, TranslateFragmentImpl(),
-                        "TranslateFragment")
+                .replace(R.id.fragment_placeholder_layout, ChooseTranslateLanguagesFragmentImpl(),
+                        "ChooseTranslateLanguagesFragmentImpl")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
     }

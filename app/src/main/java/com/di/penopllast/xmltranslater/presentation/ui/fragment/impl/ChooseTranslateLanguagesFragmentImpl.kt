@@ -10,7 +10,7 @@ import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.adapter.LanguagesAdapter
 import kotlinx.android.synthetic.main.fragment_choose_language.*
 
-class ChooseLanguagesFragmentImpl : Fragment() {
+class ChooseTranslateLanguagesFragmentImpl : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

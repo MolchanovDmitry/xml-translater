@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface YandexApi {
 
-    @GET("getLangs")
+    @GET("getLangList")
     fun getLanguageList(
             @Query("key") key: String,
             @Query("ui") ui: String
