@@ -12,6 +12,13 @@ import kotlinx.android.synthetic.main.fragment_choose_language.*
 
 class ChooseTranslateLanguagesFragmentImpl : Fragment() {
 
+    private var fileLocale: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fileLocale = arguments?.getString("locale")
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_choose_language, container, false)

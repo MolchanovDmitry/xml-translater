@@ -1,16 +1,16 @@
 package com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.adapter
 
+import android.util.ArrayMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
-import com.google.gson.internal.LinkedTreeMap
 import kotlinx.android.synthetic.main.item_lang.view.*
 
 class LanguageAdapter(
-        val langs: LinkedTreeMap<String, String>,
+        val langs: ArrayMap<String, String>,
         val connector: ChooseLanguageConnector
 ) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>() {
 

@@ -4,5 +4,4 @@ import android.util.ArrayMap
 
 interface MainView {
     fun updateTranslateStatus(propMap: ArrayMap<String, Any>)
-    fun showChooseTranslateLanguagesFragment()
 }

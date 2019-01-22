@@ -29,15 +29,9 @@ class MainActivity : AppCompatActivity(), MainView,
         internal const val FILE_SELECT_CODE = 0
     }
 
-    private lateinit var presenter: MainPresenter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        presenter = MainPresenterImpl(this)
-        presenter.getLangList()
-        //presenter.translate()
 
         if (savedInstanceState == null) {
             showChooseLanguageFragment()
@@ -62,10 +56,14 @@ class MainActivity : AppCompatActivity(), MainView,
                 .commit()
     }
 
-    override fun showChooseTranslateLanguagesFragment() {
+    private fun showChooseTranslateLanguagesFragment(locale: String) {
+        val fragment = ChooseTranslateLanguagesFragmentImpl()
+        val bundle = Bundle()
+        bundle.putString("locale", locale)
+        fragment.arguments = bundle
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout, ChooseTranslateLanguagesFragmentImpl(),
+                .replace(R.id.fragment_placeholder_layout, fragment,
                         Fragment.CHOOSE_TRANSLATION_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
@@ -75,13 +73,13 @@ class MainActivity : AppCompatActivity(), MainView,
         val langFragment = supportFragmentManager.findFragmentByTag(Fragment.CHOOSE_TRANSLATION_LANGUAGE)
         langFragment?.let {
             if (it is ChooseLanguageFragmentImpl && it.isVisible) {
-                it.fillRecycler(langs)
+                //it.fillRecycler(langs)
             }
         }
     }
 
     override fun onLanguageSelected(locale: String) {
-        showToast(locale)
+        showChooseTranslateLanguagesFragment(locale)
     }
 
     override fun updateTranslateStatus(propMap: ArrayMap<String, Any>) {
