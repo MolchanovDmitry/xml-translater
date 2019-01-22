@@ -10,12 +10,13 @@ import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
-import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenterImpl
+import com.di.penopllast.xmltranslater.presentation.presenter.impl.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.ChooseFileFragment
+import com.di.penopllast.xmltranslater.presentation.ui.fragment.Fragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseLanguageFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseTranslateLanguagesFragmentImpl
 import com.google.gson.internal.LinkedTreeMap
 
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), MainView,
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseFileFragment(),
-                        "ChooseFileFragment")
+                        Fragment.CHOOSE_FILE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
     }
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity(), MainView,
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
-                        "ChooseLanguageFragmentImpl")
+                        Fragment.CHOOSE_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
     }
@@ -65,13 +66,13 @@ class MainActivity : AppCompatActivity(), MainView,
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseTranslateLanguagesFragmentImpl(),
-                        "ChooseTranslateLanguagesFragmentImpl")
+                        Fragment.CHOOSE_TRANSLATION_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
     }
 
-    override fun onLanguageListFetched(langs: LinkedTreeMap<String, String>) {
-        val langFragment = supportFragmentManager.findFragmentByTag("ChooseLanguageFragmentImpl")
+    fun onLanguageListFetched(langs: LinkedTreeMap<String, String>) {
+        val langFragment = supportFragmentManager.findFragmentByTag(Fragment.CHOOSE_TRANSLATION_LANGUAGE)
         langFragment?.let {
             if (it is ChooseLanguageFragmentImpl && it.isVisible) {
                 it.fillRecycler(langs)
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity(), MainView,
     }
 
     override fun updateTranslateStatus(propMap: ArrayMap<String, Any>) {
-        val langFragment = supportFragmentManager.findFragmentByTag("TranslateFragment")
+        val langFragment = supportFragmentManager.findFragmentByTag(Fragment.TRANSLATE)
         langFragment?.let {
             if (it is TranslateFragment && it.isVisible) {
                 it.updateFragmentTranslateStatus(propMap)

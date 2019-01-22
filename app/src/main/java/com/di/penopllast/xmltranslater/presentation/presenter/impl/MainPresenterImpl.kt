@@ -1,13 +1,14 @@
-package com.di.penopllast.xmltranslater.presentation.presenter
+package com.di.penopllast.xmltranslater.presentation.presenter.impl
 
 import android.util.ArrayMap
 import com.di.penopllast.xmltranslater.application.utils.Const
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.MainView
-import com.google.gson.internal.LinkedTreeMap
 import java.io.File
 import com.di.penopllast.xmltranslater.application.utils.from_xml_to_json_parser.XmlToJson
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
 import com.di.penopllast.xmltranslater.domain.model.string.StringRoot
+import com.di.penopllast.xmltranslater.presentation.presenter.BasePresenter
+import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
 import com.di.penopllast.xmltranslater.presentation.ui.StatusKey
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
@@ -18,7 +19,6 @@ import java.lang.StringBuilder
 class MainPresenterImpl(private val view: MainView? = null)
     : MainPresenter,
         BasePresenter(),
-        MainPresenter.DownloadLanguageCallback,
         MainPresenter.TranslateCallback {
 
     private lateinit var originalXml: StringBuilder
@@ -26,15 +26,6 @@ class MainPresenterImpl(private val view: MainView? = null)
     private var stringRowCount = 0
     private var iterationCount: Int = 0
     private val currentLocale = "ru"
-
-    override fun getLangList() {
-        repositoryNetwork.getLangList(currentLocale, Const.API_KEY, this)
-    }
-
-    override fun onLanguageListFetched(rootLangs: RootLangs) {
-        view?.showChooseTranslateLanguagesFragment()
-        val langList = getDestinationLanguageList(rootLangs)
-    }
 
     private fun getDestinationLanguageList(rootLangs: RootLangs): ArrayMap<String, String> {
         val destinationLanguageList: ArrayMap<String, String> = ArrayMap()
