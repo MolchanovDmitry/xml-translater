@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.fragment.impl
+package com.di.penopllast.xmltranslater.presentation.ui.chooselanguages
 
 import android.os.Bundle
 import android.view.LayoutInflater

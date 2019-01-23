@@ -9,15 +9,13 @@ import android.util.ArrayMap
 import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.utils.Utils
-import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
-import com.di.penopllast.xmltranslater.presentation.presenter.impl.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.ChooseFileFragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.Fragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.impl.ChooseTranslateLanguagesFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.ChooseTranslateLanguagesFragmentImpl
 import com.google.gson.internal.LinkedTreeMap
 
 

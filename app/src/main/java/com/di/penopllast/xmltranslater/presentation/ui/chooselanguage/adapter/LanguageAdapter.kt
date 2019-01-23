@@ -4,20 +4,21 @@ import android.util.ArrayMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
 import kotlinx.android.synthetic.main.item_lang.view.*
 
 class LanguageAdapter(
-        val langs: ArrayMap<String, String>,
-        val connector: ChooseLanguageConnector
+        private val langs: ArrayMap<String, String>,
+        private val connector: ChooseLanguageConnector
 ) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val root = view.root_layout
-        val codeText = view.code_text
-        val describeText = view.describe_text
+        val root: ViewGroup = view.root_layout
+        val codeText: TextView = view.code_text
+        val describeText: TextView = view.describe_text
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
