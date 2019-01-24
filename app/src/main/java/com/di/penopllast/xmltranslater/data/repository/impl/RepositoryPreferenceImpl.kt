@@ -7,5 +7,18 @@ import com.ironz.binaryprefs.Preferences
 
 class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
 
+    companion object {
+        private const val LOCALE = "locale"
+        private const val NO_LOCALE = "no_locale"
+    }
+
     private val preferences: Preferences = BinaryPreferencesBuilder(context).build()
+
+    override fun setFileLocale(locale: String) {
+        preferences.edit().putString(LOCALE, locale).apply()
+    }
+
+    override fun getFileLocale(): String {
+        return preferences.getString(LOCALE, NO_LOCALE) ?: NO_LOCALE
+    }
 }
