@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.adapter
+package com.di.penopllast.xmltranslater.presentation.ui.translate.adapter
 
 import android.view.LayoutInflater
 import android.view.View

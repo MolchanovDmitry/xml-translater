@@ -9,6 +9,7 @@ class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
 
     companion object {
         private const val LOCALE = "locale"
+        private const val PATH = "path"
         private const val NO_LOCALE = "no_locale"
     }
 
@@ -20,5 +21,13 @@ class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
 
     override fun getFileLocale(): String {
         return preferences.getString(LOCALE, NO_LOCALE) ?: NO_LOCALE
+    }
+
+    override fun setFilePath(path: String) {
+        preferences.edit().putString(PATH, path).apply()
+    }
+
+    override fun getFilePath(): String {
+        return preferences.getString(PATH, "") ?: ""
     }
 }

@@ -1,6 +1,6 @@
 package com.di.penopllast.xmltranslater.di
 
-import com.di.penopllast.xmltranslater.presentation.ui.acitvity.MainActivity
+import com.di.penopllast.xmltranslater.presentation.ui.main.MainActivity
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 import com.di.penopllast.xmltranslater.data.repository.impl.RepositoryNetworkImpl
 import com.di.penopllast.xmltranslater.di.module.ApiModule

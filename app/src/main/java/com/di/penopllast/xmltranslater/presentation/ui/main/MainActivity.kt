@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.acitvity
+package com.di.penopllast.xmltranslater.presentation.ui.main
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
@@ -9,11 +9,11 @@ import android.util.ArrayMap
 import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.utils.Utils
-import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseFileConnector
-import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.ChooseFileFragment
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.Fragment
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
+import com.di.penopllast.xmltranslater.presentation.ui.main.connector.ChooseFileConnector
+import com.di.penopllast.xmltranslater.presentation.ui.main.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.ui.ChooseFileFragment
+import com.di.penopllast.xmltranslater.presentation.ui.Fragment
+import com.di.penopllast.xmltranslater.presentation.ui.translate.view.TranslateFragment
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.view.ChooseDestinationLanguagesFragmentImpl
 import com.google.gson.internal.LinkedTreeMap
@@ -39,9 +39,10 @@ class MainActivity : AppCompatActivity(), MainView,
     private fun showChooseFileFragment() {
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout, ChooseFileFragment(),
+                .add(R.id.fragment_placeholder_layout, ChooseFileFragment(),
                         Fragment.CHOOSE_FILE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
                 .commit()
     }
 
@@ -49,9 +50,10 @@ class MainActivity : AppCompatActivity(), MainView,
         title = "Choose file language"
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
+                .add(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
                         Fragment.CHOOSE_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
                 .commit()
     }
 
@@ -66,6 +68,7 @@ class MainActivity : AppCompatActivity(), MainView,
                 .replace(R.id.fragment_placeholder_layout, fragment,
                         Fragment.CHOOSE_TRANSLATION_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
                 .commit()
     }
 

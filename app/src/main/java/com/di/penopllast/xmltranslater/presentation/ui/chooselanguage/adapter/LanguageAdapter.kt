@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.ui.main.connector.ChooseLanguageConnector
 import kotlinx.android.synthetic.main.item_lang.view.*
 
 class LanguageAdapter(

@@ -6,10 +6,11 @@ import com.di.penopllast.xmltranslater.domain.room.model.LocaleDescription
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.di.penopllast.xmltranslater.domain.room.model.LocaleMatch
+import com.di.penopllast.xmltranslater.domain.room.model.SelectedLocale
 
 @Database(
-        entities = arrayOf(LocaleDescription::class, LocaleMatch::class),
-        version = 4,
+        entities = [LocaleDescription::class, LocaleMatch::class, SelectedLocale::class],
+        version = 5,
         exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

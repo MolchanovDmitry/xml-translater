@@ -7,12 +7,12 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector.ChooseLanguagesConnector
+import com.di.penopllast.xmltranslater.presentation.ui.main.connector.ChooseLanguagesConnector
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.data.ExtendedLocaleMatch
 import kotlinx.android.synthetic.main.item_layout_with_checkboxs.view.*
 
-class MatchLanguagesAdapter(val langMap: List<ExtendedLocaleMatch>,
-                            val connector: ChooseLanguagesConnector)
+class MatchLanguagesAdapter(private val langMap: List<ExtendedLocaleMatch>,
+                            private val connector: ChooseLanguagesConnector)
     : RecyclerView.Adapter<MatchLanguagesAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -37,5 +37,11 @@ class MatchLanguagesAdapter(val langMap: List<ExtendedLocaleMatch>,
         holder.codeFromText.text = langMap[position].from
         holder.codeToText.text = langMap[position].to
         holder.describeText.text = langMap[position].toDescription
+        holder.root.setOnClickListener {
+            if (holder.checkBox.isChecked)
+                connector.onLanguageSelected(langMap[position].to)
+            else
+                connector.onUnLanguageSelected(langMap[position].to)
+        }
     }
 }

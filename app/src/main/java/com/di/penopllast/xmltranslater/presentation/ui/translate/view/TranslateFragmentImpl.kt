@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.fragment.impl
+package com.di.penopllast.xmltranslater.presentation.ui.translate.view
 
 import android.os.Bundle
 import android.util.ArrayMap
@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.StatusKey
-import com.di.penopllast.xmltranslater.presentation.ui.adapter.LogAdapter
-import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
+import com.di.penopllast.xmltranslater.presentation.ui.translate.adapter.LogAdapter
 import kotlinx.android.synthetic.main.fragment_translate.*
 
 class TranslateFragmentImpl : Fragment(), TranslateFragment {

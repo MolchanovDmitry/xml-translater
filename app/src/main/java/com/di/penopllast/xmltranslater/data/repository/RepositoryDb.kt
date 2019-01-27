@@ -9,6 +9,9 @@ interface RepositoryDb {
     fun insertLocaleDescriptions(localeMap: LinkedTreeMap<String, String>)
     fun deleteLocaleDescriptions()
     fun getLocaleMatches(): List<LocaleMatch>
-    fun insertLocaleMatches(localeMap: ArrayList<LocaleMatch>)
+    fun insertLocaleMatches(localeMatches: List<LocaleMatch>)
     fun deleteLocaleMatches()
+    fun getSelectedLocales(): List<String>
+    fun insertSelectedLocales(localeList: List<String>)
+    fun deleteSelectedLanguages()
 }

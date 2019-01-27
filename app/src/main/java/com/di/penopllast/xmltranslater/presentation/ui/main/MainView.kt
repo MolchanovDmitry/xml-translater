@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.acitvity
+package com.di.penopllast.xmltranslater.presentation.ui.main
 
 import android.util.ArrayMap
 

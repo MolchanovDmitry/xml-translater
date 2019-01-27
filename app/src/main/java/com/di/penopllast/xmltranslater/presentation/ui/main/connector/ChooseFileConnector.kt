@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.acitvity.connector
+package com.di.penopllast.xmltranslater.presentation.ui.main.connector
 
 interface ChooseFileConnector : BaseConnector {
 

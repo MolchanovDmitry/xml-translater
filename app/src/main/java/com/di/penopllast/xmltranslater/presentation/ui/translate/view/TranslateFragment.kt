@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.fragment
+package com.di.penopllast.xmltranslater.presentation.ui.translate.view
 
 import android.util.ArrayMap
 

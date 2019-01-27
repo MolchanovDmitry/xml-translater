@@ -2,7 +2,7 @@ package com.di.penopllast.xmltranslater.presentation.presenter.impl
 
 import android.util.ArrayMap
 import com.di.penopllast.xmltranslater.application.utils.Const
-import com.di.penopllast.xmltranslater.presentation.ui.acitvity.MainView
+import com.di.penopllast.xmltranslater.presentation.ui.main.MainView
 import java.io.File
 import com.di.penopllast.xmltranslater.application.utils.from_xml_to_json_parser.XmlToJson
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
@@ -25,22 +25,6 @@ class MainPresenterImpl(private val view: MainView? = null)
     private var stringRoot: StringRoot? = null
     private var stringRowCount = 0
     private var iterationCount: Int = 0
-    private val currentLocale = "ru"
-
-    private fun getDestinationLanguageList(rootLangs: RootLangs): ArrayMap<String, String> {
-        val destinationLanguageList: ArrayMap<String, String> = ArrayMap()
-        for (dir in rootLangs.dirs) {
-            val colonIndex = dir.indexOf(':')
-            val firstLocale = dir.substring(0, colonIndex)
-            val secondLocale = dir.substring(colonIndex + 1)
-
-            if (currentLocale == firstLocale) {
-                print("Сохраняем $secondLocale ${rootLangs.langs[secondLocale]}")
-                destinationLanguageList[secondLocale] = rootLangs.langs[secondLocale]
-            }
-        }
-        return destinationLanguageList
-    }
 
     override fun translate() {
         GlobalScope.launch {

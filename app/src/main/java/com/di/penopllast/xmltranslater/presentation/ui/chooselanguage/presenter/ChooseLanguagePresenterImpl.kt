@@ -52,4 +52,9 @@ class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment? = nu
 
         view?.showLanguageList(langMap)
     }
+
+    override fun saveSelectedLocale(locale: String) {
+        repositoryPreference.setFileLocale(locale)
+    }
+
 }
