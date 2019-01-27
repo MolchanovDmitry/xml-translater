@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity(), MainView,
     }
 
     private fun showChooseLanguageFragment() {
+        title = "Choose file language"
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), MainView,
     }
 
     private fun showChooseTranslateLanguagesFragment(locale: String) {
+        title = "Choose Translate Languages"
         val fragment = ChooseDestinationLanguagesFragmentImpl()
         val bundle = Bundle()
         bundle.putString("locale", locale)

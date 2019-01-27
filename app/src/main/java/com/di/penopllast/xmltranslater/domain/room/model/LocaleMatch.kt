@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
  */
 @Entity
 data class LocaleMatch(
-        @field:PrimaryKey val localeFrom: String,
+        @PrimaryKey val id: Int,
+        val localeFrom: String,
         val localeTo: String
 )

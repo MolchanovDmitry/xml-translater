@@ -3,6 +3,7 @@ package com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.presenter
 import android.util.ArrayMap
 import com.di.penopllast.xmltranslater.application.utils.Const
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
+import com.di.penopllast.xmltranslater.domain.room.model.LocaleMatch
 import com.di.penopllast.xmltranslater.presentation.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragment
 
@@ -18,24 +19,24 @@ class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment? = nu
     override fun onLanguageListFetched(rootLangs: RootLangs) {
         saveLocaleEntities(rootLangs)
         showLanguageList(rootLangs)
-
-
     }
 
     private fun saveLocaleEntities(rootLangs: RootLangs) {
         executorService.submit {
 
-            val localeMath: ArrayMap<String, String> = ArrayMap()
+            val localeMatch: ArrayList<LocaleMatch> = ArrayList()
 
-            for (dir in rootLangs.dirs) {
+            rootLangs.dirs.forEachIndexed { index, dir ->
                 val colonIndex = dir.indexOf('-')
                 val fromLang = dir.substring(0, colonIndex)
-                localeMath[fromLang] = dir.substring(colonIndex + 1)
+                val toLang = dir.substring(colonIndex + 1)
+                localeMatch.add(LocaleMatch(index, fromLang, toLang))
             }
+
             repositoryDb.deleteLocaleDescriptions()
             repositoryDb.deleteLocaleMatches()
-            repositoryDb.insertLocaleDescriptions(localeMath)
-            repositoryDb.insertLocaleMatches(rootLangs.langs)
+            repositoryDb.insertLocaleDescriptions(rootLangs.langs)
+            repositoryDb.insertLocaleMatches(localeMatch)
         }
     }
 
