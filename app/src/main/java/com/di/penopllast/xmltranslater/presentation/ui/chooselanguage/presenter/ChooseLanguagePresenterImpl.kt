@@ -16,12 +16,39 @@ class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment? = nu
     }
 
     override fun onLanguageListFetched(rootLangs: RootLangs) {
-        val langMap: ArrayMap<String, String> = ArrayMap()
+        saveLocaleEntities(rootLangs)
+        showLanguageList(rootLangs)
+
+
+    }
+
+    private fun saveLocaleEntities(rootLangs: RootLangs) {
+        executorService.submit {
+
+            val localeMath: ArrayMap<String, String> = ArrayMap()
+
+            for (dir in rootLangs.dirs) {
+                val colonIndex = dir.indexOf('-')
+                val fromLang = dir.substring(0, colonIndex)
+                localeMath[fromLang] = dir.substring(colonIndex + 1)
+            }
+            repositoryDb.deleteLocaleDescriptions()
+            repositoryDb.deleteLocaleMatches()
+            repositoryDb.insertLocaleDescriptions(localeMath)
+            repositoryDb.insertLocaleMatches(rootLangs.langs)
+        }
+    }
+
+    private fun showLanguageList(rootLangs: RootLangs) {
+
+        val langMap: ArrayMap<String, String> = ArrayMap() // locale - description
+
         for (dir in rootLangs.dirs) {
             val colonIndex = dir.indexOf('-')
             val fromLang = dir.substring(0, colonIndex)
             langMap[fromLang] = rootLangs.langs[fromLang]
         }
+
         view?.showLanguageList(langMap)
     }
 }

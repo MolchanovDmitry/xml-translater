@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.chooselanguages
+package com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.adapter.LanguagesAdapter
 import kotlinx.android.synthetic.main.fragment_choose_language.*
 
-class ChooseTranslateLanguagesFragmentImpl : Fragment() {
+class ChooseDestinationLanguagesFragmentImpl : Fragment() {
 
     private var fileLocale: String? = null
 

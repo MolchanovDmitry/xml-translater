@@ -6,24 +6,41 @@ import androidx.room.Room
 import com.di.penopllast.xmltranslater.data.repository.RepositoryDb
 import com.di.penopllast.xmltranslater.domain.room.AppDatabase
 import com.di.penopllast.xmltranslater.domain.room.dao.DbDao
-import com.di.penopllast.xmltranslater.domain.room.model.LocaleMap
+import com.di.penopllast.xmltranslater.domain.room.model.LocaleDescription
+import com.di.penopllast.xmltranslater.domain.room.model.LocaleMatch
+import com.google.gson.internal.LinkedTreeMap
 
 class RepositoryDbImpl(context: Context) : RepositoryDb {
 
     private val dao: DbDao = Room.databaseBuilder(context, AppDatabase::class.java, "db")
             .build().dbDao
 
-    override fun getLocaleMaps(): List<LocaleMap> {
-        return dao.localMapList
+    override fun getLocaleDescriptions(): List<LocaleDescription> {
+        return dao.localeDescriptionList
     }
 
-    override fun insertLocaleMaps(localeMap: ArrayMap<String, String>) {
+    override fun insertLocaleDescriptions(localeMap: ArrayMap<String, String>) {
         for (map in localeMap) {
-            dao.insert(LocaleMap(map.key, map.value))
+            dao.insertLocaleDescription(LocaleDescription(map.key, map.value))
         }
     }
 
-    override fun deleteLocaleMaps() {
-        dao.clearLocaleMap()
+    override fun deleteLocaleDescriptions() {
+        dao.clearLocaleDescription()
     }
+
+    override fun getLocaleMatches(): List<LocaleMatch> {
+        return dao.localeMatchList
+    }
+
+    override fun insertLocaleMatches(localeMap: LinkedTreeMap<String, String>) {
+        for (map in localeMap) {
+            dao.insertLocaleMatch(LocaleMatch(map.key, map.value))
+        }
+    }
+
+    override fun deleteLocaleMatches() {
+        dao.clearLocaleMatch()
+    }
+
 }

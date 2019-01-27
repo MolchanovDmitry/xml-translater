@@ -1,24 +1,37 @@
 package com.di.penopllast.xmltranslater.domain.room.dao
 
-import com.di.penopllast.xmltranslater.domain.room.model.LocaleMap
+import com.di.penopllast.xmltranslater.domain.room.model.LocaleDescription
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.di.penopllast.xmltranslater.domain.room.model.LocaleMatch
 
 @Dao
 interface DbDao {
 
-    @get:Query("select * from LocaleMap")
-    val localMapList: List<LocaleMap>
+    @get:Query("select * from LocaleDescription")
+    val localeDescriptionList: List<LocaleDescription>
 
-    @Query("delete from LocaleMap")
-    fun clearLocaleMap()
+    @get:Query("select * from LocaleMatch")
+    val localeMatchList: List<LocaleMatch>
+
+    @Query("delete from LocaleDescription")
+    fun clearLocaleDescription()
+
+    @Query("delete from LocaleMatch")
+    fun clearLocaleMatch()
 
     @Insert
-    fun insert(starredApp: LocaleMap)
+    fun insertLocaleDescription(localeDescription: LocaleDescription)
+
+    @Insert
+    fun insertLocaleMatch(localeMatch: LocaleMatch)
 
     @Delete
-    fun delete(employee: LocaleMap)
+    fun deleteLocaleDescription(localeDescription: LocaleDescription)
+
+    @Delete
+    fun deleteLocaleMatch(localeMatch: LocaleMatch)
 }

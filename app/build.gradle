@@ -48,6 +48,6 @@ dependencies {
     //preferences
     implementation 'com.github.yandextaxitech:binaryprefs:1.0.1'
     //room
-    implementation "androidx.room:room-runtime:2.1.0-alpha03"
-    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha03"
+    implementation "androidx.room:room-runtime:2.1.0-alpha04"
+    kapt "androidx.room:room-compiler:2.1.0-alpha04"
 }

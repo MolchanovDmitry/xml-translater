@@ -15,7 +15,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.fragment.ChooseFileFragme
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.Fragment
 import com.di.penopllast.xmltranslater.presentation.ui.fragment.TranslateFragment
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.ChooseTranslateLanguagesFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.view.ChooseDestinationLanguagesFragmentImpl
 import com.google.gson.internal.LinkedTreeMap
 
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), MainView,
     }
 
     private fun showChooseTranslateLanguagesFragment(locale: String) {
-        val fragment = ChooseTranslateLanguagesFragmentImpl()
+        val fragment = ChooseDestinationLanguagesFragmentImpl()
         val bundle = Bundle()
         bundle.putString("locale", locale)
         fragment.arguments = bundle
