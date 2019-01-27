@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui
+package com.di.penopllast.xmltranslater.presentation.ui.choosefile
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.ui.main.MainActivity
-import com.di.penopllast.xmltranslater.presentation.ui.main.connector.ChooseFileConnector
+import com.di.penopllast.xmltranslater.presentation.presenter.MainActivity
+import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseFileConnector
 import kotlinx.android.synthetic.main.fragment_choose_file.*
 
 class ChooseFileFragment : Fragment() {

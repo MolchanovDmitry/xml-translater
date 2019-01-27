@@ -6,8 +6,8 @@ import com.di.penopllast.xmltranslater.data.api.YandexApi
 import com.di.penopllast.xmltranslater.data.repository.RepositoryNetwork
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
 import com.di.penopllast.xmltranslater.domain.model.translate.Translate
-import com.di.penopllast.xmltranslater.presentation.presenter.MainPresenter
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.presenter.ChooseLanguagePresenter
+import com.di.penopllast.xmltranslater.presentation.ui.translate.presenter.TranslatePresenter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,14 +37,14 @@ class RepositoryNetworkImpl : RepositoryNetwork {
     }
 
     override fun translate(apiKey: String, key: String, text: String, fromTo: String,
-                           callback: MainPresenter.TranslateCallback) {
+                           callback: TranslatePresenter.TranslateCallback) {
         yandexApi.translate(apiKey, text, fromTo).enqueue(object : Callback<Translate> {
             override fun onResponse(call: Call<Translate>, response: Response<Translate>) {
                 response.body()?.text?.let { callback.onTranslated(key, it.get(0)) }
             }
 
             override fun onFailure(call: Call<Translate>, t: Throwable) {
-                Utils.print("Faik translate $text $t")
+                Utils.print("Faik generalTranslate $text $t")
                 callback.onTranslateError(key, text)
             }
         });

@@ -4,5 +4,6 @@ import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.data.Exte
 
 interface ChooseDestinationLanguagesFragment {
     fun showExtendedLocaleMatchList(extendedLocaleMatchList: ArrayList<ExtendedLocaleMatch>)
+    fun toTranslateFragment()
 
 }

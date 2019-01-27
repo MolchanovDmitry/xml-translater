@@ -32,6 +32,7 @@ class ChooseDestinationLanguagesPresenterImpl(
         executorService.execute {
             repositoryDb.deleteSelectedLanguages()
             repositoryDb.insertSelectedLocales(localeList)
+            view?.toTranslateFragment()
         }
     }
 }

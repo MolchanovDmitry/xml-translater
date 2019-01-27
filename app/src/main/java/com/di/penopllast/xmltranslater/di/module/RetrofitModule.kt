@@ -27,7 +27,7 @@ class RetrofitModule {
     @Provides
     @Named("serverUrl")
     internal fun provideServerUrl(): String {
-        return "https://translate.yandex.net/api/v1.5/tr.json/"
+        return "https://generalTranslate.yandex.net/api/v1.5/tr.json/"
     }
 
     @Provides
