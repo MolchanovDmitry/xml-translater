@@ -15,7 +15,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.adapter.M
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.data.ExtendedLocaleMatch
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.presenter.ChooseDestinationLanguagesPresenter
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.presenter.ChooseDestinationLanguagesPresenterImpl
-import kotlinx.android.synthetic.main.fragment_choose_language.*
+import kotlinx.android.synthetic.main.fragment_choose_translate_languages.*
 
 class ChooseDestinationLanguagesFragmentImpl : Fragment(),
         ChooseDestinationLanguagesFragment, ChooseLanguagesConnector {
@@ -43,6 +43,12 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
             recycler_language_list.layoutManager = LinearLayoutManager(context)
             recycler_language_list.adapter = MatchLanguagesAdapter(extendedLocaleMatchList, this)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        button_translate.setOnClickListener { presenter.saveSelectedLocales(selectedLocaleList) }
+
     }
 
     override fun onUnLanguageSelected(locale: String) {

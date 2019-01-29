@@ -1,10 +1,12 @@
 package com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.ArrayMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
@@ -17,6 +19,12 @@ import kotlinx.android.synthetic.main.fragment_choose_language.*
 class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, ChooseLanguageConnector {
 
     private lateinit var presenter: ChooseLanguagePresenter
+    private var connector: ChooseLanguageConnector? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        connector = context as ChooseLanguageConnector
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,5 +40,11 @@ class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, ChooseLan
 
     override fun onLanguageSelected(locale: String) {
         presenter.saveSelectedLocale(locale)
+        connector?.onLanguageSelected(locale)
+    }
+
+    override fun onLoadError() {
+        Toast.makeText(context, "Error loadind language list. Check your interner connection"
+                , Toast.LENGTH_SHORT).show()
     }
 }

@@ -25,7 +25,7 @@ class RepositoryNetworkImpl : RepositoryNetwork {
                              callback: ChooseLanguagePresenter.DownloadCallback) {
         yandexApi.getLanguageList(apiKey, s).enqueue(object : Callback<RootLangs> {
             override fun onFailure(call: Call<RootLangs>, t: Throwable) {
-                Utils.print("Error getting lang list  $t")
+                callback.onLoadError()
             }
 
             override fun onResponse(call: Call<RootLangs>, response: Response<RootLangs>) {

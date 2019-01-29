@@ -8,6 +8,7 @@ interface ChooseLanguagePresenter {
 
     interface DownloadCallback {
         fun onLanguageListFetched(rootLangs: RootLangs)
+        fun onLoadError()
     }
 
 }

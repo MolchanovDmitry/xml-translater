@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity(), MainView,
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            showChooseFileFragment()
+            //showChooseFileFragment()
+            showChooseLanguageFragment()
         }
     }
 
@@ -50,11 +51,11 @@ class MainActivity : AppCompatActivity(), MainView,
         title = "Choose file language"
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
+                .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
                         Fragment.CHOOSE_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
-                .commit()
+                .commitAllowingStateLoss()
     }
 
     private fun showChooseTranslateLanguagesFragment() {
@@ -91,14 +92,14 @@ class MainActivity : AppCompatActivity(), MainView,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            FILE_SELECT_CODE -> if (resultCode == Activity.RESULT_OK) {
-                val uri = data?.data
-                Utils.print("File Uri: ${uri?.toString()}")
-                val path = uri?.path
-                Utils.print("File Path: $path")
-                showChooseLanguageFragment()
-            }
+        if (resultCode == Activity.RESULT_OK) {
+            val uri = data?.data
+            Utils.print("File Uri: ${uri?.toString()}")
+            val path = uri?.path
+            Utils.print("File Path: $path")
+            showChooseLanguageFragment()
+        } else {
+            Toast.makeText(this, "Something wrong :(", Toast.LENGTH_SHORT).show()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

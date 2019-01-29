@@ -9,7 +9,7 @@ class Utils private constructor() {
     }
 
     companion object {
-        private const val TAG = "DisLiker"
+        private const val TAG = "Translater"
 
         fun print(message: String) {
             Log.i(TAG, message)

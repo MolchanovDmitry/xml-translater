@@ -57,4 +57,8 @@ class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment? = nu
         repositoryPreference.setFileLocale(locale)
     }
 
+    override fun onLoadError() {
+        view?.onLoadError()
+    }
+
 }

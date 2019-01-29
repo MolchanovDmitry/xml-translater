@@ -35,7 +35,7 @@ class ChooseFileFragment : Fragment() {
 
     private fun showFileChooser() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*xml*"
+        intent.type = "*/*"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
 
         try {
