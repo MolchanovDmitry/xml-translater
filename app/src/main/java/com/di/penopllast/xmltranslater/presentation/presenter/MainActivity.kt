@@ -7,7 +7,9 @@ import android.widget.Toast
 import android.content.Intent
 import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.R
+import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 import com.di.penopllast.xmltranslater.application.utils.Utils
+import com.di.penopllast.xmltranslater.data.repository.RepositoryPreference
 import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.presenter.connector.FinishChooseDestinationLanguagesConnector
@@ -16,6 +18,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.Fragment
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.view.ChooseDestinationLanguagesFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.translate.view.TranslateFragmentImpl
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainView,
         ChooseFileConnector,
@@ -26,13 +29,19 @@ class MainActivity : AppCompatActivity(), MainView,
         internal const val FILE_SELECT_CODE = 0
     }
 
+    lateinit var repositoryPreference: RepositoryPreference @Inject set
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        XmlTranslaterApp.app.componentsHolder.appComponent.inject(this)
+
         if (savedInstanceState == null) {
             //showChooseFileFragment()
-            showChooseLanguageFragment()
+            /*repositoryPreference.setFilePath("/sdcard/strings.xml")
+            showChooseLanguageFragment()*/
+            showTranslageFragment()
         }
     }
 
@@ -95,8 +104,9 @@ class MainActivity : AppCompatActivity(), MainView,
         if (resultCode == Activity.RESULT_OK) {
             val uri = data?.data
             Utils.print("File Uri: ${uri?.toString()}")
-            val path = uri?.path
+            val path = uri?.path ?: ""
             Utils.print("File Path: $path")
+            repositoryPreference.setFilePath(path)
             showChooseLanguageFragment()
         } else {
             Toast.makeText(this, "Something wrong :(", Toast.LENGTH_SHORT).show()

@@ -52,11 +52,13 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
     }
 
     override fun onUnLanguageSelected(locale: String) {
-        selectedLocaleList.add(locale)
+        selectedLocaleList.remove(locale)
     }
 
     override fun onLanguageSelected(locale: String) {
-        selectedLocaleList.remove(locale)
+        if (!selectedLocaleList.contains(locale))
+            selectedLocaleList.add(locale)
+
     }
 
     override fun toTranslateFragment() {

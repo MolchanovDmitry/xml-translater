@@ -1,7 +1,6 @@
 package com.di.penopllast.xmltranslater.data.repository.impl
 
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
-import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.data.api.YandexApi
 import com.di.penopllast.xmltranslater.data.repository.RepositoryNetwork
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
@@ -38,15 +37,13 @@ class RepositoryNetworkImpl : RepositoryNetwork {
 
     override fun translate(apiKey: String, key: String, text: String, fromTo: String,
                            callback: TranslatePresenter.TranslateCallback) {
-        yandexApi.translate(apiKey, text, fromTo).enqueue(object : Callback<Translate> {
-            override fun onResponse(call: Call<Translate>, response: Response<Translate>) {
-                response.body()?.text?.let { callback.onTranslated(key, it.get(0)) }
-            }
 
-            override fun onFailure(call: Call<Translate>, t: Throwable) {
-                Utils.print("Faik generalTranslate $text $t")
-                callback.onTranslateError(key, text)
-            }
-        });
+        val response: Response<Translate> = yandexApi.translate(apiKey, text, fromTo).execute()
+        response.body()?.let {
+            it.text?.let { textIt ->
+                callback.onTranslated(key, textIt[0])
+            } ?: callback.onTranslateError(key, text)
+        } ?: callback.onTranslateError(key, text)
+
     }
 }

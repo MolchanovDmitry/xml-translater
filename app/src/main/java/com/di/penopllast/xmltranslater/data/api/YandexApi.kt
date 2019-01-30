@@ -14,7 +14,7 @@ interface YandexApi {
             @Query("ui") ui: String
     ): Call<RootLangs>
 
-    @GET("generalTranslate")
+    @GET("translate")
     fun translate(
             @Query("key") key: String,
             @Query("text") text: String?,

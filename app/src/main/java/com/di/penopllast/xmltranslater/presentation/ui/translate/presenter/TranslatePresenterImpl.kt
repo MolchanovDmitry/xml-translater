@@ -2,6 +2,7 @@ package com.di.penopllast.xmltranslater.presentation.ui.translate.presenter
 
 import android.util.ArrayMap
 import com.di.penopllast.xmltranslater.application.utils.Const
+import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.application.utils.from_xml_to_json_parser.XmlToJson
 import com.di.penopllast.xmltranslater.domain.model.string.StringRoot
 import com.di.penopllast.xmltranslater.presentation.presenter.BasePresenter
@@ -20,47 +21,62 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
     private var currentTranslateLocale = ""
     private var filePathWithoutName = ""
     private var stringRowCount = 0
-    private var iterationCount: Int = 0
+    private var iterationIndex = 0
 
     override fun generalTranslate() {
         GlobalScope.launch {
-            val fileLocale = repositoryPreference.getFileLocale()
+            /*val fileLocale = repositoryPreference.getFileLocale()
             val filePath = repositoryPreference.getFilePath()
-            val translateLocaleList = repositoryDb.getSelectedLocales()
+            val translateLocaleList = repositoryDb.getSelectedLocales()*/
+
+            val fileLocale = "ru"
+            val filePath = "/sdcard/strings.xml"
+            val translateLocaleList = ArrayList<String>()
+            translateLocaleList.add("en")
+            translateLocaleList.add("de")
 
             filePathWithoutName = filePath.substring(0, filePath.lastIndexOf('/'))
             translateLocaleList.forEach {
                 currentTranslateLocale = it
-                iterationCount = 0
+                iterationIndex = 0
                 translate(filePath, fileLocale, it)
             }
         }
     }
 
     private fun translate(filePath: String, fromLocale: String, toLocale: String) {
-
         val stringRoot: StringRoot? = parseXmlFile(filePath)
-        stringRoot?.resources?.string?.let {
-            loop@ for (stringRow in it) {
-                stringRowCount = it.size
+        val stringCount = stringRoot?.resources?.string?.size
+        if (stringCount == 0) {
+            view?.addUiLog("Nothing to translate in $filePath")
+        } else {
+            view?.addUiLog("Beggining translate from \"$fromLocale\" \"$toLocale\" ")
+            stringRoot?.resources?.string?.let {
+                loop@ it.forEachIndexed { index, stringRow ->
+                    stringRowCount = it.size
 
-                var isTranslatable = true
-                stringRow.translatable?.let { translatable ->
-                    if (translatable.equals("false")) {
-                        isTranslatable = false
-                        iterationCount++
+                    var isTranslatable = true
+                    stringRow.translatable?.let { translatable ->
+                        if (translatable == "false") {
+                            isTranslatable = false
+                            iterationIndex++
+                        }
+                    }
+                    if (isTranslatable) {
+                        repositoryNetwork.translate(
+                                Const.API_KEY,
+                                stringRow.name,
+                                stringRow.content,
+                                "$fromLocale-$toLocale",
+                                this)
+                    } else {
+                        view?.addUiLog("Not translatable field: ${stringRow.name}")
                     }
                 }
-                if (!isTranslatable) continue@loop
-
-                repositoryNetwork.translate(
-                        Const.API_KEY,
-                        stringRow.name,
-                        stringRow.content,
-                        "$fromLocale-$toLocale",
-                        this)
             }
         }
+        view?.addUiLog("Translate from \"$fromLocale\" to \"$toLocale\" success.")
+        saveXmlFile()
     }
 
     private fun parseXmlFile(filePath: String): StringRoot? {
@@ -72,7 +88,7 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
     }
 
     override fun onTranslated(name: String, translatedText: String) {
-        iterationCount++
+        iterationIndex++
 
         val tagName = "name=\"$name\""
         val tagIndex = originalXml.indexOf(tagName)
@@ -80,41 +96,17 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
         val endReplaceIndex = originalXml.indexOf("</string>", startReplaceIndex)
         originalXml.replace(startReplaceIndex, endReplaceIndex, translatedText)
 
-        val propMap: ArrayMap<String, Any> = ArrayMap()
-        propMap[StatusKey.LOCALE] = "ru-en"
-        propMap[StatusKey.INDEX] = iterationCount
-        propMap[StatusKey.COUNT] = stringRowCount
-        propMap[StatusKey.NAME] = name
-        propMap[StatusKey.TEXT] = translatedText
-        propMap[StatusKey.IS_SUCCESS] = true
-        view?.updateTranslateStatus(propMap)
-
-        checkFinish()
+        view?.updateTranslateStatus(currentTranslateLocale, iterationIndex, stringRowCount)
     }
 
     override fun onTranslateError(name: String, text: String) {
-        iterationCount++
-
-        val propMap: ArrayMap<String, Any> = ArrayMap()
-        propMap[StatusKey.LOCALE] = "ru-en"
-        propMap[StatusKey.INDEX] = iterationCount
-        propMap[StatusKey.COUNT] = stringRowCount
-        propMap[StatusKey.NAME] = name
-        propMap[StatusKey.TEXT] = text
-        propMap[StatusKey.IS_SUCCESS] = false
-        view?.updateTranslateStatus(propMap)
-
-        checkFinish()
-    }
-
-    private fun checkFinish() {
-        if (iterationCount >= stringRowCount) {
-            saveXmlFile()
-        }
+        iterationIndex++
+        view?.addUiLog("Not translated field: $name")
     }
 
     private fun saveXmlFile() {
-        File(filePathWithoutName + "string-" + currentTranslateLocale + ".xml")
-                .writeText(originalXml.toString())
+        val fileOut = "$filePathWithoutName/string-$currentTranslateLocale.xml"
+        File(fileOut).writeText(originalXml.toString())
+        view?.addUiLog("File saved as $fileOut")
     }
 }

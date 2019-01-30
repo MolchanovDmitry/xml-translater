@@ -1,10 +1,12 @@
 package com.di.penopllast.xmltranslater.presentation.ui.translate.view
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.ArrayMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
@@ -17,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_translate.*
 class TranslateFragmentImpl : Fragment(), TranslateFragment {
 
     private lateinit var presenter: TranslatePresenter
+    private val handler = Handler()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,20 +36,16 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
         log_recycler_view.adapter = LogAdapter()
     }
 
-    override fun updateTranslateStatus(propMap: ArrayMap<String, Any>) {
-        val locale = propMap[StatusKey.LOCALE]
-        val index = propMap[StatusKey.INDEX]
-        val count = propMap[StatusKey.COUNT]
-        val name = propMap[StatusKey.NAME]
-        val text = propMap[StatusKey.TEXT]
-        val isSuccess = propMap[StatusKey.IS_SUCCESS]
-
+    override fun updateTranslateStatus(locale: String, index: Int, count: Int) {
         val status = "Locale: $locale: generalTranslate $index/$count"
-        status_text.text = status
+        handler.post { status_text.text = status }
+    }
 
-        var message = if (isSuccess as Boolean) "Success generalTranslate: " else "Fail generalTranslate"
-        message += " name = $name text = $text"
+    override fun addUiLog(message: String) {
+        handler.post { (log_recycler_view.adapter as LogAdapter).addItem(message) }
+    }
 
-        (log_recycler_view.adapter as LogAdapter).addItem(message)
+    override fun showToast(s: String) {
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
     }
 }
