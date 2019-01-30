@@ -1,9 +1,9 @@
 package com.di.penopllast.xmltranslater.presentation.ui.translate.view
 
-import android.util.ArrayMap
+import com.di.penopllast.xmltranslater.presentation.ui.translate.model.LogColor
 
 interface TranslateFragment {
     fun showToast(s: String)
     fun updateTranslateStatus(locale: String, index: Int, count: Int)
-    fun addUiLog(message: String)
+    fun addUiLog(message: String, @LogColor color: Int = LogColor.DEFAULT)
 }

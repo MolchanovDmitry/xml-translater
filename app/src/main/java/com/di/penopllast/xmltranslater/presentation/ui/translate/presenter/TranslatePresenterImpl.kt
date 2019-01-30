@@ -1,12 +1,10 @@
 package com.di.penopllast.xmltranslater.presentation.ui.translate.presenter
 
-import android.util.ArrayMap
 import com.di.penopllast.xmltranslater.application.utils.Const
-import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.application.utils.from_xml_to_json_parser.XmlToJson
 import com.di.penopllast.xmltranslater.domain.model.string.StringRoot
 import com.di.penopllast.xmltranslater.presentation.presenter.BasePresenter
-import com.di.penopllast.xmltranslater.presentation.ui.StatusKey
+import com.di.penopllast.xmltranslater.presentation.ui.translate.model.LogColor
 import com.di.penopllast.xmltranslater.presentation.ui.translate.view.TranslateFragment
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
@@ -48,11 +46,11 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
         val stringRoot: StringRoot? = parseXmlFile(filePath)
         val stringCount = stringRoot?.resources?.string?.size
         if (stringCount == 0) {
-            view?.addUiLog("Nothing to translate in $filePath")
+            view?.addUiLog("Nothing to translate in $filePath", LogColor.RED)
         } else {
-            view?.addUiLog("Beggining translate from \"$fromLocale\" \"$toLocale\" ")
+            view?.addUiLog("Beginning translate from \"$fromLocale\" to \"$toLocale\" ")
             stringRoot?.resources?.string?.let {
-                loop@ it.forEachIndexed { index, stringRow ->
+                it.forEach { stringRow ->
                     stringRowCount = it.size
 
                     var isTranslatable = true
@@ -70,12 +68,12 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
                                 "$fromLocale-$toLocale",
                                 this)
                     } else {
-                        view?.addUiLog("Not translatable field: ${stringRow.name}")
+                        view?.addUiLog("Not translatable field: ${stringRow.name}", LogColor.YELLOW)
                     }
                 }
             }
         }
-        view?.addUiLog("Translate from \"$fromLocale\" to \"$toLocale\" success.")
+        view?.addUiLog("Translate from \"$fromLocale\" to \"$toLocale\" success.", LogColor.GREEN)
         saveXmlFile()
     }
 
@@ -101,12 +99,12 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
 
     override fun onTranslateError(name: String, text: String) {
         iterationIndex++
-        view?.addUiLog("Not translated field: $name")
+        view?.addUiLog("Not translated field: $name", LogColor.RED)
     }
 
     private fun saveXmlFile() {
         val fileOut = "$filePathWithoutName/string-$currentTranslateLocale.xml"
         File(fileOut).writeText(originalXml.toString())
-        view?.addUiLog("File saved as $fileOut")
+        view?.addUiLog("File saved as $fileOut", LogColor.GREEN)
     }
 }

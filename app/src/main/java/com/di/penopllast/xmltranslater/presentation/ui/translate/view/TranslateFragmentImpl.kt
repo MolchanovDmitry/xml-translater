@@ -1,8 +1,8 @@
 package com.di.penopllast.xmltranslater.presentation.ui.translate.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.ArrayMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.ui.StatusKey
 import com.di.penopllast.xmltranslater.presentation.ui.translate.adapter.LogAdapter
+import com.di.penopllast.xmltranslater.presentation.ui.translate.model.LogColor
 import com.di.penopllast.xmltranslater.presentation.ui.translate.presenter.TranslatePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.translate.presenter.TranslatePresenterImpl
 import kotlinx.android.synthetic.main.fragment_translate.*
@@ -41,8 +41,15 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
         handler.post { status_text.text = status }
     }
 
-    override fun addUiLog(message: String) {
-        handler.post { (log_recycler_view.adapter as LogAdapter).addItem(message) }
+    override fun addUiLog(message: String, @LogColor color: Int) {
+        handler.post { (log_recycler_view.adapter as LogAdapter).addItem(message, getColor(color)) }
+    }
+
+    private fun getColor(@LogColor color: Int): Int = when (color) {
+        LogColor.RED -> Color.RED
+        LogColor.GREEN -> Color.GREEN
+        LogColor.YELLOW -> Color.YELLOW
+        else -> Color.WHITE
     }
 
     override fun showToast(s: String) {
