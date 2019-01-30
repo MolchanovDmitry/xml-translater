@@ -11,6 +11,7 @@ class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
         private const val LOCALE = "locale"
         private const val PATH = "path"
         private const val NO_LOCALE = "no_locale"
+        private const val API_KEY = "api_key"
     }
 
     private val preferences: Preferences = BinaryPreferencesBuilder(context).build()
@@ -29,5 +30,13 @@ class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
 
     override fun getFilePath(): String {
         return preferences.getString(PATH, "") ?: ""
+    }
+
+    override fun setApiKey(key: String) {
+        preferences.edit().putString(API_KEY, key).apply()
+    }
+
+    override fun getApiKey(): String {
+        return preferences.getString(API_KEY, "") ?: ""
     }
 }

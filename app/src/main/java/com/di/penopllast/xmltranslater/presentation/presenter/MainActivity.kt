@@ -13,15 +13,17 @@ import com.di.penopllast.xmltranslater.data.repository.RepositoryPreference
 import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.presenter.connector.FinishChooseDestinationLanguagesConnector
-import com.di.penopllast.xmltranslater.presentation.ui.choosefile.ChooseFileFragment
+import com.di.penopllast.xmltranslater.presentation.presenter.connector.SaveApiKeyConnector
+import com.di.penopllast.xmltranslater.presentation.ui.s2_choose_file.ChooseFileFragment
 import com.di.penopllast.xmltranslater.presentation.ui.Fragment
-import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.view.ChooseDestinationLanguagesFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.saveapikey.SaveApiKeyFragment
-import com.di.penopllast.xmltranslater.presentation.ui.translate.view.TranslateFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.view.ChooseLanguageFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.view.ChooseDestinationLanguagesFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.view.SaveApiKeyFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.view.TranslateFragmentImpl
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainView,
+        SaveApiKeyConnector,
         ChooseFileConnector,
         ChooseLanguageConnector,
         FinishChooseDestinationLanguagesConnector {
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainView,
         title = "Save translate api key"
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_placeholder_layout, SaveApiKeyFragment(),
+                .add(R.id.fragment_placeholder_layout, SaveApiKeyFragmentImpl(),
                         Fragment.SAVE_API_KEY)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
@@ -103,6 +105,10 @@ class MainActivity : AppCompatActivity(), MainView,
                 .addToBackStack(null)
                 .commit()
 
+    }
+
+    override fun onSaveApiKey() {
+        showChooseFileFragment()
     }
 
     override fun onLanguageSelected(locale: String) {

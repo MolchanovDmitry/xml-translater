@@ -5,4 +5,6 @@ interface RepositoryPreference {
     fun getFileLocale(): String
     fun setFilePath(path: String)
     fun getFilePath(): String
+    fun setApiKey(key: String)
+    fun getApiKey(): String
 }

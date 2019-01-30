@@ -5,8 +5,8 @@ import com.di.penopllast.xmltranslater.data.api.YandexApi
 import com.di.penopllast.xmltranslater.data.repository.RepositoryNetwork
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
 import com.di.penopllast.xmltranslater.domain.model.translate.Translate
-import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.presenter.ChooseLanguagePresenter
-import com.di.penopllast.xmltranslater.presentation.ui.translate.presenter.TranslatePresenter
+import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.presenter.ChooseLanguagePresenter
+import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.presenter.TranslatePresenter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
