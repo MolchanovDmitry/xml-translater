@@ -17,6 +17,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.choosefile.ChooseFileFrag
 import com.di.penopllast.xmltranslater.presentation.ui.Fragment
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguage.view.ChooseLanguageFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.chooselanguages.view.ChooseDestinationLanguagesFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.saveapikey.SaveApiKeyFragment
 import com.di.penopllast.xmltranslater.presentation.ui.translate.view.TranslateFragmentImpl
 import javax.inject.Inject
 
@@ -38,11 +39,23 @@ class MainActivity : AppCompatActivity(), MainView,
         XmlTranslaterApp.app.componentsHolder.appComponent.inject(this)
 
         if (savedInstanceState == null) {
+            showSaveYandexApiKeyFragment()
             //showChooseFileFragment()
-            repositoryPreference.setFilePath("/sdcard/strings.xml")
-            showChooseLanguageFragment()
+            /*repositoryPreference.setFilePath("/sdcard/strings.xml")
+            showChooseLanguageFragment()*/
             //showTranslageFragment()
         }
+    }
+
+    private fun showSaveYandexApiKeyFragment() {
+        title = "Save translate api key"
+        supportFragmentManager
+                .beginTransaction()
+                .add(R.id.fragment_placeholder_layout, SaveApiKeyFragment(),
+                        Fragment.SAVE_API_KEY)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
+                .commit()
     }
 
     private fun showChooseFileFragment() {
@@ -85,7 +98,7 @@ class MainActivity : AppCompatActivity(), MainView,
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout,
                         TranslateFragmentImpl(),
-                        Fragment.CHOOSE_TRANSLATION_LANGUAGE)
+                        Fragment.TRANSLATE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()

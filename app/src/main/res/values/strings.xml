@@ -4,4 +4,10 @@
     <string name="install_file_manager">Please install a File Manager.</string>
     <string name="choose_file">Choose your file</string>
     <string name="translate">Translate</string>
+
+    <string name="yandex_api_key_link">If you have no
+        <a href="https://tech.yandex.ru/translate/doc/dg/concepts/api-keys-docpage/">Yandex API key</a>
+        yet, \nplease register it by
+        <a href="https://tech.yandex.ru/translate/doc/dg/concepts/api-keys-docpage/">this link</a>
+    </string>
 </resources>
