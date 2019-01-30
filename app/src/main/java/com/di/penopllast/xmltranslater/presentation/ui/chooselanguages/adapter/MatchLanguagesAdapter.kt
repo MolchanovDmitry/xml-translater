@@ -21,6 +21,10 @@ class MatchLanguagesAdapter(private val langMap: List<ExtendedLocaleMatch>,
         val codeToText: TextView = view.text_code_to
         val describeText: TextView = view.text_description
         val checkBox: CheckBox = view.checkbox
+
+        init {
+            checkBox.isClickable = false//focus event only for root
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,10 +42,13 @@ class MatchLanguagesAdapter(private val langMap: List<ExtendedLocaleMatch>,
         holder.codeToText.text = langMap[position].to
         holder.describeText.text = langMap[position].toDescription
         holder.root.setOnClickListener {
-            if (holder.checkBox.isChecked)
-                connector.onLanguageSelected(langMap[position].to)
-            else
+            if (holder.checkBox.isChecked) {
+                holder.checkBox.isChecked = false
                 connector.onUnLanguageSelected(langMap[position].to)
+            } else {
+                holder.checkBox.isChecked = true
+                connector.onLanguageSelected(langMap[position].to)
+            }
         }
     }
 }

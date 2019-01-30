@@ -23,15 +23,15 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
 
     override fun generalTranslate() {
         GlobalScope.launch {
-            /*val fileLocale = repositoryPreference.getFileLocale()
+            val fileLocale = repositoryPreference.getFileLocale()
             val filePath = repositoryPreference.getFilePath()
-            val translateLocaleList = repositoryDb.getSelectedLocales()*/
+            val translateLocaleList = repositoryDb.getSelectedLocales()
 
-            val fileLocale = "ru"
+            /*val fileLocale = "ru"
             val filePath = "/sdcard/strings.xml"
             val translateLocaleList = ArrayList<String>()
             translateLocaleList.add("en")
-            translateLocaleList.add("de")
+            translateLocaleList.add("de")*/
 
             filePathWithoutName = filePath.substring(0, filePath.lastIndexOf('/'))
             translateLocaleList.forEach {

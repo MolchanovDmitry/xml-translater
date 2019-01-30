@@ -39,9 +39,9 @@ class MainActivity : AppCompatActivity(), MainView,
 
         if (savedInstanceState == null) {
             //showChooseFileFragment()
-            /*repositoryPreference.setFilePath("/sdcard/strings.xml")
-            showChooseLanguageFragment()*/
-            showTranslageFragment()
+            repositoryPreference.setFilePath("/sdcard/strings.xml")
+            showChooseLanguageFragment()
+            //showTranslageFragment()
         }
     }
 
