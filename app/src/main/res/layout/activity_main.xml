@@ -7,4 +7,9 @@
         android:id="@+id/fragment_placeholder_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
+        android:id="@+id/help_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </FrameLayout>

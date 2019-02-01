@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.content.Intent
+import android.os.Handler
 import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
@@ -20,6 +21,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.view.C
 import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.view.ChooseDestinationLanguagesFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.view.SaveApiKeyFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.view.TranslateFragmentImpl
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainView,
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity(), MainView,
     }
 
     lateinit var repositoryPreference: RepositoryPreference @Inject set
+    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,13 @@ class MainActivity : AppCompatActivity(), MainView,
             showChooseLanguageFragment()*/
             //showTranslageFragment()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler.postDelayed({
+            help_panel.hide()
+        }, 2000)
     }
 
     private fun showSaveYandexApiKeyFragment() {
