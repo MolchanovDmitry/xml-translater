@@ -57,6 +57,9 @@ class MainActivity : AppCompatActivity(), MainView,
         handler.postDelayed({
             help_panel.hide()
         }, 2000)
+        handler.postDelayed({
+            help_panel.show()
+        }, 4000)
     }
 
     private fun showSaveYandexApiKeyFragment() {
