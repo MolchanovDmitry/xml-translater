@@ -16,10 +16,15 @@ class HelpPanel @JvmOverloads constructor(
     private val groupList = ArrayList<View>()
     private val hintList = ArrayList<View>()
     private var isHidden = false
+    private var clickListener: OnHelpViewClickListener? = null
 
     init {
         inflate(context, R.layout.vidget_help_panel, this)
+        fillLists()
+        initClickListeners()
+    }
 
+    private fun fillLists() {
         groupList.add(frame_1)
         groupList.add(frame_2)
         groupList.add(frame_3)
@@ -31,6 +36,20 @@ class HelpPanel @JvmOverloads constructor(
         hintList.add(text_3_description)
         hintList.add(text_4_description)
         hintList.add(text_5_description)
+    }
+
+    private fun initClickListeners() {
+        frame_1.setOnClickListener { clickListener?.onFirstStepClick() }
+        frame_2.setOnClickListener { clickListener?.onSecondStepClicl() }
+        frame_3.setOnClickListener { clickListener?.onThirdStepClick() }
+        frame_4.setOnClickListener { clickListener?.onFourthStepClick() }
+        frame_4.setOnClickListener { clickListener?.onFifthStepClick() }
+
+        text_1_description.setOnClickListener { clickListener?.onFirstStepClick() }
+        text_2_description.setOnClickListener { clickListener?.onSecondStepClicl() }
+        text_3_description.setOnClickListener { clickListener?.onThirdStepClick() }
+        text_4_description.setOnClickListener { clickListener?.onFourthStepClick() }
+        text_4_description.setOnClickListener { clickListener?.onFifthStepClick() }
     }
 
     fun hide() {
@@ -77,4 +96,16 @@ class HelpPanel @JvmOverloads constructor(
     }
 
     fun isHidden(): Boolean = isHidden
+
+    fun setClickListener(listener: OnHelpViewClickListener) {
+        this.clickListener = listener
+    }
+
+    interface OnHelpViewClickListener {
+        fun onFirstStepClick()
+        fun onSecondStepClicl()
+        fun onThirdStepClick()
+        fun onFourthStepClick()
+        fun onFifthStepClick()
+    }
 }

@@ -2,7 +2,9 @@ package com.di.penopllast.xmltranslater.presentation.ui.widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.View
 import com.di.penopllast.xmltranslater.R
@@ -21,6 +23,11 @@ class RingView @JvmOverloads constructor(
         ringPaint.color = context.getColor(R.color.orange) // Your color here
         ringPaint.style = Paint.Style.STROKE // This is the important line
         ringPaint.strokeWidth = 5f // Your stroke width in pixels
+
+        val color1 = getContext().getColor(R.color.orange);
+        val color2 = getContext().getColor(R.color.primary_dark_material_dark)
+        ringPaint.setShader(LinearGradient(0f, 0f, 100f, 100f,
+                color1, color2, Shader.TileMode.CLAMP))
     }
 
     override fun draw(canvas: Canvas?) {

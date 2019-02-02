@@ -24,9 +24,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import android.view.MotionEvent
 import com.di.penopllast.xmltranslater.R
+import com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
 
 
-class MainActivity : AppCompatActivity(), MainView,
+class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickListener,
         SaveApiKeyConnector,
         ChooseFileConnector,
         ChooseLanguageConnector,
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity(), MainView,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        help_panel.setClickListener(this)
         XmlTranslaterApp.app.componentsHolder.appComponent.inject(this)
 
         if (savedInstanceState == null) {
@@ -132,8 +133,28 @@ class MainActivity : AppCompatActivity(), MainView,
         showTranslageFragment()
     }
 
-    var x1 = 0F
-    var x2 = 0F
+    override fun onFirstStepClick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSecondStepClicl() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onThirdStepClick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onFourthStepClick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onFifthStepClick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private var x1 = 0F
+    private var x2 = 0F
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> x1 = event.x
