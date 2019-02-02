@@ -7,7 +7,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseLanguagesConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguagesConnector
 import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.data.ExtendedLocaleMatch
 import kotlinx.android.synthetic.main.item_layout_with_checkboxs.view.*
 

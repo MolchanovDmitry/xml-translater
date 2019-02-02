@@ -43,13 +43,13 @@ class HelpPanel @JvmOverloads constructor(
         frame_2.setOnClickListener { clickListener?.onSecondStepClicl() }
         frame_3.setOnClickListener { clickListener?.onThirdStepClick() }
         frame_4.setOnClickListener { clickListener?.onFourthStepClick() }
-        frame_4.setOnClickListener { clickListener?.onFifthStepClick() }
+        frame_4.isClickable = false
 
         text_1_description.setOnClickListener { clickListener?.onFirstStepClick() }
         text_2_description.setOnClickListener { clickListener?.onSecondStepClicl() }
         text_3_description.setOnClickListener { clickListener?.onThirdStepClick() }
         text_4_description.setOnClickListener { clickListener?.onFourthStepClick() }
-        text_4_description.setOnClickListener { clickListener?.onFifthStepClick() }
+        text_4_description.isClickable = false
     }
 
     fun hide() {
@@ -106,6 +106,5 @@ class HelpPanel @JvmOverloads constructor(
         fun onSecondStepClicl()
         fun onThirdStepClick()
         fun onFourthStepClick()
-        fun onFifthStepClick()
     }
 }

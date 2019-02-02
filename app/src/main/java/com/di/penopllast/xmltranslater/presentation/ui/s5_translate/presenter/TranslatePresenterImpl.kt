@@ -3,7 +3,7 @@ package com.di.penopllast.xmltranslater.presentation.ui.s5_translate.presenter
 import com.di.penopllast.xmltranslater.application.utils.Const
 import com.di.penopllast.xmltranslater.application.utils.from_xml_to_json_parser.XmlToJson
 import com.di.penopllast.xmltranslater.domain.model.string.StringRoot
-import com.di.penopllast.xmltranslater.presentation.presenter.BasePresenter
+import com.di.penopllast.xmltranslater.presentation.controller.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.model.LogColor
 import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.view.TranslateFragment
 import com.google.gson.Gson

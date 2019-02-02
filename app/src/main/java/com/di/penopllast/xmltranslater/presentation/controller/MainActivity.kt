@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.presenter
+package com.di.penopllast.xmltranslater.presentation.controller
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
@@ -7,13 +7,11 @@ import android.widget.Toast
 import android.content.Intent
 import android.os.Handler
 import androidx.fragment.app.FragmentTransaction
-import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 import com.di.penopllast.xmltranslater.application.utils.Utils
-import com.di.penopllast.xmltranslater.data.repository.RepositoryPreference
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseFileConnector
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseLanguageConnector
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.FinishChooseDestinationLanguagesConnector
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.SaveApiKeyConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseFileConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
 import com.di.penopllast.xmltranslater.presentation.ui.s2_choose_file.ChooseFileFragment
 import com.di.penopllast.xmltranslater.presentation.ui.Fragment
 import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.view.ChooseLanguageFragmentImpl
@@ -21,7 +19,6 @@ import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.view.
 import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.view.SaveApiKeyFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.view.TranslateFragmentImpl
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 import android.view.MotionEvent
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
@@ -38,14 +35,22 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         private const val SWIPE_DISTANCE = 150
     }
 
-    lateinit var repositoryPreference: RepositoryPreference @Inject set
+    private lateinit var presenter: MainPresenter
     private val handler = Handler()
+    private var currentStep = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         help_panel.setClickListener(this)
-        XmlTranslaterApp.app.componentsHolder.appComponent.inject(this)
+
+        presenter = MainPresenterImpl(this)
+        /*if (presenter.isApiKeyExist()) {
+            currentStep = 2
+            showChooseLanguageFragment()
+        } else {
+            showSaveYandexApiKeyFragment()
+        }*/
 
         if (savedInstanceState == null) {
             showSaveYandexApiKeyFragment()
@@ -64,6 +69,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     private fun showSaveYandexApiKeyFragment() {
+        currentStep = 1
         title = "Save translate api key"
         supportFragmentManager
                 .beginTransaction()
@@ -75,6 +81,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     private fun showChooseFileFragment() {
+        currentStep = 2
         title = "Choose file"
         supportFragmentManager
                 .beginTransaction()
@@ -86,6 +93,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     private fun showChooseLanguageFragment() {
+        currentStep = 3
         title = "Choose file language"
         supportFragmentManager
                 .beginTransaction()
@@ -97,6 +105,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     private fun showChooseTranslateLanguagesFragment() {
+        currentStep = 4
         title = "Choose Translate Languages"
         supportFragmentManager
                 .beginTransaction()
@@ -109,6 +118,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     private fun showTranslageFragment() {
+        currentStep = 5
         title = "Translate"
         supportFragmentManager
                 .beginTransaction()
@@ -134,23 +144,31 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     override fun onFirstStepClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showSaveYandexApiKeyFragment()
     }
 
     override fun onSecondStepClicl() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (currentStep < 2) {
+            showToast("Complete previous step")
+        } else {
+            showChooseFileFragment()
+        }
     }
 
     override fun onThirdStepClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (currentStep < 3) {
+            showToast("Complete previous steps")
+        } else {
+            showChooseLanguageFragment()
+        }
     }
 
     override fun onFourthStepClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onFifthStepClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (currentStep < 4) {
+            showToast("Complete previous steps")
+        } else {
+            showChooseTranslateLanguagesFragment()
+        }
     }
 
     private var x1 = 0F
@@ -188,7 +206,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
             Utils.print("File Uri: ${uri?.toString()}")
             val path = uri?.path ?: ""
             Utils.print("File Path: $path")
-            repositoryPreference.setFilePath(path)
+            presenter.saveFilePath(path)
             showChooseLanguageFragment()
         } else {
             Toast.makeText(this, "Something wrong :(", Toast.LENGTH_SHORT).show()

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_save_api_key.*
 import android.content.Intent
 import android.net.Uri
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.SaveApiKeyConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
 import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.presenter.SaveApiKeyPresenter
 import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.presenter.SaveApiKeyPresenterImpl
 

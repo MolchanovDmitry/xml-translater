@@ -4,7 +4,7 @@ import android.util.ArrayMap
 import com.di.penopllast.xmltranslater.application.utils.Const
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
 import com.di.penopllast.xmltranslater.domain.room.model.LocaleMatch
-import com.di.penopllast.xmltranslater.presentation.presenter.BasePresenter
+import com.di.penopllast.xmltranslater.presentation.controller.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.view.ChooseLanguageFragment
 
 class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment? = null)

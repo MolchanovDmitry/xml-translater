@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.adapter.LanguageAdapter
 import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.presenter.ChooseLanguagePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.presenter.ChooseLanguagePresenterImpl

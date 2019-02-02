@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.ChooseLanguagesConnector
-import com.di.penopllast.xmltranslater.presentation.presenter.connector.FinishChooseDestinationLanguagesConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguagesConnector
+import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
 import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.adapter.MatchLanguagesAdapter
 import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.data.ExtendedLocaleMatch
 import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.presenter.ChooseDestinationLanguagesPresenter
