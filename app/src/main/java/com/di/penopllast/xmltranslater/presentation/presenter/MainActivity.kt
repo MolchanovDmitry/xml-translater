@@ -7,7 +7,6 @@ import android.widget.Toast
 import android.content.Intent
 import android.os.Handler
 import androidx.fragment.app.FragmentTransaction
-import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.data.repository.RepositoryPreference
@@ -23,6 +22,9 @@ import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.view.Save
 import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.view.TranslateFragmentImpl
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+import android.view.MotionEvent
+import com.di.penopllast.xmltranslater.R
+
 
 class MainActivity : AppCompatActivity(), MainView,
         SaveApiKeyConnector,
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity(), MainView,
 
     companion object {
         internal const val FILE_SELECT_CODE = 0
+        private const val SWIPE_DISTANCE = 150
     }
 
     lateinit var repositoryPreference: RepositoryPreference @Inject set
@@ -56,10 +59,7 @@ class MainActivity : AppCompatActivity(), MainView,
         super.onResume()
         handler.postDelayed({
             help_panel.hide()
-        }, 2000)
-        handler.postDelayed({
-            help_panel.show()
-        }, 4000)
+        }, 1000)
     }
 
     private fun showSaveYandexApiKeyFragment() {
@@ -130,6 +130,35 @@ class MainActivity : AppCompatActivity(), MainView,
 
     override fun onFinishChooseDestinationLanguages() {
         showTranslageFragment()
+    }
+
+    var x1 = 0F
+    var x2 = 0F
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> x1 = event.x
+            MotionEvent.ACTION_UP -> {
+                x2 = event.x
+                var deltaX = x2 - x1
+                Utils.print("1488 1 $deltaX")
+                if (deltaX > SWIPE_DISTANCE) {
+                    help_panel.show()
+                }
+                deltaX = x1 - x2
+                if (deltaX > SWIPE_DISTANCE) {
+                    help_panel.hide()
+                }
+            }
+        }
+        return super.onTouchEvent(event)
+    }
+
+    override fun onBackPressed() {
+        if (help_panel.isHidden()) {
+            super.onBackPressed()
+        } else {
+            help_panel.hide()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

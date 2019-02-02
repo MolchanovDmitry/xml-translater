@@ -2,7 +2,6 @@ package com.di.penopllast.xmltranslater.presentation.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.di.penopllast.xmltranslater.R
@@ -16,6 +15,7 @@ class HelpPanel @JvmOverloads constructor(
 
     private val groupList = ArrayList<View>()
     private val hintList = ArrayList<View>()
+    private var isHidden = false
 
     init {
         inflate(context, R.layout.vidget_help_panel, this)
@@ -37,12 +37,14 @@ class HelpPanel @JvmOverloads constructor(
         hideShowRings(true)
         hideShowHints(true)
         hideShowBack(true)
+        isHidden = true
     }
 
     fun show() {
         hideShowRings(false)
         hideShowHints(false)
         hideShowBack(false)
+        isHidden = false
     }
 
 
@@ -74,5 +76,5 @@ class HelpPanel @JvmOverloads constructor(
                 .startDelay = 200
     }
 
-
+    fun isHidden(): Boolean = isHidden
 }
