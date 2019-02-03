@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="115dp"
-        android:background="@color/black_30"
+        android:background="@drawable/panel_background"
         app:layout_constraintBottom_toBottomOf="@id/frame_5"
         app:layout_constraintEnd_toEndOf="@id/text_4_description"
         app:layout_constraintStart_toStartOf="parent"

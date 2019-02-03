@@ -13,6 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="paste your yandex api key here"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_paste"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,16 +45,18 @@
 
     <Button
         android:id="@+id/button_paste"
+        style="@style/ButtonsStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="paste"
+        android:text="Paste"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_save"
+        style="@style/ButtonsStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
