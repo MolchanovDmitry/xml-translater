@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.di.penopllast.xmltranslater.R
-import kotlinx.android.synthetic.main.vidget_help_panel.view.*
+import kotlinx.android.synthetic.main.widget_help_panel.view.*
 
 class HelpPanel @JvmOverloads constructor(
         context: Context,
@@ -19,7 +19,7 @@ class HelpPanel @JvmOverloads constructor(
     private var clickListener: OnHelpViewClickListener? = null
 
     init {
-        inflate(context, R.layout.vidget_help_panel, this)
+        inflate(context, R.layout.widget_help_panel, this)
         fillLists()
         initClickListeners()
     }

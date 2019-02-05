@@ -1,11 +1,13 @@
 package com.di.penopllast.xmltranslater.presentation.controller
 
 import android.app.Activity
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.content.Intent
 import android.os.Handler
+import android.view.LayoutInflater
 import androidx.fragment.app.FragmentTransaction
 import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseFileConnector
@@ -20,8 +22,10 @@ import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.view.Save
 import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.view.TranslateFragmentImpl
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.MotionEvent
+import android.widget.FrameLayout
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
+import kotlinx.android.synthetic.main.custom_title.*
 
 
 class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickListener,
@@ -42,6 +46,8 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        initCustomActionBar()
         help_panel.setClickListener(this)
 
         presenter = MainPresenterImpl(this)
@@ -61,6 +67,19 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         }
     }
 
+    private fun initCustomActionBar() {
+        val actionBar = supportActionBar
+        actionBar?.setDisplayShowCustomEnabled(true)
+
+        val inflator = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val v = inflator.inflate(R.layout.custom_title, null)
+        v.layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+        actionBar?.title = ""
+        actionBar?.customView = v
+    }
+
+
     override fun onResume() {
         super.onResume()
         handler.postDelayed({
@@ -70,7 +89,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showSaveYandexApiKeyFragment() {
         currentStep = 1
-        title = "Save translate api key"
+        text_title.text = "Save translate api key"
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_placeholder_layout, SaveApiKeyFragmentImpl(),
@@ -82,7 +101,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showChooseFileFragment() {
         currentStep = 2
-        title = "Choose file"
+        text_title.text = "Choose file"
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_placeholder_layout, ChooseFileFragment(),
@@ -94,7 +113,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showChooseLanguageFragment() {
         currentStep = 3
-        title = "Choose file language"
+        text_title.text = "Choose file language"
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
@@ -106,7 +125,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showChooseTranslateLanguagesFragment() {
         currentStep = 4
-        title = "Choose Translate Languages"
+        text_title.text = "Choose Translate Languages"
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout,
@@ -119,7 +138,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showTranslageFragment() {
         currentStep = 5
-        title = "Translate"
+        text_title.text = "Translate"
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout,
