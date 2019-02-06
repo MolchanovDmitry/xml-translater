@@ -1,10 +1,7 @@
 package com.di.penopllast.xmltranslater.presentation.ui.widget
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.LinearGradient
-import android.graphics.Paint
-import android.graphics.Shader
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.di.penopllast.xmltranslater.R
@@ -15,24 +12,36 @@ class RingView @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val ringPaint = Paint()
+    private val paint = Paint()
 
     init {
-        ringPaint.isAntiAlias = true;
-        ringPaint.isFilterBitmap = true;
-        ringPaint.color = context.getColor(R.color.orange) // Your color here
-        ringPaint.style = Paint.Style.STROKE // This is the important line
-        ringPaint.strokeWidth = 5f // Your stroke width in pixels
+        paint.isAntiAlias = true
+        paint.isFilterBitmap = true
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = resources.getDimension(R.dimen.ring_stroke_width)
 
-        val color1 = getContext().getColor(R.color.orange);
-        val color2 = getContext().getColor(R.color.primary_dark_material_dark)
-        ringPaint.setShader(LinearGradient(0f, 0f, 100f, 100f,
-                color1, color2, Shader.TileMode.CLAMP))
+        colorOrange()
     }
 
     override fun draw(canvas: Canvas?) {
         super.draw(canvas)
-        canvas?.drawCircle(width / 2.0f, height / 2.0f, (width - 5) / 2.0f, ringPaint)
+        canvas?.drawCircle(width / 2.0f, height / 2.0f, (width - 5) / 2.0f, paint)
+    }
+
+    fun colorOrange() {
+        val color1 = Color.RED
+        val color2 = context.getColor(R.color.orange)
+        val width = resources.getDimension(R.dimen.ring_width)
+        paint.shader = LinearGradient(0f, 0f, width / 2F, width / 2f,
+                color1, color2, Shader.TileMode.CLAMP)
+    }
+
+    fun colorGreen() {
+        val color1 = context.getColor(R.color.orange)
+        val color2 = Color.GREEN
+        val width = resources.getDimension(R.dimen.ring_width)
+        paint.shader = LinearGradient(0f, 0f, width / 2F, width / 2f,
+                color1, color2, Shader.TileMode.CLAMP)
     }
 
 }

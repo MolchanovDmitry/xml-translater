@@ -4,13 +4,13 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="2dp"/>
-            <solid android:color="@android:color/white"/>
+            <solid android:color="@color/orange"/>
         </shape>
     </item>
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <corners android:radius="2dp"/>
-            <solid android:color="@android:color/white"/>
+            <solid android:color="@color/orange"/>
         </shape>
     </item>
     <item>
@@ -19,7 +19,7 @@
             <gradient android:angle="270"
                 android:startColor="@android:color/transparent"/>
             <corners android:radius="4dp"/>
-            <stroke android:width="3px" android:color="#828b9b"/>
+            <stroke android:width="3px" android:color="@color/orange"/>
         </shape>
     </item>
 </selector>

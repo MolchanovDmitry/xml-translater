@@ -5,8 +5,10 @@
     <string name="choose_file">Choose your file</string>
     <string name="translate">Translate</string>
 
-    <string name="register_api_key">If you have no <a href="">Yandex API key</a>yet, \n
-        please register it by <a href="">this link</a>
+    <string name="register_api_key">
+        If you have no Yandex API key et, \n
+        please register it by
+        <a href="https://tech.yandex.com/translate/">this link</a>
     </string>
     <string name="yandex_api_link">https://tech.yandex.com/translate/</string>
 </resources>

@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         text_title.text = "Save translate api key"
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_placeholder_layout, SaveApiKeyFragmentImpl(),
+                .replace(R.id.fragment_placeholder_layout, SaveApiKeyFragmentImpl(),
                         Fragment.SAVE_API_KEY)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
@@ -101,10 +101,11 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showChooseFileFragment() {
         currentStep = 2
+        help_panel.colorRing(0, true)
         text_title.text = "Choose file"
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_placeholder_layout, ChooseFileFragment(),
+                .replace(R.id.fragment_placeholder_layout, ChooseFileFragment(),
                         Fragment.CHOOSE_FILE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
@@ -113,6 +114,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showChooseLanguageFragment() {
         currentStep = 3
+        help_panel.colorRing(1, true)
         text_title.text = "Choose file language"
         supportFragmentManager
                 .beginTransaction()
@@ -125,6 +127,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showChooseTranslateLanguagesFragment() {
         currentStep = 4
+        help_panel.colorRing(2, true)
         text_title.text = "Choose Translate Languages"
         supportFragmentManager
                 .beginTransaction()
@@ -138,6 +141,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showTranslageFragment() {
         currentStep = 5
+        help_panel.colorRing(3, true)
         text_title.text = "Translate"
         supportFragmentManager
                 .beginTransaction()
@@ -164,13 +168,16 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     override fun onFirstStepClick() {
         showSaveYandexApiKeyFragment()
+        help_panel.colorRing(0, false)
     }
 
-    override fun onSecondStepClicl() {
+    override fun onSecondStepClick() {
         if (currentStep < 2) {
             showToast("Complete previous step")
         } else {
             showChooseFileFragment()
+            help_panel.colorRing(0, true)
+            help_panel.colorRing(1, false)
         }
     }
 
@@ -179,6 +186,8 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
             showToast("Complete previous steps")
         } else {
             showChooseLanguageFragment()
+            help_panel.colorRing(1, true)
+            help_panel.colorRing(2, false)
         }
     }
 
@@ -187,6 +196,8 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
             showToast("Complete previous steps")
         } else {
             showChooseTranslateLanguagesFragment()
+            help_panel.colorRing(2, true)
+            help_panel.colorRing(3, false)
         }
     }
 

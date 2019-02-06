@@ -12,6 +12,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="Paste your Yandex API key"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/edit_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,8 +22,9 @@
         android:id="@+id/edit_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
+        android:inputType="text"
         android:hint="paste here, friend"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,15 +34,14 @@
 
     <TextView
         android:id="@+id/text_bottom_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:gravity="center"
         android:text="@string/register_api_key"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_view" />
+        app:layout_constraintTop_toBottomOf="@+id/button_save" />
 
     <Button
         android:id="@+id/button_paste"
@@ -61,8 +62,21 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_view" />
+
+    <Button
+        android:id="@+id/button_cut"
+        style="@style/ButtonsStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Cut"
+        app:layout_constraintEnd_toEndOf="@+id/button_paste"
+        app:layout_constraintStart_toStartOf="@+id/button_paste"
+        app:layout_constraintTop_toBottomOf="@+id/button_paste" />
 </androidx.constraintlayout.widget.ConstraintLayout>

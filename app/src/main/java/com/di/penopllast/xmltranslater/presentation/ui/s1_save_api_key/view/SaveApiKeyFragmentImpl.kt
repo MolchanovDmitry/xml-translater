@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_save_api_key.*
 import android.content.Intent
 import android.net.Uri
+import android.text.util.Linkify
+import androidx.core.text.util.LinkifyCompat
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
 import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.presenter.SaveApiKeyPresenter
@@ -48,9 +50,9 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
-        button_save.setOnClickListener {
-
-        }
+        button_save.setOnClickListener { presenter.saveApiKey(edit_view.text.toString()) }
+        button_cut.setOnClickListener { edit_view.text.clear() }
+        LinkifyCompat.addLinks(text_bottom_text, Linkify.WEB_URLS)
     }
 
     override fun onFinish() {

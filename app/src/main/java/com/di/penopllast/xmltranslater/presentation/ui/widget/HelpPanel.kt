@@ -1,8 +1,10 @@
 package com.di.penopllast.xmltranslater.presentation.ui.widget
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.di.penopllast.xmltranslater.R
 import kotlinx.android.synthetic.main.widget_help_panel.view.*
@@ -14,7 +16,8 @@ class HelpPanel @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val groupList = ArrayList<View>()
-    private val hintList = ArrayList<View>()
+    private val hintList = ArrayList<TextView>()
+    private val mapRingViewList = ArrayList<MapRingView>()
     private var isHidden = false
     private var clickListener: OnHelpViewClickListener? = null
 
@@ -36,20 +39,29 @@ class HelpPanel @JvmOverloads constructor(
         hintList.add(text_3_description)
         hintList.add(text_4_description)
         hintList.add(text_5_description)
+
+        mapRingViewList.add(MapRingView(ring_1, view_bridge_1))
+        mapRingViewList.add(MapRingView(ring_2, view_bridge_2))
+        mapRingViewList.add(MapRingView(ring_3, view_bridge_3))
+        mapRingViewList.add(MapRingView(ring_4, view_bridge_4))
     }
 
     private fun initClickListeners() {
         frame_1.setOnClickListener { clickListener?.onFirstStepClick() }
-        frame_2.setOnClickListener { clickListener?.onSecondStepClicl() }
+        frame_2.setOnClickListener { clickListener?.onSecondStepClick() }
         frame_3.setOnClickListener { clickListener?.onThirdStepClick() }
         frame_4.setOnClickListener { clickListener?.onFourthStepClick() }
         frame_4.isClickable = false
 
         text_1_description.setOnClickListener { clickListener?.onFirstStepClick() }
-        text_2_description.setOnClickListener { clickListener?.onSecondStepClicl() }
+        text_2_description.setOnClickListener { clickListener?.onSecondStepClick() }
         text_3_description.setOnClickListener { clickListener?.onThirdStepClick() }
         text_4_description.setOnClickListener { clickListener?.onFourthStepClick() }
         text_4_description.isClickable = false
+
+        view_background.setOnClickListener {
+            if (isHidden) show()
+        }
     }
 
     fun hide() {
@@ -82,7 +94,6 @@ class HelpPanel @JvmOverloads constructor(
         hintList.forEachIndexed { index, view ->
             view.animate()
                     .translationX(x)
-                    .setDuration(750)
                     .startDelay = 50L + index * 50L
         }
     }
@@ -91,8 +102,7 @@ class HelpPanel @JvmOverloads constructor(
         val x = if (isHide) -view_background.width + view_background.width * 0.18F else 0F
         view_background.animate()
                 .translationX(x)
-                .setDuration(750)
-                .startDelay = 200
+                .startDelay = if (isHide) 200 else 0
     }
 
     fun isHidden(): Boolean = isHidden
@@ -101,10 +111,36 @@ class HelpPanel @JvmOverloads constructor(
         this.clickListener = listener
     }
 
+    /**
+     * @param isSuccess
+     * if true - color current ring and view like green
+     * else - color all previous rings and view like orange
+     */
+    fun colorRing(ringId: Int, isSuccess: Boolean) {
+        if (isSuccess) {
+            mapRingViewList[ringId].ring.colorGreen()
+            mapRingViewList[ringId].ring.invalidate()
+            mapRingViewList[ringId].view.setBackgroundColor(Color.GREEN)
+            hintList[ringId].setTextColor(Color.GREEN)
+        } else {
+            for (i in (ringId + 1)..mapRingViewList.size) {
+                mapRingViewList[i].ring.colorOrange()
+                mapRingViewList[i].ring.invalidate()
+                mapRingViewList[i].view.setBackgroundColor(context.getColor(R.color.orange))
+                hintList[i].setTextColor(context.getColor(R.color.orange))
+            }
+        }
+    }
+
     interface OnHelpViewClickListener {
         fun onFirstStepClick()
-        fun onSecondStepClicl()
+        fun onSecondStepClick()
         fun onThirdStepClick()
         fun onFourthStepClick()
     }
+
+    private data class MapRingView(
+            val ring: RingView,
+            val view: View
+    )
 }
