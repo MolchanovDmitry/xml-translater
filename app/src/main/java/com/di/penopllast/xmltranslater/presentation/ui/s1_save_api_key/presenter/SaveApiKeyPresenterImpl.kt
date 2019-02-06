@@ -1,6 +1,6 @@
 package com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.presenter
 
-import com.di.penopllast.xmltranslater.presentation.controller.BasePresenter
+import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.view.SaveApiKeyFragment
 
 class SaveApiKeyPresenterImpl(private val view: SaveApiKeyFragment? = null)

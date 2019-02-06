@@ -1,6 +1,6 @@
 package com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.presenter
 
-import com.di.penopllast.xmltranslater.presentation.controller.BasePresenter
+import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.data.ExtendedLocaleMatch
 import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.view.ChooseDestinationLanguagesFragment
 

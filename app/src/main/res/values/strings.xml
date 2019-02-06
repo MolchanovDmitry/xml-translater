@@ -1,14 +1,21 @@
 <resources>
     <string name="app_name">XmlTranslater</string>
 
-    <string name="install_file_manager">Please install a File Manager.</string>
-    <string name="choose_file">Choose your file</string>
+
     <string name="translate">Translate</string>
 
+    <!-- Choose api-key screen -->
     <string name="register_api_key">
         If you have no Yandex API key et, \n
         please register it by
         <a href="https://tech.yandex.com/translate/">this link</a>
     </string>
     <string name="yandex_api_link">https://tech.yandex.com/translate/</string>
+
+    <!-- Choose file screen -->
+    <string name="choose_file">Choose your file</string>
+    <string name="install_file_manager">Please install a File Manager.</string>
+    <string name="previous_file">Previous selected file:\n</string>
+    <string name="submit">Submit</string>
+
 </resources>

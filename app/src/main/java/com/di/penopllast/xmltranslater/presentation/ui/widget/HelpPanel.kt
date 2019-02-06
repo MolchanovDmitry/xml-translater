@@ -40,10 +40,10 @@ class HelpPanel @JvmOverloads constructor(
         hintList.add(text_4_description)
         hintList.add(text_5_description)
 
-        mapRingViewList.add(MapRingView(ring_1, view_bridge_1))
-        mapRingViewList.add(MapRingView(ring_2, view_bridge_2))
-        mapRingViewList.add(MapRingView(ring_3, view_bridge_3))
-        mapRingViewList.add(MapRingView(ring_4, view_bridge_4))
+        mapRingViewList.add(MapRingView(ring_1, text_1, view_bridge_1))
+        mapRingViewList.add(MapRingView(ring_2, text_2, view_bridge_2))
+        mapRingViewList.add(MapRingView(ring_3, text_3, view_bridge_3))
+        mapRingViewList.add(MapRingView(ring_4, text_4, view_bridge_4))
     }
 
     private fun initClickListeners() {
@@ -120,14 +120,17 @@ class HelpPanel @JvmOverloads constructor(
         if (isSuccess) {
             mapRingViewList[ringId].ring.colorGreen()
             mapRingViewList[ringId].ring.invalidate()
+            mapRingViewList[ringId].text.setTextColor(Color.GREEN)
             mapRingViewList[ringId].view.setBackgroundColor(Color.GREEN)
             hintList[ringId].setTextColor(Color.GREEN)
         } else {
+            val orangeColor = context.getColor(R.color.orange)
             for (i in (ringId + 1)..mapRingViewList.size) {
                 mapRingViewList[i].ring.colorOrange()
                 mapRingViewList[i].ring.invalidate()
-                mapRingViewList[i].view.setBackgroundColor(context.getColor(R.color.orange))
-                hintList[i].setTextColor(context.getColor(R.color.orange))
+                mapRingViewList[i].text.setTextColor(orangeColor)
+                mapRingViewList[i].view.setBackgroundColor(orangeColor)
+                hintList[i].setTextColor(orangeColor)
             }
         }
     }
@@ -141,6 +144,7 @@ class HelpPanel @JvmOverloads constructor(
 
     private data class MapRingView(
             val ring: RingView,
+            val text: TextView,
             val view: View
     )
 }

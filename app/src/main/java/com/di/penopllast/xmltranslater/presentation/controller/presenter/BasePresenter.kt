@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.controller
+package com.di.penopllast.xmltranslater.presentation.controller.presenter
 
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 import com.di.penopllast.xmltranslater.data.repository.RepositoryDb
