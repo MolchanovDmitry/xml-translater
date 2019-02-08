@@ -8,20 +8,29 @@ import com.ironz.binaryprefs.Preferences
 class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
 
     companion object {
-        private const val LOCALE = "locale"
+        private const val USER_LOCALE = "user_locale"
+        private const val FILE_LOCALE = "file_locale"
+        private const val LOCALE_DEFAULT = "en"
         private const val PATH = "path"
-        private const val NO_LOCALE = "no_locale"
         private const val API_KEY = "api_key"
     }
 
     private val preferences: Preferences = BinaryPreferencesBuilder(context).build()
 
+    override fun setUserLocale(locale: String) {
+        preferences.edit().putString(USER_LOCALE, locale).apply()
+    }
+
+    override fun getUserLocale(): String {
+        return preferences.getString(USER_LOCALE, LOCALE_DEFAULT) ?: LOCALE_DEFAULT
+    }
+
     override fun setFileLocale(locale: String) {
-        preferences.edit().putString(LOCALE, locale).apply()
+        preferences.edit().putString(FILE_LOCALE, locale).apply()
     }
 
     override fun getFileLocale(): String {
-        return preferences.getString(LOCALE, NO_LOCALE) ?: NO_LOCALE
+        return preferences.getString(FILE_LOCALE, LOCALE_DEFAULT) ?: LOCALE_DEFAULT
     }
 
     override fun setFilePath(path: String) {

@@ -26,10 +26,14 @@ class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, ChooseLan
         connector = context as ChooseLanguageConnector
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         presenter = ChooseLanguagePresenterImpl(this)
         presenter.getLangList()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_choose_language, container, false)
     }
 

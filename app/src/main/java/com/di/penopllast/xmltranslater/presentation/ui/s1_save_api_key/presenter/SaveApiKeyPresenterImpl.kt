@@ -10,4 +10,11 @@ class SaveApiKeyPresenterImpl(private val view: SaveApiKeyFragment? = null)
         repositoryPreference.setApiKey(key)
         view?.onFinish()
     }
+
+    override fun checkApiKeyExist() {
+        val savedKey = repositoryPreference.getApiKey()
+        if (savedKey != ""){
+            view?.updateApiKey(savedKey)
+        }
+    }
 }

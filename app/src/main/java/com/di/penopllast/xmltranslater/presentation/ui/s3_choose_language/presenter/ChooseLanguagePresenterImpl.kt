@@ -10,10 +10,9 @@ import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.view.C
 class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment? = null)
     : BasePresenter(), ChooseLanguagePresenter, ChooseLanguagePresenter.DownloadCallback {
 
-    private val currentLocale = "ru"
-
     override fun getLangList() {
-        repositoryNetwork.getLangList(currentLocale, Const.API_KEY, this)
+        val locale = repositoryPreference.getUserLocale()
+        repositoryNetwork.getLangList(locale, Const.API_KEY, this)
     }
 
     override fun onLanguageListFetched(rootLangs: RootLangs) {

@@ -28,14 +28,19 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
         connector = context as SaveApiKeyConnector
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = SaveApiKeyPresenterImpl(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        presenter = SaveApiKeyPresenterImpl(this)
         return inflater.inflate(R.layout.fragment_save_api_key, container, false)
     }
 
     override fun onStart() {
         super.onStart()
+        presenter.checkApiKeyExist()
 
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
 
@@ -53,6 +58,10 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
         button_save.setOnClickListener { presenter.saveApiKey(edit_view.text.toString()) }
         button_cut.setOnClickListener { edit_view.text.clear() }
         LinkifyCompat.addLinks(text_bottom_text, Linkify.WEB_URLS)
+    }
+
+    override fun updateApiKey(savedKey: String) {
+        edit_view?.setText(savedKey)
     }
 
     override fun onFinish() {

@@ -2,4 +2,5 @@ package com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.presente
 
 interface SaveApiKeyPresenter {
     fun saveApiKey(key: String)
+    fun checkApiKeyExist()
 }

@@ -125,7 +125,7 @@ class HelpPanel @JvmOverloads constructor(
             hintList[ringId].setTextColor(Color.GREEN)
         } else {
             val orangeColor = context.getColor(R.color.orange)
-            for (i in (ringId + 1)..mapRingViewList.size) {
+            for (i in ringId until mapRingViewList.size - 1) {
                 mapRingViewList[i].ring.colorOrange()
                 mapRingViewList[i].ring.invalidate()
                 mapRingViewList[i].text.setTextColor(orangeColor)

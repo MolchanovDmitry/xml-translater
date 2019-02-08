@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
     private lateinit var connector: ChooseFileConnector
     private lateinit var presenter: ChooseFilePresenter
+    private val handler = Handler()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -33,9 +35,13 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = ChooseFilePresenterImpl(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        presenter = ChooseFilePresenterImpl(this)
         return inflater.inflate(R.layout.fragment_choose_file, container, false)
     }
 
@@ -60,13 +66,15 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
             val spannable = SpannableString(text)
             spannable.setSpan(ForegroundColorSpan(it.getColor(R.color.orange)),
                     firstStringPath.length, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            text_hint.text = spannable
+            handler.post {
+                text_hint.text = spannable
 
-            text_hint.visibility = View.VISIBLE
+                text_hint.visibility = View.VISIBLE
 
-            button_submit.visibility = View.VISIBLE
-            button_submit.setOnClickListener {
-                connector.onFileSelected()
+                button_submit.visibility = View.VISIBLE
+                button_submit.setOnClickListener {
+                    connector.onFileSelected()
+                }
             }
         }
     }

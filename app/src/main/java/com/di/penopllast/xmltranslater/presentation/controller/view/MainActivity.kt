@@ -26,6 +26,8 @@ import com.di.penopllast.xmltranslater.presentation.controller.presenter.MainPre
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
 import kotlinx.android.synthetic.main.custom_title.*
+import android.os.Build
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickListener,
@@ -51,19 +53,20 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         help_panel.setClickListener(this)
 
         presenter = MainPresenterImpl(this)
+        presenter.saveUserLocale(getLocale())
         if (presenter.isApiKeyExist()) {
             showChooseFileFragment()
         } else {
             showSaveYandexApiKeyFragment()
         }
+    }
 
-        /*if (savedInstanceState == null) {
-            showSaveYandexApiKeyFragment()
-            //showChooseFileFragment()
-            *//*repositoryPreference.setFilePath("/sdcard/strings.xml")
-            showChooseLanguageFragment()*//*
-            //showTranslageFragment()
-        }*/
+    private fun getLocale(): Locale {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            resources.configuration.locales.get(0)
+        } else {
+            resources.configuration.locale
+        }
     }
 
     private fun initCustomActionBar() {
@@ -121,7 +124,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
                         Fragment.CHOOSE_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
-                .commitAllowingStateLoss()
+                .commit()
     }
 
     private fun showChooseTranslateLanguagesFragment() {
