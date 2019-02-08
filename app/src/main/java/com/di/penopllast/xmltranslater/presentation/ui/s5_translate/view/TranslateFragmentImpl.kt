@@ -21,9 +21,13 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
     private lateinit var presenter: TranslatePresenter
     private val handler = Handler()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = TranslatePresenterImpl(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        presenter = TranslatePresenterImpl(this)
         return inflater.inflate(R.layout.fragment_translate, container, false)
     }
 

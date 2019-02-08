@@ -6,8 +6,15 @@
 
     <TextView
         android:id="@+id/status_text"
+        android:textColor="@color/orange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/orange"
+        android:layout_margin="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/log_recycler_view"

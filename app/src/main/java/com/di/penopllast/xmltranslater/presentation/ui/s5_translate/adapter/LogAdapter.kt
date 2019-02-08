@@ -27,7 +27,7 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.logText.text = logMapList[position].str
-        holder.logText.setBackgroundColor(logMapList[position].color)
+        holder.logText.setTextColor(logMapList[position].color)
     }
 
     fun addItem(s: String, color: Int) {
