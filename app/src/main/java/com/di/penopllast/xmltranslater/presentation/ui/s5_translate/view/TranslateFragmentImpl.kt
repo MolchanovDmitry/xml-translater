@@ -42,7 +42,7 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
 
     override fun updateTranslateStatus(locale: String, index: Int, count: Int) {
         val status = "Locale: $locale: generalTranslate $index/$count"
-        handler.post { status_text.text = status }
+        handler.post { status_text?.text = status }
     }
 
     override fun addUiLog(message: String, @LogColor color: Int) {
