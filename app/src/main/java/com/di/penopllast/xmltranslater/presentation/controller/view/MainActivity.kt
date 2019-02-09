@@ -12,12 +12,12 @@ import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseF
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
 import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
-import com.di.penopllast.xmltranslater.presentation.ui.s2_choose_file.view.ChooseFileFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.Fragment
-import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.view.ChooseLanguageFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.s4_choose_languages.view.ChooseDestinationLanguagesFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.s1_save_api_key.view.SaveApiKeyFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.s5_translate.view.TranslateFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.view.ChooseFileFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.controller.model.Fragment
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.ChooseLanguageFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.ChooseDestinationLanguagesFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.view.SaveApiKeyFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.view.TranslateFragmentImpl
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.MotionEvent
 import android.widget.FrameLayout
@@ -51,13 +51,12 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
         initCustomActionBar()
         help_panel.setClickListener(this)
+        showSaveYandexApiKeyFragment()
 
         presenter = MainPresenterImpl(this)
         presenter.saveUserLocale(getLocale())
         if (presenter.isApiKeyExist()) {
             showChooseFileFragment()
-        } else {
-            showSaveYandexApiKeyFragment()
         }
     }
 
@@ -231,6 +230,8 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     override fun onBackPressed() {
         if (help_panel.isHidden()) {
             super.onBackPressed()
+            if (supportFragmentManager.backStackEntryCount == 0)
+                finish()
         } else {
             help_panel.hide()
         }

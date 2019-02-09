@@ -3,10 +3,9 @@ package com.di.penopllast.xmltranslater.data.repository.impl
 import com.di.penopllast.xmltranslater.application.XmlTranslaterApp
 import com.di.penopllast.xmltranslater.data.api.YandexApi
 import com.di.penopllast.xmltranslater.data.repository.RepositoryNetwork
-import com.di.penopllast.xmltranslater.domain.helper.translate.Translater
 import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
 import com.di.penopllast.xmltranslater.domain.model.translate.Translate
-import com.di.penopllast.xmltranslater.presentation.ui.s3_choose_language.presenter.ChooseLanguagePresenter
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.presenter.ChooseLanguagePresenter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
