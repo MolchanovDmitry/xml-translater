@@ -3,5 +3,5 @@ package com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.pr
 interface ChooseFilePresenter {
     fun saveFilePath(path: String)
     fun checkFileExist()
-    fun setFileType(type: Int)
+    fun saveFileType(selectedItemPosition: Int)
 }

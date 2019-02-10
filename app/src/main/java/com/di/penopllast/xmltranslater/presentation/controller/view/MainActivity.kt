@@ -214,7 +214,6 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
             MotionEvent.ACTION_UP -> {
                 x2 = event.x
                 var deltaX = x2 - x1
-                Utils.print("1488 1 $deltaX")
                 if (deltaX > SWIPE_DISTANCE) {
                     help_panel.show()
                 }

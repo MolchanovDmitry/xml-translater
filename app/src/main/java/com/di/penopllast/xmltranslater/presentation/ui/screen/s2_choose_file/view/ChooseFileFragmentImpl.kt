@@ -19,14 +19,12 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.pre
 import kotlinx.android.synthetic.main.fragment_choose_file.*
 import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.annotation.IntDef
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.domain.model.FileType
 
 
-class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment, AdapterView.OnItemSelectedListener {
+class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
     private lateinit var connector: ChooseFileConnector
     private lateinit var presenter: ChooseFilePresenter
@@ -60,17 +58,15 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment, AdapterView.OnIte
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinner_file_type.adapter = adapter
-            spinner_file_type.onItemSelectedListener = this
         }
-        choose_file_button.setOnClickListener { showFileChooser() }
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        presenter.setFileType(position)
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        choose_file_button.setOnClickListener {
+            if (spinner_file_type.selectedItemPosition == 0) {
+                spinner_file_type.performClick()
+                showToast("Choose file type")
+            } else {
+                showFileChooser()
+            }
+        }
     }
 
     override fun onResume() {
@@ -121,8 +117,8 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment, AdapterView.OnIte
             val uri = data?.data
             Utils.print("File Uri: ${uri?.toString()}")
             val path = uri?.path ?: ""
-            Utils.print("File Path: $path")
             presenter.saveFilePath(path)
+            presenter.saveFileType(getFileType(spinner_file_type.selectedItemPosition))
             connector.onFileSelected()
         } else {
             showToast("Something wrong :(")
@@ -132,5 +128,11 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment, AdapterView.OnIte
 
     private fun showToast(s: String) {
         Toast.makeText(activity?.applicationContext, s, Toast.LENGTH_LONG).show()
+    }
+
+    private fun getFileType(spinnerItemPosition: Int) = when (spinnerItemPosition) {
+        1 -> FileType.XML
+        2 -> FileType.PHP
+        else -> -1
     }
 }

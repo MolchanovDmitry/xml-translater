@@ -19,6 +19,7 @@
     <string name="submit">Submit</string>
 
     <string-array name="file_type">
+        <item>File type</item>
         <item>xml</item>
         <item>php</item>
     </string-array>

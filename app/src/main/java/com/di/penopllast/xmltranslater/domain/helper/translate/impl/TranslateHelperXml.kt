@@ -95,7 +95,7 @@ class TranslateHelperXml(
     }
 
     private fun getCountOfStrings(text: String): Int {
-        val endStringTag = "STRING_END"
+        val endStringTag = STRING_END
         return (text.length - text.replace(endStringTag, "").length) /
                 endStringTag.length
     }

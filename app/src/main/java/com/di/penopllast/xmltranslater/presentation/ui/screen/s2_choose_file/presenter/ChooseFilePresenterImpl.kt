@@ -21,8 +21,9 @@ class ChooseFilePresenterImpl(val view: ChooseFileFragment)
         }
     }
 
-    override fun setFileType(type: Int) {
-        GlobalScope.launch { repositoryPreference.setFileType(type) }
+
+    override fun saveFileType(selectedItemPosition: Int) {
+        GlobalScope.launch { repositoryPreference.setFileType(selectedItemPosition) }
     }
 
     override fun saveFilePath(path: String) {
