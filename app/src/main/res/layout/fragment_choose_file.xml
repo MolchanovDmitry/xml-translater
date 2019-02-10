@@ -5,14 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/choose_file_button"
-        style="@style/ButtonsStyle"
-        android:text="@string/choose_file"
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/choose_file_button"
+            style="@style/ButtonsStyle"
+            android:text="@string/choose_file" />
+
+        <Spinner
+            android:id="@+id/spinner_file_type"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/text_hint"
@@ -21,7 +35,7 @@
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choose_file_button"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout"
         tools:layout_editor_absoluteX="8dp" />
 
     <Button

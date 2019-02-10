@@ -2,6 +2,7 @@ package com.di.penopllast.xmltranslater.data.repository.impl
 
 import android.content.Context
 import com.di.penopllast.xmltranslater.data.repository.RepositoryPreference
+import com.di.penopllast.xmltranslater.domain.model.FileType
 import com.ironz.binaryprefs.BinaryPreferencesBuilder
 import com.ironz.binaryprefs.Preferences
 
@@ -13,6 +14,7 @@ class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
         private const val LOCALE_DEFAULT = "en"
         private const val PATH = "path"
         private const val API_KEY = "api_key"
+        private const val FILE_TYPE = "file_type"
     }
 
     private val preferences: Preferences = BinaryPreferencesBuilder(context).build()
@@ -47,5 +49,13 @@ class RepositoryPreferenceImpl(context: Context) : RepositoryPreference {
 
     override fun getApiKey(): String {
         return preferences.getString(API_KEY, "") ?: ""
+    }
+
+    override fun setFileType(@FileType fileType: Int) {
+        preferences.edit().putInt(FILE_TYPE, fileType).apply()
+    }
+
+    override fun getFileType(): Int {
+        return preferences.getInt(FILE_TYPE, -1)
     }
 }

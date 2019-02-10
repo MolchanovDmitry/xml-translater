@@ -1,5 +1,7 @@
 package com.di.penopllast.xmltranslater.data.repository
 
+import com.di.penopllast.xmltranslater.domain.model.FileType
+
 interface RepositoryPreference {
     fun setFileLocale(locale: String)
     fun getFileLocale(): String
@@ -9,4 +11,6 @@ interface RepositoryPreference {
     fun getApiKey(): String
     fun setUserLocale(locale: String)
     fun getUserLocale(): String
+    fun setFileType(@FileType fileType: Int)
+    fun getFileType(): Int
 }

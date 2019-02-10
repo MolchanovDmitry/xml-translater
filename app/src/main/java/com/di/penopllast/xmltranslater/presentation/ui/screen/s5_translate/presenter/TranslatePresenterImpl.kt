@@ -3,7 +3,9 @@ package com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.pres
 import com.di.penopllast.xmltranslater.domain.helper.translate.MessageCallback
 import com.di.penopllast.xmltranslater.domain.helper.translate.MessageType
 import com.di.penopllast.xmltranslater.domain.helper.translate.TranslateHelper
+import com.di.penopllast.xmltranslater.domain.helper.translate.impl.TranslateHelperPhp
 import com.di.penopllast.xmltranslater.domain.helper.translate.impl.TranslateHelperXml
+import com.di.penopllast.xmltranslater.domain.model.FileType
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.model.LogColor
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.view.TranslateFragment
@@ -23,13 +25,22 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
             val filePath = repositoryPreference.getFilePath()
             val translateLocaleList = repositoryDb.getSelectedLocales()
             val fileContent = File(filePath).readText(Charsets.UTF_8)
-            val translateHelper: TranslateHelper = TranslateHelperXml(
-                    apiKey, fileContent, fileLocale, repositoryNetwork,
-                    this@TranslatePresenterImpl)
+
+            val translateHelper = when (repositoryPreference.getFileType()) {
+                FileType.XML -> TranslateHelperXml(
+                        apiKey, fileContent, fileLocale, repositoryNetwork,
+                        this@TranslatePresenterImpl)
+                FileType.PHP -> TranslateHelperPhp(
+                        apiKey, fileContent, fileLocale, repositoryNetwork,
+                        this@TranslatePresenterImpl)
+                else -> null
+            }
             translateLocaleList.forEach { locale ->
                 currentLocale = locale
-                val translatedContent = translateHelper.getTranslatedContent(locale)
-                saveFile(translatedContent, filePath, locale, translateHelper.getFileExtension())
+                val translatedContent = translateHelper?.getTranslatedContent(locale)
+                if (translatedContent != null && !translatedContent.isEmpty()) {
+                    saveFile(translatedContent, filePath, locale, translateHelper.getFileExtension())
+                }
             }
         }
     }
