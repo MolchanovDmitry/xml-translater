@@ -99,7 +99,8 @@ class HelpPanel @JvmOverloads constructor(
     }
 
     private fun hideShowBack(isHide: Boolean) {
-        val x = if (isHide) -view_background.width + view_background.width * 0.18F else 0F
+        val startPadding = resources.getDimensionPixelSize(R.dimen.back_panel_start_padding)
+        val x = if (isHide) -view_background.width + startPadding * 1F else 0F
         view_background.animate()
                 .translationX(x)
                 .startDelay = if (isHide) 200 else 0
