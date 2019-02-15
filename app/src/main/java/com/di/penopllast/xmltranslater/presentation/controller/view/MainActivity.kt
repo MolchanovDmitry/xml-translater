@@ -7,7 +7,6 @@ import android.widget.Toast
 import android.os.Handler
 import android.view.LayoutInflater
 import androidx.fragment.app.FragmentTransaction
-import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
 import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
@@ -56,8 +55,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         presenter = MainPresenterImpl(this)
         presenter.saveUserLocale(getLocale())
         if (presenter.isApiKeyExist()) {
-            //showChooseFileFragment()
-            showTranslageFragment()
+            showChooseFileFragment()
         }
     }
 
