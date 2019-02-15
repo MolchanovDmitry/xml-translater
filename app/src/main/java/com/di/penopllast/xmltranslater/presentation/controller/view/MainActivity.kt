@@ -219,9 +219,19 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
                 if (deltaX > SWIPE_DISTANCE) {
                     help_panel.hide()
                 }
+                if (!help_panel.isHidden()) {
+                    if ((event.x > help_panel.width && event.y < help_panel.height) ||
+                            (event.x < help_panel.width && event.y > help_panel.height))
+                        help_panel.hide()
+                }
             }
         }
         return super.onTouchEvent(event)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacksAndMessages(null)
     }
 
     override fun onBackPressed() {
