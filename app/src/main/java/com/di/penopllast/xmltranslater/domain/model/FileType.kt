@@ -7,5 +7,6 @@ annotation class FileType {
     companion object {
         const val XML = 0
         const val PHP = 1
+        const val STRINGS = 2
     }
 }

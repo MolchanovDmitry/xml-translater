@@ -26,15 +26,13 @@ import com.di.penopllast.xmltranslater.domain.model.FileType
 
 class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
-    private lateinit var connector: ChooseFileConnector
     private lateinit var presenter: ChooseFilePresenter
+    private var connector: ChooseFileConnector? = null
     private val handler = Handler()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is ChooseFileConnector) {
-            connector = context
-        }
+        connector = context as ChooseFileConnector
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,24 +45,26 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
         return inflater.inflate(R.layout.fragment_choose_file, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
-        ArrayAdapter.createFromResource(
-                activity,
-                R.array.file_type,
-                android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinner_file_type.adapter = adapter
-        }
-        choose_file_button.setOnClickListener {
-            if (spinner_file_type.selectedItemPosition == 0) {
-                spinner_file_type.performClick()
-                showToast("Choose file type")
-            } else {
-                showFileChooser()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        context?.let { context ->
+            ArrayAdapter.createFromResource(
+                    context,
+                    R.array.file_type,
+                    android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Apply the adapter to the spinner
+                spinner_file_type.adapter = adapter
+            }
+            choose_file_button.setOnClickListener {
+                if (spinner_file_type.selectedItemPosition == 0) {
+                    spinner_file_type.performClick()
+                    showToast("Choose file type")
+                } else {
+                    showFileChooser()
+                }
             }
         }
     }
@@ -92,7 +92,7 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
                 button_submit.visibility = View.VISIBLE
                 button_submit.setOnClickListener {
-                    connector.onFileSelected()
+                    connector?.onFileSelected()
                 }
             }
         }
@@ -119,7 +119,7 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
             val path = uri?.path ?: ""
             presenter.saveFilePath(path)
             presenter.saveFileType(getFileType(spinner_file_type.selectedItemPosition))
-            connector.onFileSelected()
+            connector?.onFileSelected()
         } else {
             showToast("Something wrong :(")
         }
@@ -133,6 +133,7 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
     private fun getFileType(spinnerItemPosition: Int) = when (spinnerItemPosition) {
         1 -> FileType.XML
         2 -> FileType.PHP
+        3 -> FileType.STRINGS
         else -> -1
     }
 }

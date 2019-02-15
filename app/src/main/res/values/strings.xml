@@ -22,5 +22,6 @@
         <item>File type</item>
         <item>xml</item>
         <item>php</item>
+        <item>strings</item>
     </string-array>
 </resources>

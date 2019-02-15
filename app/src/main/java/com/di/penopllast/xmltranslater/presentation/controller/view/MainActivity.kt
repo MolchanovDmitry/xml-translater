@@ -56,7 +56,8 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         presenter = MainPresenterImpl(this)
         presenter.saveUserLocale(getLocale())
         if (presenter.isApiKeyExist()) {
-            showChooseFileFragment()
+            //showChooseFileFragment()
+            showTranslageFragment()
         }
     }
 

@@ -6,7 +6,7 @@ import com.di.penopllast.xmltranslater.domain.helper.translate.TranslateHelper
 import com.di.penopllast.xmltranslater.domain.helper.translate.Translater
 import java.util.regex.Pattern
 
-class TranslateHelperIosStrings(
+class TranslateHelperStrings(
         private val apiKey: String,
         private val originalContent: String,
         private val originalLocale: String,
@@ -25,19 +25,16 @@ class TranslateHelperIosStrings(
         val textCount = getCountOfText()
         var content = originalContent
 
-        println("1488 count = $textCount")
         var valueEndIndex = 0
         for (i in 0..textCount) {
-            val keyStartIndex = content.indexOf(REGEX_ROW, valueEndIndex)
-            val keyEndIndex = content.indexOf(REGEX_DIVIDER, keyStartIndex)
+            val keyStartIndex = indexOfRegex(REGEX_ROW, content, valueEndIndex) + 1
+            val keyEndIndex = indexOfRegex(REGEX_DIVIDER, content, keyStartIndex)
             val equallyIndex = content.indexOf("=", keyEndIndex)
-            val valueStartIndex = content.indexOf(QUOTE, equallyIndex)
-            valueEndIndex = content.indexOf(REGEX_END_ROW, valueStartIndex)
+            val valueStartIndex = content.indexOf(QUOTE, equallyIndex) + 1
+            valueEndIndex = indexOfRegex(REGEX_END_ROW, content, valueStartIndex)
 
             val key = content.substring(keyStartIndex, keyEndIndex)
             val value = content.substring(valueStartIndex, valueEndIndex)
-
-            println("1488 key = $key value = $value")
 
             val translatedText = translater.translate(
                     apiKey, value, "$originalLocale-$toLocale")
@@ -45,15 +42,25 @@ class TranslateHelperIosStrings(
                 messageCallback?.onTranslateMessageRetrieved("Error to translate $key",
                         MessageType.ERROR)
             }
+
             //put translate result
             content = content.replaceRange(
                     valueStartIndex, valueEndIndex, translatedText)
             messageCallback?.onStatusRetrieved(i, textCount)
+
+            valueEndIndex = equallyIndex
         }
+        return content
     }
 
     override fun getFileExtension(): String {
         return ".strings"
+    }
+
+    private fun indexOfRegex(regex: String, s: String, startIndex: Int): Int {
+        val pattern = Pattern.compile(regex, Pattern.MULTILINE)
+        val matcher = pattern.matcher(s)
+        return if (matcher.find(startIndex)) matcher.start() else -1
     }
 
     private fun getCountOfText(): Int {

@@ -2,7 +2,7 @@ package com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.pres
 
 import com.di.penopllast.xmltranslater.domain.helper.translate.MessageCallback
 import com.di.penopllast.xmltranslater.domain.helper.translate.MessageType
-import com.di.penopllast.xmltranslater.domain.helper.translate.TranslateHelper
+import com.di.penopllast.xmltranslater.domain.helper.translate.impl.TranslateHelperStrings
 import com.di.penopllast.xmltranslater.domain.helper.translate.impl.TranslateHelperPhp
 import com.di.penopllast.xmltranslater.domain.helper.translate.impl.TranslateHelperXml
 import com.di.penopllast.xmltranslater.domain.model.FileType
@@ -31,6 +31,9 @@ class TranslatePresenterImpl(private val view: TranslateFragment? = null)
                         apiKey, fileContent, fileLocale, repositoryNetwork,
                         this@TranslatePresenterImpl)
                 FileType.PHP -> TranslateHelperPhp(
+                        apiKey, fileContent, fileLocale, repositoryNetwork,
+                        this@TranslatePresenterImpl)
+                FileType.STRINGS -> TranslateHelperStrings(
                         apiKey, fileContent, fileLocale, repositoryNetwork,
                         this@TranslatePresenterImpl)
                 else -> null
