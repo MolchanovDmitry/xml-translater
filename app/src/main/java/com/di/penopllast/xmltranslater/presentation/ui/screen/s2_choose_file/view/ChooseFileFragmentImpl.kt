@@ -26,18 +26,13 @@ import com.di.penopllast.xmltranslater.domain.model.FileType
 
 class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
-    private lateinit var presenter: ChooseFilePresenter
+    private val presenter: ChooseFilePresenter = ChooseFilePresenterImpl(this)
     private var connector: ChooseFileConnector? = null
     private val handler = Handler()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         connector = context as ChooseFileConnector
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = ChooseFilePresenterImpl(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_choose_language.*
 
 class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, ChooseLanguageConnector {
 
-    private lateinit var presenter: ChooseLanguagePresenter
+    private val presenter: ChooseLanguagePresenter = ChooseLanguagePresenterImpl(this)
     private var connector: ChooseLanguageConnector? = null
 
     override fun onAttach(context: Context) {
@@ -26,15 +26,14 @@ class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, ChooseLan
         connector = context as ChooseLanguageConnector
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = ChooseLanguagePresenterImpl(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        presenter.getLangList()
         return inflater.inflate(R.layout.fragment_choose_language, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getLangList()
     }
 
     override fun showLanguageList(langMap: ArrayMap<String, String>) {

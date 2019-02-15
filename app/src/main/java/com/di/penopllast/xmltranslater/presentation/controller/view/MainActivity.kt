@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         private const val SWIPE_DISTANCE = 150
     }
 
-    private lateinit var presenter: MainPresenter
+    private val presenter: MainPresenter = MainPresenterImpl(this)
     private val handler = Handler()
     private var currentStep = 1
 
@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         help_panel.setClickListener(this)
         showSaveYandexApiKeyFragment()
 
-        presenter = MainPresenterImpl(this)
         presenter.saveUserLocale(getLocale())
         if (presenter.isApiKeyExist()) {
             showChooseFileFragment()

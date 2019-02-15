@@ -20,7 +20,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.pr
 
 class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
 
-    private lateinit var presenter: SaveApiKeyPresenter
+    private val presenter: SaveApiKeyPresenter = SaveApiKeyPresenterImpl(this)
     private var connector: SaveApiKeyConnector? = null
 
     override fun onAttach(context: Context) {
@@ -28,18 +28,14 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
         connector = context as SaveApiKeyConnector
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = SaveApiKeyPresenterImpl(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_save_api_key, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.checkApiKeyExist()
 
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?

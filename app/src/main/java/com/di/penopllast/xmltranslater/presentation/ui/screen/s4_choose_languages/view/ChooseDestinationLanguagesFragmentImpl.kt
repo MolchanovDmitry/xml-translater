@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_choose_translate_languages.*
 class ChooseDestinationLanguagesFragmentImpl : Fragment(),
         ChooseDestinationLanguagesFragment, ChooseLanguagesConnector {
 
-    private lateinit var presenter: ChooseDestinationLanguagesPresenter
+    private val presenter: ChooseDestinationLanguagesPresenter = ChooseDestinationLanguagesPresenterImpl(this)
     private var connector: FinishChooseDestinationLanguagesConnector? = null
     private val handler = Handler()
     private val selectedLocaleList = ArrayList<String>()
@@ -32,10 +32,12 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        presenter = ChooseDestinationLanguagesPresenterImpl(this)
-        presenter.getLocaleMatches()
-
         return inflater.inflate(R.layout.fragment_choose_translate_languages, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getLocaleMatches()
     }
 
     override fun showExtendedLocaleMatchList(extendedLocaleMatchList: ArrayList<ExtendedLocaleMatch>) {
@@ -48,7 +50,6 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
     override fun onStart() {
         super.onStart()
         button_translate.setOnClickListener { presenter.saveSelectedLocales(selectedLocaleList) }
-
     }
 
     override fun onUnLanguageSelected(locale: String) {
@@ -58,7 +59,6 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
     override fun onLanguageSelected(locale: String) {
         if (!selectedLocaleList.contains(locale))
             selectedLocaleList.add(locale)
-
     }
 
     override fun toTranslateFragment() {

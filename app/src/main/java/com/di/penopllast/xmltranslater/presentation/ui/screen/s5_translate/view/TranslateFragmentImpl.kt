@@ -18,13 +18,8 @@ import kotlinx.android.synthetic.main.fragment_translate.*
 
 class TranslateFragmentImpl : Fragment(), TranslateFragment {
 
-    private lateinit var presenter: TranslatePresenter
+    private val presenter: TranslatePresenter = TranslatePresenterImpl(this)
     private val handler = Handler()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = TranslatePresenterImpl(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
