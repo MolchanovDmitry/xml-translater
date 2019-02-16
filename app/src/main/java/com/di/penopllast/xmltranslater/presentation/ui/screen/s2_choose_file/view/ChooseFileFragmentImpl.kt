@@ -22,6 +22,7 @@ import android.text.SpannableString
 import android.widget.ArrayAdapter
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.domain.model.FileType
+import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 
 
 class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
@@ -42,6 +43,7 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        connector?.onResumeFragment(FragmentName.CHOOSE_FILE)
         context?.let { context ->
             ArrayAdapter.createFromResource(
                     context,

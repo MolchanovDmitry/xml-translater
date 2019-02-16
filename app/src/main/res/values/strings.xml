@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">XmlTranslater</string>
-
-
     <string name="translate">Translate</string>
+
+    <!-- titles -->
+    <string name="title_api_key">Save translate api key</string>
+    <string name="title_choose_file">Choose file</string>
+    <string name="title_choose_file_locale">Choose file language</string>
+    <string name="title_choose_translate_languages">Choose Translate Languages</string>
+    <string name="title_translate">Translate</string>
 
     <!-- Choose api-key screen -->
     <string name="register_api_key">

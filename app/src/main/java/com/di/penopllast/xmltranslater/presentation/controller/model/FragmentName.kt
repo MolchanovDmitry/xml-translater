@@ -3,7 +3,7 @@ package com.di.penopllast.xmltranslater.presentation.controller.model
 import androidx.annotation.StringDef
 
 @StringDef
-annotation class Fragment {
+annotation class FragmentName {
     companion object {
         const val SAVE_API_KEY = "SaveApiKeyFragmentImpl"
         const val CHOOSE_FILE = "ChooseFileFragmentImpl"

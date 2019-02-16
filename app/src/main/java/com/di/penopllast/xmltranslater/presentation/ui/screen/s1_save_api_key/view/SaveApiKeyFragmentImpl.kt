@@ -14,6 +14,7 @@ import android.text.util.Linkify
 import androidx.core.text.util.LinkifyCompat
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
+import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.presenter.SaveApiKeyPresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.presenter.SaveApiKeyPresenterImpl
 
@@ -36,6 +37,7 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        connector?.onResumeFragment(FragmentName.SAVE_API_KEY)
         presenter.checkApiKeyExist()
 
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?

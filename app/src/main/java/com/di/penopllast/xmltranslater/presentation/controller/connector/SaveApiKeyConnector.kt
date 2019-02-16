@@ -1,5 +1,5 @@
 package com.di.penopllast.xmltranslater.presentation.controller.connector
 
-interface SaveApiKeyConnector {
+interface SaveApiKeyConnector : BaseConnector{
     fun onSaveApiKey()
 }

@@ -1,5 +1,5 @@
 package com.di.penopllast.xmltranslater.presentation.controller.connector
 
-interface FinishChooseDestinationLanguagesConnector {
+interface FinishChooseDestinationLanguagesConnector : BaseConnector {
     fun onFinishChooseDestinationLanguages()
 }

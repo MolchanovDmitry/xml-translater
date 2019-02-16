@@ -12,9 +12,9 @@ import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseL
 import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
 import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.view.ChooseFileFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.controller.model.Fragment
-import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.ChooseLanguageFragmentImpl
-import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.ChooseDestinationLanguagesFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.impl.ChooseLanguageFragmentImpl
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.impl.ChooseDestinationLanguagesFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.view.SaveApiKeyFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.view.TranslateFragmentImpl
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,6 +26,11 @@ import com.di.penopllast.xmltranslater.presentation.controller.presenter.MainPre
 import com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
 import kotlinx.android.synthetic.main.custom_title.*
 import android.os.Build
+import android.view.ViewGroup
+import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_0_API_KEY
+import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_1_FILE
+import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_2_FROM_LOCALE
+import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_3_TO_LOCALE
 import java.util.*
 
 
@@ -62,6 +67,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             resources.configuration.locales.get(0)
         } else {
+            @Suppress("DEPRECATION")
             resources.configuration.locale
         }
     }
@@ -71,7 +77,8 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         actionBar?.setDisplayShowCustomEnabled(true)
 
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val v = inflater.inflate(R.layout.custom_title, null)
+        val viewGroup: ViewGroup? = null
+        val v = inflater.inflate(R.layout.custom_title, viewGroup)
         v.layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
         actionBar?.title = ""
@@ -88,11 +95,11 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     private fun showSaveYandexApiKeyFragment() {
         currentStep = 1
-        text_title.text = "Save translate api key"
+        text_title.text = getString(R.string.title_api_key)
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, SaveApiKeyFragmentImpl(),
-                        Fragment.SAVE_API_KEY)
+                        FragmentName.SAVE_API_KEY)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
@@ -101,11 +108,11 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     private fun showChooseFileFragment() {
         currentStep = 2
         help_panel.colorRing(0, true)
-        text_title.text = "Choose file"
+        text_title.text = getString(R.string.title_choose_file)
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseFileFragmentImpl(),
-                        Fragment.CHOOSE_FILE)
+                        FragmentName.CHOOSE_FILE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
@@ -114,11 +121,11 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     private fun showChooseLanguageFragment() {
         currentStep = 3
         help_panel.colorRing(1, true)
-        text_title.text = "Choose file language"
+        text_title.text = getString(R.string.title_choose_file_locale)
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
-                        Fragment.CHOOSE_LANGUAGE)
+                        FragmentName.CHOOSE_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
@@ -127,30 +134,39 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     private fun showChooseTranslateLanguagesFragment() {
         currentStep = 4
         help_panel.colorRing(2, true)
-        text_title.text = "Choose Translate Languages"
+        text_title.text = getString(R.string.title_choose_translate_languages)
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout,
                         ChooseDestinationLanguagesFragmentImpl(),
-                        Fragment.CHOOSE_TRANSLATION_LANGUAGE)
+                        FragmentName.CHOOSE_TRANSLATION_LANGUAGE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
     }
 
-    private fun showTranslageFragment() {
+    private fun showTranslateFragment() {
         currentStep = 5
         help_panel.colorRing(3, true)
-        text_title.text = "Translate"
+        text_title.text = getString(R.string.title_translate)
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder_layout,
                         TranslateFragmentImpl(),
-                        Fragment.TRANSLATE)
+                        FragmentName.TRANSLATE)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
 
+    }
+
+    override fun onResumeFragment(@FragmentName fragmentName: String) {
+        when (fragmentName) {
+            FragmentName.SAVE_API_KEY -> onFirstRingSuccessClick()
+            FragmentName.CHOOSE_FILE -> onSecondRingSuccessClick()
+            FragmentName.CHOOSE_LANGUAGE -> onThirdRingSuccessClick()
+            FragmentName.CHOOSE_TRANSLATION_LANGUAGE -> onFourthRingSuccessClick()
+        }
     }
 
     override fun onSaveApiKey() {
@@ -166,12 +182,12 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     override fun onFinishChooseDestinationLanguages() {
-        showTranslageFragment()
+        showTranslateFragment()
     }
 
     override fun onFirstStepClick() {
         showSaveYandexApiKeyFragment()
-        help_panel.colorRing(0, false)
+        onFirstRingSuccessClick()
     }
 
     override fun onSecondStepClick() {
@@ -179,8 +195,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
             showToast("Complete previous step")
         } else {
             showChooseFileFragment()
-            help_panel.colorRing(0, true)
-            help_panel.colorRing(1, false)
+            onSecondRingSuccessClick()
         }
     }
 
@@ -189,8 +204,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
             showToast("Complete previous steps")
         } else {
             showChooseLanguageFragment()
-            help_panel.colorRing(1, true)
-            help_panel.colorRing(2, false)
+            onThirdRingSuccessClick()
         }
     }
 
@@ -199,9 +213,27 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
             showToast("Complete previous steps")
         } else {
             showChooseTranslateLanguagesFragment()
-            help_panel.colorRing(2, true)
-            help_panel.colorRing(3, false)
+            onFourthRingSuccessClick()
         }
+    }
+
+    private fun onFirstRingSuccessClick() {
+        help_panel.colorRing(RING_0_API_KEY, false)
+    }
+
+    private fun onSecondRingSuccessClick() {
+        help_panel.colorRing(RING_0_API_KEY, true)
+        help_panel.colorRing(RING_1_FILE, false)
+    }
+
+    private fun onThirdRingSuccessClick() {
+        help_panel.colorRing(RING_1_FILE, true)
+        help_panel.colorRing(RING_2_FROM_LOCALE, false)
+    }
+
+    private fun onFourthRingSuccessClick() {
+        help_panel.colorRing(RING_2_FROM_LOCALE, true)
+        help_panel.colorRing(RING_3_TO_LOCALE, false)
     }
 
     private var x1 = 0F

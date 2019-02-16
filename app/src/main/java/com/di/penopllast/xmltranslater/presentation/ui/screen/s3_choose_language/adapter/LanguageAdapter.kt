@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.SelectLanguageCallback
 import kotlinx.android.synthetic.main.item_lang.view.*
 
 class LanguageAdapter(
         private val langs: ArrayMap<String, String>,
-        private val connector: ChooseLanguageConnector
+        private val callback: SelectLanguageCallback
 ) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,6 +33,6 @@ class LanguageAdapter(
         val locale = langs.keys.elementAt(position)
         holder.codeText.text = locale
         holder.describeText.text = langs.values.elementAt(position)
-        holder.root.setOnClickListener { connector.onLanguageSelected(locale) }
+        holder.root.setOnClickListener { callback.onLanguageSelected(locale) }
     }
 }

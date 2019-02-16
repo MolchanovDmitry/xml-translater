@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view
+package com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.impl
 
 import android.content.Context
 import android.os.Bundle
@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.adapter.LanguageAdapter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.presenter.ChooseLanguagePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.presenter.ChooseLanguagePresenterImpl
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.ChooseLanguageFragment
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.SelectLanguageCallback
 import kotlinx.android.synthetic.main.fragment_choose_language.*
 
-class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, ChooseLanguageConnector {
+class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, SelectLanguageCallback {
 
     private val presenter: ChooseLanguagePresenter = ChooseLanguagePresenterImpl(this)
     private var connector: ChooseLanguageConnector? = null
@@ -33,6 +36,7 @@ class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, ChooseLan
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        connector?.onResumeFragment(FragmentName.CHOOSE_LANGUAGE)
         presenter.getLangList()
     }
 

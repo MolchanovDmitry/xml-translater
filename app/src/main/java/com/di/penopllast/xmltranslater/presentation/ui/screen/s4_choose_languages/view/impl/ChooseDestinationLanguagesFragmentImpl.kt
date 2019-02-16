@@ -1,4 +1,4 @@
-package com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view
+package com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.impl
 
 import android.content.Context
 import android.os.Bundle
@@ -9,16 +9,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.di.penopllast.xmltranslater.R
-import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguagesConnector
 import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
+import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.adapter.MatchLanguagesAdapter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.model.ExtendedLocaleMatch
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.presenter.ChooseDestinationLanguagesPresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.presenter.ChooseDestinationLanguagesPresenterImpl
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.ChooseDestinationLanguagesFragment
+import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.SelectLanguagesCallback
 import kotlinx.android.synthetic.main.fragment_choose_translate_languages.*
 
 class ChooseDestinationLanguagesFragmentImpl : Fragment(),
-        ChooseDestinationLanguagesFragment, ChooseLanguagesConnector {
+        ChooseDestinationLanguagesFragment, SelectLanguagesCallback {
 
     private val presenter: ChooseDestinationLanguagesPresenter = ChooseDestinationLanguagesPresenterImpl(this)
     private var connector: FinishChooseDestinationLanguagesConnector? = null
@@ -37,6 +39,7 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        connector?.onResumeFragment(FragmentName.CHOOSE_TRANSLATION_LANGUAGE)
         presenter.getLocaleMatches()
     }
 
