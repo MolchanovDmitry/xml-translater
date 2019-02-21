@@ -5,7 +5,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_language
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.ChooseDestinationLanguagesFragment
 
 class ChooseDestinationLanguagesPresenterImpl(
-        private val view: ChooseDestinationLanguagesFragment? = null)
+        private val view: ChooseDestinationLanguagesFragment?)
     : BasePresenter(), ChooseDestinationLanguagesPresenter {
 
     override fun getLocaleMatches() {

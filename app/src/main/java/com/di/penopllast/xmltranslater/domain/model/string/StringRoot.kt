@@ -7,6 +7,6 @@ data class StringRoot(
 
         @SerializedName("resources")
         @Expose
-        var resources: Resources? = null
+        val resources: Resources? = null
 
 )

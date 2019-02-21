@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName
 data class Item(
         @SerializedName("content")
         @Expose
-        var content: kotlin.String? = null,
+        val content: kotlin.String? = null,
         @SerializedName("quantity")
         @Expose
-        var quantity: kotlin.String? = null
+        val quantity: kotlin.String? = null
 )

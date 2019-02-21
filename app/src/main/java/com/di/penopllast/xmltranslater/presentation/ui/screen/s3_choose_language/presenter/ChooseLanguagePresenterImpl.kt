@@ -7,7 +7,7 @@ import com.di.penopllast.xmltranslater.domain.room.model.LocaleMatch
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.ChooseLanguageFragment
 
-class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment? = null)
+class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment?)
     : BasePresenter(), ChooseLanguagePresenter, ChooseLanguagePresenter.DownloadCallback {
 
     override fun getLangList() {

@@ -7,11 +7,11 @@ data class Resources(
 
         @SerializedName("string")
         @Expose
-        var string: List<StringRow>? = null,
+        val string: List<StringRow>? = null,
         @SerializedName("plurals")
         @Expose
-        var plurals: List<Plural>? = null,
+        val plurals: List<Plural>? = null,
         @SerializedName("integer")
         @Expose
-        var integer: Any? = null
+        val integer: Any? = null
 )

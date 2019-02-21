@@ -7,8 +7,8 @@ data class Plural(
 
         @SerializedName("item")
         @Expose
-        var item: List<Item>? = null,
+        val item: List<Item>? = null,
         @SerializedName("name")
         @Expose
-        var name: kotlin.String? = null
+        val name: kotlin.String? = null
 )

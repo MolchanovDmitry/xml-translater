@@ -3,7 +3,7 @@ package com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.p
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.view.SaveApiKeyFragment
 
-class SaveApiKeyPresenterImpl(private val view: SaveApiKeyFragment? = null)
+class SaveApiKeyPresenterImpl(private val view: SaveApiKeyFragment?)
     : BasePresenter(), SaveApiKeyPresenter {
 
     override fun saveApiKey(key: String) {
@@ -13,7 +13,7 @@ class SaveApiKeyPresenterImpl(private val view: SaveApiKeyFragment? = null)
 
     override fun checkApiKeyExist() {
         val savedKey = repositoryPreference.getApiKey()
-        if (savedKey != ""){
+        if (savedKey != "") {
             view?.updateApiKey(savedKey)
         }
     }

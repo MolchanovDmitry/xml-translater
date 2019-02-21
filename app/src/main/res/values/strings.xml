@@ -22,6 +22,7 @@
     <string name="install_file_manager">Please install a File Manager.</string>
     <string name="previous_file">Previous selected file:\n</string>
     <string name="submit">Submit</string>
+    <string name="complete_previous_step">Complete previous step</string>
 
     <string-array name="file_type">
         <item>File type</item>

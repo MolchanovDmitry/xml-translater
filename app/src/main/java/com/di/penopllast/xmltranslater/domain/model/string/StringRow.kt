@@ -13,5 +13,5 @@ data class StringRow(
         val name: kotlin.String,
         @SerializedName("translatable")
         @Expose
-        var translatable: kotlin.String? = null
+        val translatable: kotlin.String? = null
 )

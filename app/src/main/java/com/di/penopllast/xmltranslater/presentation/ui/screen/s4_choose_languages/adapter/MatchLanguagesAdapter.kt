@@ -12,13 +12,12 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_language
 import kotlinx.android.synthetic.main.item_layout_with_checkboxs.view.*
 
 class MatchLanguagesAdapter(private val langMap: List<ExtendedLocaleMatch>,
-                            private val callback: SelectLanguagesCallback)
+                            private val callback: SelectLanguagesCallback?)
     : RecyclerView.Adapter<MatchLanguagesAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val root: ViewGroup = view.layout_root
-        val codeFromText: TextView = view.text_code_from
-        val codeToText: TextView = view.text_code_to
+        val localeMapText: TextView = view.text_locales
         val describeText: TextView = view.text_description
         val checkBox: CheckBox = view.checkbox
 
@@ -29,8 +28,7 @@ class MatchLanguagesAdapter(private val langMap: List<ExtendedLocaleMatch>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_layout_with_checkboxs, parent, false)
-        )
+                .inflate(R.layout.item_layout_with_checkboxs, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -38,16 +36,16 @@ class MatchLanguagesAdapter(private val langMap: List<ExtendedLocaleMatch>,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.codeFromText.text = langMap[position].from
-        holder.codeToText.text = langMap[position].to
+        val localeMap = "${langMap[position].from}-${langMap[position].to}"
+        holder.localeMapText.text = localeMap
         holder.describeText.text = langMap[position].toDescription
         holder.root.setOnClickListener {
             if (holder.checkBox.isChecked) {
                 holder.checkBox.isChecked = false
-                callback.onUnLanguageSelected(langMap[position].to)
+                callback?.onUnLanguageSelected(langMap[position].to)
             } else {
                 holder.checkBox.isChecked = true
-                callback.onLanguageSelected(langMap[position].to)
+                callback?.onLanguageSelected(langMap[position].to)
             }
         }
     }

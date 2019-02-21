@@ -11,7 +11,7 @@ class TranslateHelperStrings(
         private val originalContent: String,
         private val originalLocale: String,
         private val translater: Translater,
-        private val messageCallback: MessageCallback? = null
+        private val messageCallback: MessageCallback?
 ) : TranslateHelper {
 
     companion object {

@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName
 data class Translate(
         @SerializedName("code")
         @Expose
-        var code: Int? = null,
+        val code: Int? = null,
         @SerializedName("lang")
         @Expose
-        var lang: String? = null,
+        val lang: String? = null,
         @SerializedName("text")
         @Expose
-        var text: List<String>? = null
+        val text: List<String>? = null
 )

@@ -13,7 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class TranslatePresenterImpl(private val view: TranslateFragment? = null)
+class TranslatePresenterImpl(private val view: TranslateFragment?)
     : BasePresenter(), TranslatePresenter, MessageCallback {
 
     private lateinit var currentLocale: String

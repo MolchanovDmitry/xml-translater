@@ -1,8 +1,11 @@
 package com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.view
 
+import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.text.Spannable
@@ -12,7 +15,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.di.penopllast.xmltranslater.application.utils.Utils
-import com.di.penopllast.xmltranslater.presentation.controller.view.MainActivity
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.presenter.ChooseFilePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.presenter.ChooseFilePresenterImpl
@@ -20,6 +22,8 @@ import kotlinx.android.synthetic.main.fragment_choose_file.*
 import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 import android.widget.ArrayAdapter
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.domain.model.FileType
 import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
@@ -29,11 +33,13 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
     private val presenter: ChooseFilePresenter = ChooseFilePresenterImpl(this)
     private var connector: ChooseFileConnector? = null
+    private var activity: Activity? = null
     private val handler = Handler()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         connector = context as ChooseFileConnector
+        activity = context as Activity
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +68,20 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
                 } else {
                     showFileChooser()
                 }
+            }
+        }
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        activity?.let { activity ->
+            val permission = ContextCompat.checkSelfPermission(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        RECORD_REQUEST_CODE)
             }
         }
     }
@@ -103,22 +123,32 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
         try {
             startActivityForResult(
                     Intent.createChooser(intent, "Select a File to Upload"),
-                    MainActivity.FILE_SELECT_CODE)
-        } catch (ex: android.content.ActivityNotFoundException) {
+                    FILE_REQUEST_CODE)
+        } catch (ex: ActivityNotFoundException) {
             showToast(getString(R.string.install_file_manager))
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            Utils.print("File Uri: ${uri?.toString()}")
-            val path = uri?.path ?: ""
-            presenter.saveFilePath(path)
-            presenter.saveFileType(getFileType(spinner_file_type.selectedItemPosition))
-            connector?.onFileSelected()
-        } else {
-            showToast("Something wrong :(")
+        when (requestCode) {
+            FILE_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val uri = data?.data
+                    Utils.print("File Uri: ${uri?.toString()}")
+                    val path = uri?.path ?: ""
+                    presenter.saveFilePath(path)
+                    presenter.saveFileType(getFileType(spinner_file_type.selectedItemPosition))
+                    connector?.onFileSelected()
+                } else {
+                    showToast("Something wrong :(")
+                }
+            }
+            RECORD_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    showToast("You must grant write permission")
+                    checkPermission()
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -132,5 +162,10 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
         2 -> FileType.PHP
         3 -> FileType.STRINGS
         else -> -1
+    }
+
+    companion object {
+        const val FILE_REQUEST_CODE = 0
+        const val RECORD_REQUEST_CODE = 1
     }
 }

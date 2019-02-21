@@ -41,11 +41,10 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         FinishChooseDestinationLanguagesConnector {
 
     companion object {
-        internal const val FILE_SELECT_CODE = 0
         private const val SWIPE_DISTANCE = 150
     }
 
-    private val presenter: MainPresenter = MainPresenterImpl(this)
+    private val presenter: MainPresenter = MainPresenterImpl()
     private val handler = Handler()
     private var currentStep = 1
 
@@ -192,7 +191,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     override fun onSecondStepClick() {
         if (currentStep < 2) {
-            showToast("Complete previous step")
+            showToast(getString(R.string.complete_previous_step))
         } else {
             showChooseFileFragment()
             onSecondRingSuccessClick()
@@ -201,7 +200,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     override fun onThirdStepClick() {
         if (currentStep < 3) {
-            showToast("Complete previous steps")
+            showToast(getString(R.string.complete_previous_step))
         } else {
             showChooseLanguageFragment()
             onThirdRingSuccessClick()
@@ -210,7 +209,7 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
 
     override fun onFourthStepClick() {
         if (currentStep < 4) {
-            showToast("Complete previous steps")
+            showToast(getString(R.string.complete_previous_step))
         } else {
             showChooseTranslateLanguagesFragment()
             onFourthRingSuccessClick()

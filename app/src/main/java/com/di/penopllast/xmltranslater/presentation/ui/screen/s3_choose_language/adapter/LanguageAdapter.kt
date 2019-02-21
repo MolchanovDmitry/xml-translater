@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_lang.view.*
 
 class LanguageAdapter(
         private val langs: ArrayMap<String, String>,
-        private val callback: SelectLanguageCallback
+        private val callback: SelectLanguageCallback?
 ) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,6 +33,6 @@ class LanguageAdapter(
         val locale = langs.keys.elementAt(position)
         holder.codeText.text = locale
         holder.describeText.text = langs.values.elementAt(position)
-        holder.root.setOnClickListener { callback.onLanguageSelected(locale) }
+        holder.root.setOnClickListener { callback?.onLanguageSelected(locale) }
     }
 }

@@ -10,7 +10,7 @@ class TranslateHelperPhp(
         private val originalContent: String,
         private val originalLocale: String,
         private val translater: Translater,
-        private val messageCallback: MessageCallback? = null
+        private val messageCallback: MessageCallback?
 ) : TranslateHelper {
 
     companion object {
@@ -23,7 +23,7 @@ class TranslateHelperPhp(
      * 'key'  =>(arrow) 'value'
      */
     override fun getTranslatedContent(toLocale: String): String {
-        var countText = getCountOfText(originalContent)
+        val countText = getCountOfText(originalContent)
         if (countText == 0) {
             messageCallback?.onStatusRetrieved(0, 0)
             messageCallback?.onTranslateMessageRetrieved("There is no text. " +

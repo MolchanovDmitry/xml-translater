@@ -6,7 +6,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ChooseFilePresenterImpl(val view: ChooseFileFragment)
+class ChooseFilePresenterImpl(val view: ChooseFileFragment?)
     : BasePresenter(), ChooseFilePresenter {
 
     override fun checkFileExist() {
@@ -15,7 +15,7 @@ class ChooseFilePresenterImpl(val view: ChooseFileFragment)
             if (!filePath.isEmpty()) {
                 val file = File(filePath)
                 if (file.exists()) {
-                    view.showSavedFile(filePath)
+                    view?.showSavedFile(filePath)
                 }
             }
         }
