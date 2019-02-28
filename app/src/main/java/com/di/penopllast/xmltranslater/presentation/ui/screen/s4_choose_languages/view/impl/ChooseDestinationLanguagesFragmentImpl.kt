@@ -23,14 +23,10 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
         ChooseDestinationLanguagesFragment, SelectLanguagesCallback {
 
     private val presenter: ChooseDestinationLanguagesPresenter = ChooseDestinationLanguagesPresenterImpl(this)
-    private var connector: FinishChooseDestinationLanguagesConnector? = null
+    private val connector: FinishChooseDestinationLanguagesConnector
+            by lazy { context as FinishChooseDestinationLanguagesConnector }
     private val handler = Handler()
     private val selectedLocaleList = ArrayList<String>()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        connector = if (context is FinishChooseDestinationLanguagesConnector) context else null
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

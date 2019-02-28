@@ -22,12 +22,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.pr
 class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
 
     private val presenter: SaveApiKeyPresenter = SaveApiKeyPresenterImpl(this)
-    private var connector: SaveApiKeyConnector? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        connector = context as SaveApiKeyConnector
-    }
+    private val connector: SaveApiKeyConnector? by lazy { context as SaveApiKeyConnector }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

@@ -32,15 +32,9 @@ import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentNam
 class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
     private val presenter: ChooseFilePresenter = ChooseFilePresenterImpl(this)
-    private var connector: ChooseFileConnector? = null
-    private var activity: Activity? = null
+    private val connector: ChooseFileConnector? by lazy { context as ChooseFileConnector }
+    private val activity: Activity? by lazy { context as Activity }
     private val handler = Handler()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        connector = context as ChooseFileConnector
-        activity = context as Activity
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
