@@ -2,20 +2,22 @@ package com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.pr
 
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.view.ChooseFileFragment
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 class ChooseFilePresenterImpl(val view: ChooseFileFragment?)
     : BasePresenter(), ChooseFilePresenter {
 
     override fun checkFileExist() {
-        GlobalScope.launch {
+        scopeIO.launch {
             val filePath = repositoryPreference.getFilePath()
             if (!filePath.isEmpty()) {
                 val file = File(filePath)
                 if (file.exists()) {
-                    view?.showSavedFile(filePath)
+                    withContext(Dispatchers.Main) { view?.showSavedFile(filePath) }
                 }
             }
         }
@@ -23,11 +25,10 @@ class ChooseFilePresenterImpl(val view: ChooseFileFragment?)
 
 
     override fun saveFileType(selectedItemPosition: Int) {
-        GlobalScope.launch { repositoryPreference.setFileType(selectedItemPosition) }
+        scopeIO.launch { repositoryPreference.setFileType(selectedItemPosition) }
     }
 
     override fun saveFilePath(path: String) {
-        GlobalScope.launch { repositoryPreference.setFilePath(path) }
+        scopeIO.launch { repositoryPreference.setFilePath(path) }
     }
-
 }

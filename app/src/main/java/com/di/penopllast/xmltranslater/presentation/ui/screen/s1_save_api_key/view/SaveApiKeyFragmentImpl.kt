@@ -13,6 +13,7 @@ import android.net.Uri
 import android.text.util.Linkify
 import androidx.core.text.util.LinkifyCompat
 import com.di.penopllast.xmltranslater.R
+import com.di.penopllast.xmltranslater.application.utils.Const
 import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
 import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.presenter.SaveApiKeyPresenter
@@ -29,7 +30,6 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
         return inflater.inflate(R.layout.fragment_save_api_key, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         connector?.onResumeFragment(FragmentName.SAVE_API_KEY)
@@ -37,6 +37,7 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
 
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
 
+        edit_view?.setText(Const.API_KEY)
         button_paste.setOnClickListener {
             val textToPaste = clipboard?.primaryClip?.getItemAt(0)?.text
             textToPaste?.let {

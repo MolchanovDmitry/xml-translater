@@ -17,6 +17,7 @@ class TranslatePresenterImpl(private val view: TranslateFragment?)
     : BasePresenter(), TranslatePresenter, MessageCallback {
 
     private lateinit var currentLocale: String
+    private val resultFilePathList = ArrayList<String>()
 
     override fun generalTranslate() {
         GlobalScope.launch {
@@ -45,6 +46,7 @@ class TranslatePresenterImpl(private val view: TranslateFragment?)
                     saveFile(translatedContent, filePath, locale, translateHelper.getFileExtension())
                 }
             }
+            view?.onEndTranslate(resultFilePathList)
         }
     }
 
@@ -59,6 +61,7 @@ class TranslatePresenterImpl(private val view: TranslateFragment?)
         val firstFilePath = originalFilePath.substring(0, extensionIndex - fileExtension.length)
 
         val fileOut = "$firstFilePath-$locale$extension"
+        resultFilePathList.add(fileOut)
         File(fileOut).writeText(translatedContent)
         view?.addUiLog("File saved as $fileOut", LogColor.GREEN)
     }

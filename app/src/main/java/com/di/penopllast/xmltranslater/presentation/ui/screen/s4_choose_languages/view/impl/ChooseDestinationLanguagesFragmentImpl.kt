@@ -1,6 +1,5 @@
 package com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.impl
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -23,7 +22,7 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
         ChooseDestinationLanguagesFragment, SelectLanguagesCallback {
 
     private val presenter: ChooseDestinationLanguagesPresenter = ChooseDestinationLanguagesPresenterImpl(this)
-    private val connector: FinishChooseDestinationLanguagesConnector
+    private val connector: FinishChooseDestinationLanguagesConnector?
             by lazy { context as FinishChooseDestinationLanguagesConnector }
     private val handler = Handler()
     private val selectedLocaleList = ArrayList<String>()

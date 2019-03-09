@@ -3,13 +3,16 @@ package com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languag
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.model.ExtendedLocaleMatch
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.ChooseDestinationLanguagesFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ChooseDestinationLanguagesPresenterImpl(
         private val view: ChooseDestinationLanguagesFragment?)
     : BasePresenter(), ChooseDestinationLanguagesPresenter {
 
     override fun getLocaleMatches() {
-        executorService.execute {
+        scopeIO.launch {
             val fileLocale = repositoryPreference.getFileLocale()
             val localeDescriptions = repositoryDb.getLocaleDescriptions()
             val localeMathList = repositoryDb.getLocaleMatches()
@@ -24,15 +27,15 @@ class ChooseDestinationLanguagesPresenterImpl(
                     ))
                 }
             }
-            view?.showExtendedLocaleMatchList(extendedLocaleMatchList)
+            withContext(Dispatchers.Main) { view?.showExtendedLocaleMatchList(extendedLocaleMatchList) }
         }
     }
 
     override fun saveSelectedLocales(localeList: List<String>) {
-        executorService.execute {
+        scopeIO.launch {
             repositoryDb.deleteSelectedLanguages()
             repositoryDb.insertSelectedLocales(localeList)
-            view?.toTranslateFragment()
+            withContext(Dispatchers.Main) { view?.toTranslateFragment() }
         }
     }
 }

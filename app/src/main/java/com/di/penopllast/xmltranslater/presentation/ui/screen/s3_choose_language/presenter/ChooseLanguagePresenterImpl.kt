@@ -6,13 +6,17 @@ import com.di.penopllast.xmltranslater.domain.model.lang.RootLangs
 import com.di.penopllast.xmltranslater.domain.room.model.LocaleMatch
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.BasePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.ChooseLanguageFragment
+import kotlinx.coroutines.launch
 
 class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment?)
     : BasePresenter(), ChooseLanguagePresenter, ChooseLanguagePresenter.DownloadCallback {
 
     override fun getLangList() {
-        val locale = repositoryPreference.getUserLocale()
-        repositoryNetwork.getLangList(locale, Const.API_KEY, this)
+        scopeIO.launch {
+            val locale = repositoryPreference.getUserLocale()
+            repositoryNetwork.getLangList(locale, Const.API_KEY,
+                    this@ChooseLanguagePresenterImpl)
+        }
     }
 
     override fun onLanguageListFetched(rootLangs: RootLangs) {
@@ -21,7 +25,7 @@ class ChooseLanguagePresenterImpl(private val view: ChooseLanguageFragment?)
     }
 
     private fun saveLocaleEntities(rootLangs: RootLangs) {
-        executorService.submit {
+        scopeIO.launch {
 
             val localeMatch: ArrayList<LocaleMatch> = ArrayList()
 

@@ -6,4 +6,5 @@ interface TranslateFragment {
     fun showToast(s: String)
     fun updateTranslateStatus(locale: String, index: Int, count: Int)
     fun addUiLog(message: String, @LogColor color: Int = LogColor.DEFAULT)
+    fun onEndTranslate(resultFilePathList: ArrayList<String>)
 }
