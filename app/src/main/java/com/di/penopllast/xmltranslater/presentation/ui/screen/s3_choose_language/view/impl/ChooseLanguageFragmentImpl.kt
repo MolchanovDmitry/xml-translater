@@ -1,6 +1,5 @@
 package com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.impl
 
-import android.content.Context
 import android.os.Bundle
 import android.util.ArrayMap
 import android.view.LayoutInflater
@@ -9,20 +8,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
+import com.di.penopllast.xmltranslater.presentation.controller.lazy.bindView
 import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.adapter.LanguageAdapter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.presenter.ChooseLanguagePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.presenter.ChooseLanguagePresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.ChooseLanguageFragment
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.SelectLanguageCallback
-import kotlinx.android.synthetic.main.fragment_choose_language.*
 
 class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, SelectLanguageCallback {
 
+    private val recyclerView: RecyclerView? by bindView(R.id.recycler_language_list)
+
     private val presenter: ChooseLanguagePresenter = ChooseLanguagePresenterImpl(this)
-    private val connector: ChooseLanguageConnector by lazy { context as ChooseLanguageConnector }
+    private val connector: ChooseLanguageConnector? by lazy { context as ChooseLanguageConnector }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,8 +38,8 @@ class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, SelectLan
     }
 
     override fun showLanguageList(langMap: ArrayMap<String, String>) {
-        recycler_language_list.layoutManager = LinearLayoutManager(context)
-        recycler_language_list.adapter = LanguageAdapter(langMap, this)
+        recyclerView?.layoutManager = LinearLayoutManager(context)
+        recyclerView?.adapter = LanguageAdapter(langMap, this)
     }
 
     override fun onLanguageSelected(locale: String) {

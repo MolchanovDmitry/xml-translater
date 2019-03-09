@@ -5,10 +5,13 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
+import com.di.penopllast.xmltranslater.presentation.controller.lazy.bindView
 import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.adapter.MatchLanguagesAdapter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.model.ExtendedLocaleMatch
@@ -16,12 +19,15 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_language
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.presenter.ChooseDestinationLanguagesPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.ChooseDestinationLanguagesFragment
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.SelectLanguagesCallback
-import kotlinx.android.synthetic.main.fragment_choose_translate_languages.*
 
 class ChooseDestinationLanguagesFragmentImpl : Fragment(),
         ChooseDestinationLanguagesFragment, SelectLanguagesCallback {
 
-    private val presenter: ChooseDestinationLanguagesPresenter = ChooseDestinationLanguagesPresenterImpl(this)
+    private val recyclerView: RecyclerView? by bindView(R.id.recycler_language_list)
+    private val translateButton: Button? by bindView(R.id.button_translate)
+
+    private val presenter: ChooseDestinationLanguagesPresenter =
+            ChooseDestinationLanguagesPresenterImpl(this)
     private val connector: FinishChooseDestinationLanguagesConnector?
             by lazy { context as FinishChooseDestinationLanguagesConnector }
     private val handler = Handler()
@@ -40,14 +46,14 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
 
     override fun showExtendedLocaleMatchList(extendedLocaleMatchList: ArrayList<ExtendedLocaleMatch>) {
         handler.post {
-            recycler_language_list.layoutManager = LinearLayoutManager(context)
-            recycler_language_list.adapter = MatchLanguagesAdapter(extendedLocaleMatchList, this)
+            recyclerView?.layoutManager = LinearLayoutManager(context)
+            recyclerView?.adapter = MatchLanguagesAdapter(extendedLocaleMatchList, this)
         }
     }
 
     override fun onStart() {
         super.onStart()
-        button_translate.setOnClickListener { presenter.saveSelectedLocales(selectedLocaleList) }
+        translateButton?.setOnClickListener { presenter.saveSelectedLocales(selectedLocaleList) }
     }
 
     override fun onUnLanguageSelected(locale: String) {

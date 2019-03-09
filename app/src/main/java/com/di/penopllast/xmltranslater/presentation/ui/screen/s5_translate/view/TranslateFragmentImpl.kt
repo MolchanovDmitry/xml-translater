@@ -14,13 +14,18 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.adapt
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.model.LogColor
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.presenter.TranslatePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.presenter.TranslatePresenterImpl
-import kotlinx.android.synthetic.main.fragment_translate.*
 import android.net.Uri
 import com.di.penopllast.xmltranslater.R
 import java.io.File
 import android.os.StrictMode
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.di.penopllast.xmltranslater.presentation.controller.lazy.bindView
 
 class TranslateFragmentImpl : Fragment(), TranslateFragment {
+
+    private val logRecyclerView: RecyclerView? by bindView(R.id.log_recycler_view)
+    private val statusText: TextView? by bindView(R.id.status_text)
 
     private val presenter: TranslatePresenter = TranslatePresenterImpl(this)
     private val handler = Handler()
@@ -30,22 +35,22 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
         return inflater.inflate(R.layout.fragment_translate, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.generalTranslate()
         val layout = LinearLayoutManager(context)
         layout.reverseLayout = true
-        log_recycler_view.layoutManager = layout
-        log_recycler_view.adapter = LogAdapter()
+        logRecyclerView?.layoutManager = layout
+        logRecyclerView?.adapter = LogAdapter()
     }
 
     override fun updateTranslateStatus(locale: String, index: Int, count: Int) {
         val status = "Locale: $locale: generalTranslate $index/$count"
-        handler.post { status_text?.text = status }
+        handler.post { statusText?.text = status }
     }
 
     override fun addUiLog(message: String, @LogColor color: Int) {
-        handler.post { (log_recycler_view.adapter as LogAdapter).addItem(message, getColor(color)) }
+        handler.post { (logRecyclerView?.adapter as LogAdapter).addItem(message, getColor(color)) }
     }
 
     private fun getColor(@LogColor color: Int): Int = when (color) {

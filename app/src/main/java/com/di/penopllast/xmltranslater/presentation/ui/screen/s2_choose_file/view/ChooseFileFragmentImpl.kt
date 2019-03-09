@@ -3,7 +3,6 @@ package com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.vi
 import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -12,28 +11,31 @@ import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.di.penopllast.xmltranslater.application.utils.Utils
 import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseFileConnector
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.presenter.ChooseFilePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.presenter.ChooseFilePresenterImpl
-import kotlinx.android.synthetic.main.fragment_choose_file.*
 import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
-import android.widget.ArrayAdapter
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.domain.model.FileType
+import com.di.penopllast.xmltranslater.presentation.controller.lazy.bindView
 import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 
 
 class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
+    private val spinner: Spinner? by bindView(R.id.spinner_file_type)
+    private val chooseFileButton: Button? by bindView(R.id.choose_file_button)
+    private val hintText: TextView? by bindView(R.id.text_hint)
+    private val submitButton: Button? by bindView(R.id.button_submit)
+    
     private val presenter: ChooseFilePresenter = ChooseFilePresenterImpl(this)
     private val connector: ChooseFileConnector? by lazy { context as ChooseFileConnector }
-    private val activity: Activity? by lazy { context as Activity }
     private val handler = Handler()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -53,11 +55,11 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
                 // Specify the layout to use when the list of choices appears
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 // Apply the adapter to the spinner
-                spinner_file_type.adapter = adapter
+                spinner?.adapter = adapter
             }
-            choose_file_button.setOnClickListener {
-                if (spinner_file_type.selectedItemPosition == 0) {
-                    spinner_file_type.performClick()
+            chooseFileButton?.setOnClickListener {
+                if (spinner?.selectedItemPosition == 0) {
+                    spinner?.performClick()
                     showToast("Choose file type")
                 } else {
                     showFileChooser()
@@ -82,8 +84,8 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
     override fun onResume() {
         super.onResume()
-        text_hint.visibility = View.GONE
-        button_submit.visibility = View.GONE
+        hintText?.visibility = View.GONE
+        submitButton?.visibility = View.GONE
         presenter.checkFileExist()
     }
 
@@ -97,12 +99,12 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
             spannable.setSpan(ForegroundColorSpan(it.getColor(R.color.orange)),
                     firstStringPath.length, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             handler.post {
-                text_hint.text = spannable
+                hintText?.text = spannable
 
-                text_hint.visibility = View.VISIBLE
+                hintText?.visibility = View.VISIBLE
 
-                button_submit.visibility = View.VISIBLE
-                button_submit.setOnClickListener {
+                submitButton?.visibility = View.VISIBLE
+                submitButton?.setOnClickListener {
                     connector?.onFileSelected()
                 }
             }
@@ -130,9 +132,11 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
                     val uri = data?.data
                     Utils.print("File Uri: ${uri?.toString()}")
                     val path = uri?.path ?: ""
-                    presenter.saveFilePath(path)
-                    presenter.saveFileType(getFileType(spinner_file_type.selectedItemPosition))
-                    connector?.onFileSelected()
+                    spinner?.let {
+                        presenter.saveFilePath(path)
+                        presenter.saveFileType(getFileType(it.selectedItemPosition))
+                        connector?.onFileSelected()
+                    }
                 } else {
                     showToast("Something wrong :(")
                 }
