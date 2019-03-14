@@ -100,7 +100,8 @@ class HelpPanel @JvmOverloads constructor(
 
     private fun hideShowBack(isHide: Boolean) {
         val startPadding = resources.getDimensionPixelSize(R.dimen.back_panel_start_padding)
-        val x = if (isHide) -view_background.width + startPadding * 1F else 0F
+
+        val x = if (isHide) -width + startPadding * 1F else 0F
         view_background.animate()
                 .translationX(x)
                 .startDelay = if (isHide) 200 else 0
@@ -143,9 +144,5 @@ class HelpPanel @JvmOverloads constructor(
         fun onFourthStepClick()
     }
 
-    private data class MapRingView(
-            val ring: RingView,
-            val text: TextView,
-            val view: View
-    )
+    private data class MapRingView(val ring: RingView, val text: TextView, val view: View)
 }
