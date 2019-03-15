@@ -1,6 +1,5 @@
 package com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.view
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -14,12 +13,10 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.adapt
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.model.LogColor
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.presenter.TranslatePresenter
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.presenter.TranslatePresenterImpl
-import android.net.Uri
 import com.di.penopllast.xmltranslater.R
-import java.io.File
-import android.os.StrictMode
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.di.penopllast.xmltranslater.presentation.controller.connector.TranslateConnector
 import com.di.penopllast.xmltranslater.presentation.controller.lazy.bindView
 
 class TranslateFragmentImpl : Fragment(), TranslateFragment {
@@ -27,6 +24,7 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
     private val logRecyclerView: RecyclerView? by bindView(R.id.log_recycler_view)
     private val statusText: TextView? by bindView(R.id.status_text)
 
+    private val connector: TranslateConnector? by lazy { context as TranslateConnector }
     private val presenter: TranslatePresenter = TranslatePresenterImpl(this)
     private val handler = Handler()
 
@@ -42,6 +40,11 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
         layout.reverseLayout = true
         logRecyclerView?.layoutManager = layout
         logRecyclerView?.adapter = LogAdapter()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        connector?.onTranslateScreenCancel()
     }
 
     override fun updateTranslateStatus(locale: String, index: Int, count: Int) {
@@ -65,22 +68,6 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
     }
 
     override fun onEndTranslate(resultFilePathList: ArrayList<String>) {
-        val intent = Intent()
-        intent.action = Intent.ACTION_SEND_MULTIPLE
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Translated files")
-        intent.type = "*/*"
-
-        val builder = StrictMode.VmPolicy.Builder()
-        StrictMode.setVmPolicy(builder.build())
-
-        val files = ArrayList<Uri>()
-
-        resultFilePathList.forEach { path ->
-            val file = File(path)
-            val uri = Uri.fromFile(file)
-            files.add(uri)
-        }
-        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, files)
-        startActivity(intent)
+        connector?.onTranslateFinish(resultFilePathList)
     }
 }

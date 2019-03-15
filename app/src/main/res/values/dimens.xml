@@ -3,4 +3,5 @@
     <dimen name="ring_width">50dp</dimen>
     <dimen name="ring_stroke_width">2.5dp</dimen>
     <dimen name="back_panel_start_padding">30dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
 </resources>

@@ -1,16 +1,13 @@
 package com.di.penopllast.xmltranslater.presentation.controller.view
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import android.os.Handler
 import android.view.LayoutInflater
 import androidx.fragment.app.FragmentTransaction
-import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseFileConnector
-import com.di.penopllast.xmltranslater.presentation.controller.connector.ChooseLanguageConnector
-import com.di.penopllast.xmltranslater.presentation.controller.connector.FinishChooseDestinationLanguagesConnector
-import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s2_choose_file.view.ChooseFileFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.controller.model.FragmentName
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language.view.impl.ChooseLanguageFragmentImpl
@@ -19,30 +16,41 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.vi
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.view.TranslateFragmentImpl
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.MotionEvent
-import android.widget.FrameLayout
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.MainPresenter
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
 import kotlinx.android.synthetic.main.custom_title.*
 import android.os.Build
+import android.os.StrictMode
+import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.*
+import com.di.penopllast.xmltranslater.presentation.controller.connector.*
+import com.di.penopllast.xmltranslater.presentation.controller.lazy.bindView
 import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_0_API_KEY
 import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_1_FILE
 import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_2_FROM_LOCALE
 import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_3_TO_LOCALE
+import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickListener,
         SaveApiKeyConnector,
         ChooseFileConnector,
         ChooseLanguageConnector,
-        FinishChooseDestinationLanguagesConnector {
+        FinishChooseDestinationLanguagesConnector,
+        TranslateConnector {
 
     companion object {
         private const val SWIPE_DISTANCE = 150
     }
+
+    private val titleText: TextView? by bindView(R.id.text_title)
+    private val titleLayout: ViewGroup? by bindView(R.id.layout_title)
+    private var shareImage: ImageView? = null
 
     private val presenter: MainPresenter = MainPresenterImpl()
     private val handler = Handler()
@@ -263,6 +271,49 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     override fun onPause() {
         super.onPause()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onTranslateFinish(resultFilePathList: ArrayList<String>) {
+        handler.post {
+            shareImage = ImageView(this)
+            shareImage?.setImageResource(R.drawable.ic_share)
+            shareImage?.alpha = 0F
+            val params = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+            params.gravity = Gravity.CENTER_VERTICAL or Gravity.END
+            params.marginEnd = resources.getDimensionPixelSize(R.dimen.dp_10)
+
+            titleLayout?.addView(shareImage, params)
+            shareImage?.animate()?.alpha(1F)?.duration = 500
+            shareImage?.setOnClickListener { onShareClick(resultFilePathList) }
+        }
+    }
+
+    override fun onTranslateScreenCancel() {
+        shareImage?.let {
+            it.animate().alpha(0F).withEndAction { titleLayout?.removeView(it) }
+            shareImage = null
+        }
+    }
+
+    private fun onShareClick(resultFilePathList: ArrayList<String>) {
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND_MULTIPLE
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Translated files")
+        intent.type = "*/*"
+
+        val builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+
+        val files = ArrayList<Uri>()
+
+        resultFilePathList.forEach { path ->
+            val file = File(path)
+            val uri = Uri.fromFile(file)
+            files.add(uri)
+        }
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, files)
+        startActivity(intent)
     }
 
     override fun onBackPressed() {
