@@ -45,6 +45,7 @@ class TranslateFragmentImpl : Fragment(), TranslateFragment {
     override fun onDestroyView() {
         super.onDestroyView()
         connector?.onTranslateScreenCancel()
+        handler.removeCallbacksAndMessages(null)
     }
 
     override fun updateTranslateStatus(locale: String, index: Int, count: Int) {

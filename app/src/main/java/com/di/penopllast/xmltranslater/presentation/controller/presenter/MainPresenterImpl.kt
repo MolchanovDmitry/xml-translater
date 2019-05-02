@@ -1,16 +1,19 @@
 package com.di.penopllast.xmltranslater.presentation.controller.presenter
 
-import kotlinx.coroutines.GlobalScope
+import com.di.penopllast.xmltranslater.presentation.controller.view.MainView
 import kotlinx.coroutines.launch
 import java.util.*
 
-class MainPresenterImpl : BasePresenter(), MainPresenter {
+class MainPresenterImpl(val view: MainView?) : BasePresenter(), MainPresenter {
     override fun saveUserLocale(locale: Locale) {
-        GlobalScope.launch {
+        scopeIO.launch {
             repositoryPreference.setUserLocale(locale.language ?: "en")
         }
     }
 
-    override fun isApiKeyExist(): Boolean = !repositoryPreference.getApiKey().isEmpty()
-
+    override fun isApiKeyExist() {
+        if (repositoryPreference.getApiKey().isNotEmpty()) {
+            view?.showChooseFileFragment()
+        }
+    }
 }

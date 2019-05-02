@@ -14,18 +14,17 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s3_choose_language
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s4_choose_languages.view.impl.ChooseDestinationLanguagesFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.view.SaveApiKeyFragmentImpl
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s5_translate.view.TranslateFragmentImpl
-import kotlinx.android.synthetic.main.activity_main.*
 import android.view.MotionEvent
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.MainPresenter
 import com.di.penopllast.xmltranslater.presentation.controller.presenter.MainPresenterImpl
 import com.di.penopllast.xmltranslater.presentation.ui.widget.HelpPanel
-import kotlinx.android.synthetic.main.custom_title.*
 import android.os.Build
 import android.os.StrictMode
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import com.di.penopllast.xmltranslater.presentation.controller.connector.*
 import com.di.penopllast.xmltranslater.presentation.controller.lazy.bindView
 import com.di.penopllast.xmltranslater.presentation.controller.model.RingType.Companion.RING_0_API_KEY
@@ -45,14 +44,15 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         TranslateConnector {
 
     companion object {
-        private const val SWIPE_DISTANCE = 150
+        private const val SWIPE_DISTANCE = 100
     }
 
+    private val helpPanel: HelpPanel? by bindView(R.id.help_panel)
     private val titleText: TextView? by bindView(R.id.text_title)
     private val titleLayout: ViewGroup? by bindView(R.id.layout_title)
     private var shareImage: ImageView? = null
 
-    private val presenter: MainPresenter = MainPresenterImpl()
+    private val presenter: MainPresenter = MainPresenterImpl(this)
     private val handler = Handler()
     private var currentStep = 1
 
@@ -61,13 +61,11 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
         setContentView(R.layout.activity_main)
 
         initCustomActionBar()
-        help_panel.setClickListener(this)
-        showSaveYandexApiKeyFragment()
+        helpPanel?.setClickListener(this)
 
+        showSaveYandexApiKeyFragment()
         presenter.saveUserLocale(getLocale())
-        if (presenter.isApiKeyExist()) {
-            showChooseFileFragment()
-        }
+        presenter.isApiKeyExist()
     }
 
     private fun getLocale(): Locale {
@@ -96,75 +94,71 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     override fun onResume() {
         super.onResume()
         handler.postDelayed({
-            help_panel.hide()
+            helpPanel?.hide()
         }, 1000)
     }
 
-    private fun showSaveYandexApiKeyFragment() {
+    override fun showSaveYandexApiKeyFragment() {
         currentStep = 1
-        text_title.text = getString(R.string.title_api_key)
+        titleText?.text = getString(R.string.title_api_key)
+        //addFragment(SaveApiKeyFragmentImpl())
+        val fragment = SaveApiKeyFragmentImpl()
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout, SaveApiKeyFragmentImpl(),
-                        FragmentName.SAVE_API_KEY)
+                .add(R.id.fragment_placeholder_layout, fragment)
+                .hide(fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
     }
 
-    private fun showChooseFileFragment() {
+    override fun showChooseFileFragment() {
         currentStep = 2
-        help_panel.colorRing(0, true)
-        text_title.text = getString(R.string.title_choose_file)
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout, ChooseFileFragmentImpl(),
-                        FragmentName.CHOOSE_FILE)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
-                .commit()
+        hideCurrentFragment()
+        helpPanel?.colorRing(0, true)
+        titleText?.text = getString(R.string.title_choose_file)
+        addFragment(ChooseFileFragmentImpl())
     }
 
     private fun showChooseLanguageFragment() {
         currentStep = 3
-        help_panel.colorRing(1, true)
-        text_title.text = getString(R.string.title_choose_file_locale)
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout, ChooseLanguageFragmentImpl(),
-                        FragmentName.CHOOSE_LANGUAGE)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
-                .commit()
+        hideCurrentFragment()
+        helpPanel?.colorRing(1, true)
+        titleText?.text = getString(R.string.title_choose_file_locale)
+        addFragment(ChooseLanguageFragmentImpl())
     }
 
     private fun showChooseTranslateLanguagesFragment() {
         currentStep = 4
-        help_panel.colorRing(2, true)
-        text_title.text = getString(R.string.title_choose_translate_languages)
+        hideCurrentFragment()
+        helpPanel?.colorRing(2, true)
+        titleText?.text = getString(R.string.title_choose_translate_languages)
+        addFragment(ChooseDestinationLanguagesFragmentImpl())
+    }
+
+    private fun showTranslateFragment() {
+        currentStep = 5
+        hideCurrentFragment()
+        helpPanel?.colorRing(3, true)
+        titleText?.text = getString(R.string.title_translate)
+        addFragment(TranslateFragmentImpl())
+    }
+
+    private fun addFragment(fragment: Fragment) {
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout,
-                        ChooseDestinationLanguagesFragmentImpl(),
-                        FragmentName.CHOOSE_TRANSLATION_LANGUAGE)
+                .add(R.id.fragment_placeholder_layout, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit()
     }
 
-    private fun showTranslateFragment() {
-        currentStep = 5
-        help_panel.colorRing(3, true)
-        text_title.text = getString(R.string.title_translate)
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_placeholder_layout,
-                        TranslateFragmentImpl(),
-                        FragmentName.TRANSLATE)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
-                .commit()
-
+    private fun hideCurrentFragment() {
+        val lastFragmentIndex = supportFragmentManager.fragments.size - 1
+        if (lastFragmentIndex >= 0) {
+            val currentFragment = supportFragmentManager.fragments[lastFragmentIndex]
+            supportFragmentManager.beginTransaction().hide(currentFragment).commit()
+        }
     }
 
     override fun onResumeFragment(@FragmentName fragmentName: String) {
@@ -225,22 +219,22 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     private fun onFirstRingSuccessClick() {
-        help_panel.colorRing(RING_0_API_KEY, false)
+        helpPanel?.colorRing(RING_0_API_KEY, false)
     }
 
     private fun onSecondRingSuccessClick() {
-        help_panel.colorRing(RING_0_API_KEY, true)
-        help_panel.colorRing(RING_1_FILE, false)
+        helpPanel?.colorRing(RING_0_API_KEY, true)
+        helpPanel?.colorRing(RING_1_FILE, false)
     }
 
     private fun onThirdRingSuccessClick() {
-        help_panel.colorRing(RING_1_FILE, true)
-        help_panel.colorRing(RING_2_FROM_LOCALE, false)
+        helpPanel?.colorRing(RING_1_FILE, true)
+        helpPanel?.colorRing(RING_2_FROM_LOCALE, false)
     }
 
     private fun onFourthRingSuccessClick() {
-        help_panel.colorRing(RING_2_FROM_LOCALE, true)
-        help_panel.colorRing(RING_3_TO_LOCALE, false)
+        helpPanel?.colorRing(RING_2_FROM_LOCALE, true)
+        helpPanel?.colorRing(RING_3_TO_LOCALE, false)
     }
 
     private var x1 = 0F
@@ -252,16 +246,18 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
                 x2 = event.x
                 var deltaX = x2 - x1
                 if (deltaX > SWIPE_DISTANCE) {
-                    help_panel.show()
+                    helpPanel?.show()
                 }
                 deltaX = x1 - x2
                 if (deltaX > SWIPE_DISTANCE) {
-                    help_panel.hide()
+                    helpPanel?.hide()
                 }
-                if (!help_panel.isHidden()) {
-                    if ((event.x > help_panel.width && event.y < help_panel.height) ||
-                            (event.x < help_panel.width && event.y > help_panel.height))
-                        help_panel.hide()
+                helpPanel?.let {
+                    if (!it.isHidden()) {
+                        if ((event.x > it.width && event.y < it.height) ||
+                                (event.x < it.width && event.y > it.height))
+                            helpPanel?.hide()
+                    }
                 }
             }
         }
@@ -317,13 +313,22 @@ class MainActivity : AppCompatActivity(), MainView, HelpPanel.OnHelpViewClickLis
     }
 
     override fun onBackPressed() {
-        if (help_panel.isHidden()) {
+        if (helpPanel?.isHidden() == true) {
             super.onBackPressed()
-            if (supportFragmentManager.backStackEntryCount == 0)
+            if (supportFragmentManager.backStackEntryCount == 0) {
                 finish()
+            } else {
+                showFirstStackFragment()
+            }
         } else {
-            help_panel.hide()
+            helpPanel?.hide()
         }
+    }
+
+    private fun showFirstStackFragment() {
+        val lastFragmentIndex = supportFragmentManager.fragments.size - 1
+        val currentFragment = supportFragmentManager.fragments[lastFragmentIndex]
+        supportFragmentManager.beginTransaction().show(currentFragment).commit()
     }
 
     private fun showToast(s: String) {

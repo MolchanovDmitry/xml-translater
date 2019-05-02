@@ -155,6 +155,11 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
         Toast.makeText(activity?.applicationContext, s, Toast.LENGTH_LONG).show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
     private fun getFileType(spinnerItemPosition: Int) = when (spinnerItemPosition) {
         1 -> FileType.XML
         2 -> FileType.PHP

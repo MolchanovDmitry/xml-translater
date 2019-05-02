@@ -33,6 +33,11 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
     private val handler = Handler()
     private val selectedLocaleList = ArrayList<String>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.getLocaleMatches()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_choose_translate_languages, container, false)
@@ -41,7 +46,6 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         connector?.onResumeFragment(FragmentName.CHOOSE_TRANSLATION_LANGUAGE)
-        presenter.getLocaleMatches()
     }
 
     override fun showExtendedLocaleMatchList(extendedLocaleMatchList: ArrayList<ExtendedLocaleMatch>) {
@@ -69,5 +73,10 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
         handler.post {
             connector?.onFinishChooseDestinationLanguages()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
     }
 }
