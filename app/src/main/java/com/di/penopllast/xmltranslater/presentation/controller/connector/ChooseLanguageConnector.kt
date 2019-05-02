@@ -1,6 +1,5 @@
 package com.di.penopllast.xmltranslater.presentation.controller.connector
 
-interface ChooseLanguageConnector : BaseConnector {
-
+interface ChooseLanguageConnector  {
     fun onLanguageSelected(locale: String)
 }

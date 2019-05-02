@@ -41,7 +41,6 @@ class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        connector?.onResumeFragment(FragmentName.SAVE_API_KEY)
         presenter.checkApiKeyExist()
 
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?

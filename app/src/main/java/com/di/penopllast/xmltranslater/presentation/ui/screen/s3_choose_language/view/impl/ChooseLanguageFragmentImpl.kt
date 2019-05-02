@@ -36,11 +36,6 @@ class ChooseLanguageFragmentImpl : Fragment(), ChooseLanguageFragment, SelectLan
         return inflater.inflate(R.layout.fragment_choose_language, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        connector?.onResumeFragment(FragmentName.CHOOSE_LANGUAGE)
-    }
-
     override fun showLanguageList(langMap: ArrayMap<String, String>) {
         recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.adapter = LanguageAdapter(langMap, this)

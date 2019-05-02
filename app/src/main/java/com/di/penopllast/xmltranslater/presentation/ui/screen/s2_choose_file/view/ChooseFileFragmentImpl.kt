@@ -45,7 +45,6 @@ class ChooseFileFragmentImpl : Fragment(), ChooseFileFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        connector?.onResumeFragment(FragmentName.CHOOSE_FILE)
         context?.let { context ->
             ArrayAdapter.createFromResource(
                     context,

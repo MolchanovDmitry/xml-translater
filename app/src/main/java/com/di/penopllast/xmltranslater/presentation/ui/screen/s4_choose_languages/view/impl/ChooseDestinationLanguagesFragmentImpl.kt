@@ -43,11 +43,6 @@ class ChooseDestinationLanguagesFragmentImpl : Fragment(),
         return inflater.inflate(R.layout.fragment_choose_translate_languages, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        connector?.onResumeFragment(FragmentName.CHOOSE_TRANSLATION_LANGUAGE)
-    }
-
     override fun showExtendedLocaleMatchList(extendedLocaleMatchList: ArrayList<ExtendedLocaleMatch>) {
         handler.post {
             recyclerView?.layoutManager = LinearLayoutManager(context)
