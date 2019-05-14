@@ -1,5 +1,6 @@
 package com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.view
 
+import android.app.AlertDialog
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.text.util.LinkifyCompat
+import androidx.fragment.app.DialogFragment
 import com.di.penopllast.xmltranslater.R
 import com.di.penopllast.xmltranslater.application.utils.Const
 import com.di.penopllast.xmltranslater.presentation.controller.connector.SaveApiKeyConnector
@@ -23,7 +25,7 @@ import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.pr
 import com.di.penopllast.xmltranslater.presentation.ui.screen.s1_save_api_key.presenter.SaveApiKeyPresenterImpl
 
 
-class SaveApiKeyFragmentImpl : Fragment(), SaveApiKeyFragment {
+class SaveApiKeyFragmentImpl : DialogFragment(), SaveApiKeyFragment {
 
     private val apiKeyEdit: EditText? by bindView(R.id.edit_view)
     private val pasteButton: Button? by bindView(R.id.button_paste)

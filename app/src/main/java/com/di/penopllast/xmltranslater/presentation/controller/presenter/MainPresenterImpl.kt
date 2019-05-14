@@ -12,7 +12,7 @@ class MainPresenterImpl(val view: MainView?) : BasePresenter(), MainPresenter {
     }
 
     override fun isApiKeyExist() {
-        if (repositoryPreference.getApiKey().isNotEmpty()) {
+        if (repositoryPreference.getApiKey().isEmpty()) {
             view?.showChooseFileFragment()
         }
     }

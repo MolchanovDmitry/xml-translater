@@ -6,6 +6,15 @@
     android:background="@drawable/background_title">
 
     <TextView
+        android:id="@+id/key_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:text="@string/key"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

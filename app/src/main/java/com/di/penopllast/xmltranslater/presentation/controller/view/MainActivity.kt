@@ -28,7 +28,6 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 class MainActivity : AppCompatActivity(), MainView,
         SaveApiKeyConnector,
         ChooseFileConnector,
@@ -37,6 +36,7 @@ class MainActivity : AppCompatActivity(), MainView,
         TranslateConnector {
 
     private val titleText: TextView? by bindView(R.id.text_title)
+    private val keyText: TextView? by bindView(R.id.key_text)
     private val titleLayout: ViewGroup? by bindView(R.id.layout_title)
     private var shareImage: ImageView? = null
 
@@ -49,9 +49,12 @@ class MainActivity : AppCompatActivity(), MainView,
 
         initCustomActionBar()
 
-        showSaveYandexApiKeyFragment()
+        //showSaveYandexApiKeyFragment()
+        showChooseFileFragment()
         presenter.saveUserLocale(getLocale())
         presenter.isApiKeyExist()
+
+        keyText?.setOnClickListener { showSaveYandexApiKeyFragment() }
     }
 
     private fun getLocale(): Locale {
@@ -77,16 +80,8 @@ class MainActivity : AppCompatActivity(), MainView,
     }
 
     override fun showSaveYandexApiKeyFragment() {
-        titleText?.text = getString(R.string.title_api_key)
-        //addFragment(SaveApiKeyFragmentImpl())
-        val fragment = SaveApiKeyFragmentImpl()
-        supportFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_placeholder_layout, fragment)
-                .hide(fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
-                .commit()
+        val newFragment = SaveApiKeyFragmentImpl()
+        newFragment.show(supportFragmentManager, "SaveApiKeyFragment")
     }
 
     override fun showChooseFileFragment() {
